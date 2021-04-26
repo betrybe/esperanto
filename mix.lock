@@ -1,0 +1,4 @@
+%{
+  "markright": {:git, "https://github.com/betrybe/markright.git", "30d6fb84260f429a99127d7f58403a3ab571eae2", []},
+  "xml_builder": {:hex, :xml_builder, "2.1.4", "e60e21c0a39b9dd8dec1db5a2525c713f7fe4e85ed247caedf22a9bcdd2d5069", [:mix], [], "hexpm", "48188a4df8b9168ceb8318d128299bce064d272e18967349b2592347c434e677"},
+}
