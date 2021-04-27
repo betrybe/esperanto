@@ -23,17 +23,15 @@ defmodule Esperanto.ParseTest do
     """
     tree = Olx.parse(input, parsers: [])
     root = tree.root
-    assert nil == tree
-
-    # %NaryTree{nodes: %{^root => %NaryTree.Node{
-    #   children: [],
-    #   content: :empty,
-    #   id: ^root,
-    #   level: 0,
-    #   name: :problem,
-    #   parent:
-    #   :empty}
-    # }, root: ^root} = tree
+    %NaryTree{nodes: %{^root => %NaryTree.Node{
+      children: [],
+      content: :empty,
+      id: ^root,
+      level: 0,
+      name: :problem,
+      parent:
+      :empty}
+    }, root: ^root} = tree
   end
 
   # test "When using (x) Then the correct attribute is set to true" do

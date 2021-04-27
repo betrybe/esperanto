@@ -17,15 +17,15 @@ defmodule Olx.Parsers.Problem do
   end
 
   # No more input finish using the fallback parser
-  def astify(input, "", tree, node, parsers, nil) do
-    astify(input, "", tree, node, parsers, {Olx.Rarser.PlainText, []})
+  def astify(input, "", tree, node, parsers, :find_parse) do
+    astify(input, "", tree, node, parsers, {Olx.Parsers.PlainText, []})
   end
 
   # Parser found, execute-it
   def astify(input, rest, tree, node, parsers, {parser, opts}) do
-    {node, input_rest} = parser.parser(input, tree, node, opts)
+    {node, input_rest} = parser.parse(input, tree, node, opts)
     tree = NaryTree.add_child(tree, node)
-    astify("", input_rest <> rest,node, tree, parsers, nil)
+    astify("", input_rest <> rest,tree, node, parsers, nil)
   end
 
   # Find parser
@@ -45,7 +45,7 @@ defmodule Olx.Parsers.Problem do
   end
 
   def select_parse(_input, []) do
-    :find_parse
+    :walk
   end
 
   def select_parse(input, tree, node, parsers) do
