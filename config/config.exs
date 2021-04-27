@@ -17,6 +17,9 @@ import Config
 #       metadata: [:user_id]
 #
 config :markright, syntax: [
-  lead: [choice: {"( )", [parser: Esperanto.Parser.IncorrectChoice]}],
+  lead: [
+    choice: {"( )", [custom_parser: Esperanto.Parser.IncorrectChoice]},
+    choice: {"(x)", [custom_parser: Esperanto.Parser.CorrectChoice]}
+  ],
   surrounding: [choice: :choicegroup, choicegroup: :multiplechoiceresponse]
 ]
