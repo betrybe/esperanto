@@ -13,7 +13,8 @@ defmodule Olx.Parsers.TopLevel do
   def parse(walker, tree, _, opts) do
     tree = tree || NaryTree.new()
     parsers = Keyword.get(opts, :parsers, [])
-    astify(walker, tree, tree.root, parsers, :find_parse)
+    default_parsers = [{Olx.Parsers.PlainText, nil}]
+    astify(walker, tree, tree.root, parsers ++ default_parsers, :find_parse)
   end
 
   # No more input finished the parser
@@ -25,11 +26,6 @@ defmodule Olx.Parsers.TopLevel do
          _selected_parser
        ) do
     {tree, walker}
-  end
-
-  # No more input finish using the fallback parser
-  defp astify(%Olx.Walker{rest: ""} = input, tree, parent_id, parsers, :find_parse) do
-    astify(input, tree, parent_id, parsers, {Olx.Parsers.PlainText, []})
   end
 
   # Parser found, execute it
@@ -64,7 +60,7 @@ defmodule Olx.Parsers.TopLevel do
   defp select_parse(walker, tree, parent_id, parsers) do
     filtered_parsers =
       Enum.filter(parsers, fn {parser, opts} ->
-        apply(parser, :should_parse, [walker, tree, parent_id, parsers, opts])
+        parser.should_parse(walker, tree, parent_id, opts)
       end)
 
     select_parse(walker, filtered_parsers)

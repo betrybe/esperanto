@@ -12,5 +12,7 @@ defmodule Olx.Parsers.PlainText do
   end
 
   @impl Olx.Parser
+  def should_parse(%Walker{rest: ""}, _, _, _), do: true
+  def should_parse(%Walker{rest: :barried}, _, _, _), do: true
   def should_parse(_, _, _, _), do: false
 end
