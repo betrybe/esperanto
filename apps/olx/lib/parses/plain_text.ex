@@ -10,4 +10,7 @@ defmodule Olx.Parsers.PlainText do
   def parse(walker, _tree, nil, _opts) do
     { NaryTree.Node.new(:div, walker.input), Walker.consume_input(walker)  }
   end
+  @impl Olx.Parser
+  def should_parse(_, _, _, _), do: false
+
 end

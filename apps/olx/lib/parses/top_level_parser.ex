@@ -27,7 +27,7 @@ defmodule Olx.Parsers.TopLevel do
     astify(input, tree, node, parsers, {Olx.Parsers.PlainText, []})
   end
 
-  # Parser found, execute-it
+  # Parser found, execute it
   defp astify(input, tree, node, parsers, {parser, opts}) do
     {node, walker} = parser.parse(input, tree, node, opts)
     tree = NaryTree.add_child(tree, node)
