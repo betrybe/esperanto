@@ -8,11 +8,9 @@ defmodule Esperanto.Parser.Choice do
     plume = Esperanto.Parser.CorrectChoiceHelper.to_ast(input, plume)
     {:choice, attrs, ast} = plume.ast
     attrs = Map.put(attrs, :correct, true)
-    plume = %Plume{plume | ast: {:choice, attrs, ast} }
+    plume = %Plume{plume | ast: {:choice, attrs, ast}}
     IO.puts("Correct")
     IO.inspect(plume)
     plume
   end
-
-
 end

@@ -5,8 +5,7 @@ defmodule Esperanto.ParseTest do
     input = ~S"""
     """
 
-    {node, _} = Olx.parse(input, parsers: [])
-    tree = NaryTree.new(node)
+    {tree, _} = Olx.parse(input, parsers: [])
     root = tree.root
 
     %NaryTree{
@@ -29,16 +28,11 @@ defmodule Esperanto.ParseTest do
     Hello
     """
 
-    {node, _} = Olx.parse(input, parsers: [])
-
-    tree =
-      node
-      |> NaryTree.new()
-      |> NaryTree.to_map()
+    {tree, _} = Olx.parse(input, parsers: [])
 
     %{
       children: [%{content: content}]
-    } = tree
+    } = NaryTree.to_map(tree)
 
     assert content == "Hello\n"
   end
