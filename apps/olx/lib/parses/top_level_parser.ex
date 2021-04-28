@@ -5,8 +5,6 @@ defmodule Olx.Parsers.TopLevel do
   @moduledoc """
   Top level parser\n
   This parser selected which parser will be used based on `should_parse` call from other modules
-  """
-
   @impl Olx.Parser
   def should_parse(_, _, _, _), do: true
 
@@ -18,8 +16,8 @@ defmodule Olx.Parsers.TopLevel do
   end
 
   # No more input finished the parser
-  defp astify(%Olx.Walker{input: "", rest: ""}, tree, _node , _parsers, _selected_parser) do
-    tree
+  defp astify(%Olx.Walker{input: "", rest: ""} = walker, tree, _node, _parsers, _selected_parser) do
+    {NaryTree.detach(tree, tree.root), walker}
   end
 
   # No more input finish using the fallback parser
@@ -58,10 +56,11 @@ defmodule Olx.Parsers.TopLevel do
 
   # find parsers that should be executed
   defp select_parse(walker, tree, node, parsers) do
-    filtered_parsers = Enum.filter(parsers, fn {parser, opts} ->
-      apply(parser, :should_parse, [walker, tree, node, parsers, opts])
-    end)
+    filtered_parsers =
+      Enum.filter(parsers, fn {parser, opts} ->
+        apply(parser, :should_parse, [walker, tree, node, parsers, opts])
+      end)
+
     select_parse(walker, filtered_parsers)
   end
-
 end

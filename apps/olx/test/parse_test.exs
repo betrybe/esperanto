@@ -4,27 +4,42 @@ defmodule Esperanto.ParseTest do
   test "top level AST is problem" do
     input = ~S"""
     """
-    tree = Olx.parse(input, parsers: [])
+
+    {node, _} = Olx.parse(input, parsers: [])
+    tree = NaryTree.new(node)
     root = tree.root
-    %NaryTree{nodes: %{^root => %NaryTree.Node{
-      children: [],
-      content: :empty,
-      id: ^root,
-      level: 0,
-      name: :problem,
-      parent:
-      :empty}
-    }, root: ^root} = tree
+
+    %NaryTree{
+      nodes: %{
+        ^root => %NaryTree.Node{
+          children: [],
+          content: :empty,
+          id: ^root,
+          level: 0,
+          name: :problem,
+          parent: :empty
+        }
+      },
+      root: ^root
+    } = tree
   end
 
   test "plain text" do
     input = ~S"""
     Hello
     """
-    tree = Olx.parse(input, parsers: []) |> NaryTree.to_map()
+
+    {node, _} = Olx.parse(input, parsers: [])
+
+    tree =
+      node
+      |> NaryTree.new()
+      |> NaryTree.to_map()
+
     %{
       children: [%{content: content}]
     } = tree
+
     assert content == "Hello\n"
   end
 
