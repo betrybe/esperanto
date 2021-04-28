@@ -14,8 +14,7 @@ defmodule Olx do
       :world
 
   """
-  @spec parse(String.t(), list())::ASTNode
   def parse(input, opts) do
-    Problem.parse(input, nil, nil, opts)
+    Problem.parse(input, opts)
   end
 end

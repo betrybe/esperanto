@@ -21,17 +21,11 @@ defmodule Esperanto.ParseTest do
     input = ~S"""
     Hello
     """
-    tree = Olx.parse(input, parsers: [])
-    root = tree.root
-    %NaryTree{nodes: %{^root => %NaryTree.Node{
-      children: [],
-      content: :empty,
-      id: ^root,
-      level: 0,
-      name: :problem,
-      parent:
-      :empty}
-    }, root: ^root} = tree
+    tree = Olx.parse(input, parsers: []) |> NaryTree.to_map()
+    %{
+      children: [%{content: content}]
+    } = tree
+    assert content == "Hello\n"
   end
 
   # test "When using (x) Then the correct attribute is set to true" do
