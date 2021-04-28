@@ -16,10 +16,11 @@ import Config
 #       format: "$date $time [$level] $metadata$message\n",
 #       metadata: [:user_id]
 #
-config :markright, syntax: [
-  lead: [
-    choice: {"( )", [custom_parser: Esperanto.Parser.IncorrectChoice]},
-    choice: {"(x)", [custom_parser: Esperanto.Parser.CorrectChoice]}
-  ],
-  surrounding: [choice: :choicegroup, choicegroup: :multiplechoiceresponse]
-]
+config :markright,
+  syntax: [
+    lead: [
+      choice: {"( )", [custom_parser: Esperanto.Parser.IncorrectChoice]},
+      choice: {"(x)", [custom_parser: Esperanto.Parser.CorrectChoice]}
+    ],
+    surrounding: [choice: :choicegroup, choicegroup: :multiplechoiceresponse]
+  ]

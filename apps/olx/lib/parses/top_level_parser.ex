@@ -6,7 +6,6 @@ defmodule Olx.Parsers.TopLevel do
   Top level parser\n
   This parser selected which parser will be used based on `should_parse` call from other modules
   """
-
   @impl Olx.Parser
   def should_parse(_, _, _, _), do: true
 
@@ -14,36 +13,41 @@ defmodule Olx.Parsers.TopLevel do
   def parse(walker, tree, _, opts) do
     tree = tree || NaryTree.new()
     parsers = Keyword.get(opts, :parsers, [])
-    astify(walker, tree, nil, parsers, :find_parse)
+    astify(walker, tree, tree.root, parsers, :find_parse)
   end
 
   # No more input finished the parser
-  defp astify(%Olx.Walker{input: "", rest: ""}, tree, _node , _parsers, _selected_parser) do
-    tree
+  defp astify(
+         %Olx.Walker{input: "", rest: ""} = walker,
+         tree,
+         _parent_id,
+         _parsers,
+         _selected_parser
+       ) do
+    {tree, walker}
   end
 
   # No more input finish using the fallback parser
-  defp astify(%Olx.Walker{rest: ""} = input, tree, node, parsers, :find_parse) do
-    astify(input, tree, node, parsers, {Olx.Parsers.PlainText, []})
+  defp astify(%Olx.Walker{rest: ""} = input, tree, parent_id, parsers, :find_parse) do
+    astify(input, tree, parent_id, parsers, {Olx.Parsers.PlainText, []})
   end
 
   # Parser found, execute it
-  defp astify(input, tree, node, parsers, {parser, opts}) do
-    {node, walker} = parser.parse(input, tree, node, opts)
-    tree = NaryTree.add_child(tree, node)
-    astify(walker, tree, node, parsers, nil)
+  defp astify(input, tree, parent_id, parsers, {parser, opts}) do
+    {tree, walker} = parser.parse(input, tree, parent_id, opts)
+    astify(walker, tree, parent_id, parsers, nil)
   end
 
   # Find parser
-  defp astify(walker, tree, node, parsers, :find_parse) do
-    selected_parsers = select_parse(walker, tree, node, parsers)
-    astify(walker, tree, node, parsers, selected_parsers)
+  defp astify(walker, tree, parent_id, parsers, :find_parse) do
+    selected_parsers = select_parse(walker, tree, parent_id, parsers)
+    astify(walker, tree, parent_id, parsers, selected_parsers)
   end
 
   # no parser found,  walk
-  defp astify(walker, tree, node, parsers, :walk) do
+  defp astify(walker, tree, parent_id, parsers, :walk) do
     walker = Walker.walk(walker)
-    astify(walker, tree, node, parsers, :find_parse)
+    astify(walker, tree, parent_id, parsers, :find_parse)
   end
 
   # Only one parse found, ready to go
@@ -57,11 +61,12 @@ defmodule Olx.Parsers.TopLevel do
   end
 
   # find parsers that should be executed
-  defp select_parse(walker, tree, node, parsers) do
-    filtered_parsers = Enum.filter(parsers, fn {parser, opts} ->
-      apply(parser, :should_parse, [walker, tree, node, parsers, opts])
-    end)
+  defp select_parse(walker, tree, parent_id, parsers) do
+    filtered_parsers =
+      Enum.filter(parsers, fn {parser, opts} ->
+        apply(parser, :should_parse, [walker, tree, parent_id, parsers, opts])
+      end)
+
     select_parse(walker, filtered_parsers)
   end
-
 end
