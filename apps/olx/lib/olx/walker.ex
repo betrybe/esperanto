@@ -9,6 +9,20 @@ defmodule Olx.Walker do
     column: integer()
   }
 
+  @doc ~S"""
+  Start the walker by split it in input and rest
+
+  ## Examples
+
+      iex> Olx.Walker.start("abc")
+      %Olx.Walker{input: "a", rest: "bc"}
+
+      iex> Olx.Walker.start("")
+      %Olx.Walker{input: "", rest: ""}
+
+      iex> Olx.Walker.start("a")
+      %Olx.Walker{input: "a", rest: ""}
+  """
   @spec start(String.t())::__MODULE__.t()
   def start(input) do
     {input, rest} = String.split_at(input, 1)
@@ -18,6 +32,17 @@ defmodule Olx.Walker do
     }
   end
 
+  @doc ~S"""
+  Walk through next input
+
+  ## Examples
+
+      iex> Olx.Walker.walk(Olx.Walker.start("abc"))
+      %Olx.Walker{input: "ab", rest: "c", column: 2}
+
+      iex> Olx.Walker.walk(Olx.Walker.start("a\nc"))
+      %Olx.Walker{input: "a\n", rest: "c", column: 1, line: 2}
+  """
   @spec walk(__MODULE__.t())::__MODULE__.t()
   def walk(walker) do
     {next, rest} = String.split_at(walker.rest, 1)
@@ -30,6 +55,14 @@ defmodule Olx.Walker do
     }
   end
 
+  @doc ~S"""
+  Consume the current walk input
+
+  ## Examples
+
+      iex> Olx.Walker.consume_input(Olx.Walker.start("abc"))
+      %Olx.Walker{input: "", rest: "bc", column: 1}
+  """
   @spec consume_input(__MODULE__.t())::__MODULE__.t()
   def consume_input(walker) do
     %__MODULE__{
