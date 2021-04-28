@@ -37,6 +37,35 @@ defmodule Esperanto.ParseTest do
     assert content == "Hello\n"
   end
 
+  test "plain text with label" do
+    input = ~S"""
+    >>Hello<<
+    """
+
+    {tree, _} = Olx.parse(input, parsers: [])
+
+    #IO.inspect(NaryTree.to_list(tree))
+    #NaryTree.print_tree(tree)
+    %{
+      children: [
+        %{
+          content: :empty,
+          name: "label",
+          children: [
+            %{
+              content: content
+            }
+          ]
+        },
+        %{
+          content: "\n"
+        }
+      ]
+    } = NaryTree.to_map(tree)
+
+    assert content == "Hello"
+  end
+
   # test "When using (x) Then the correct attribute is set to true" do
   #   input = ~S"""
   #   ( ) item 2

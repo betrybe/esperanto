@@ -132,7 +132,7 @@ defmodule Olx.Walker do
     %__MODULE__{
       walker
       | barrier: ~r"$a",
-        rest: walker.barriered,
+        rest: String.replace(walker.barriered, walker.barrier, "", global: false),
         barriered: ""
     }
   end

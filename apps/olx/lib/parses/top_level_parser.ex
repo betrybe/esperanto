@@ -10,11 +10,21 @@ defmodule Olx.Parsers.TopLevel do
   def should_parse(_, _, _, _), do: true
 
   @impl Olx.Parser
-  def parse(walker, tree, _, opts) do
-    tree = tree || NaryTree.new()
+  def parse(walker, nil, nil, opts) do
+    tree = NaryTree.new()
+    parse(walker, tree, tree.root, opts)
+  end
+
+  def parse(walker, tree, parent_id, opts) do
     parsers = Keyword.get(opts, :parsers, [])
-    default_parsers = [{Olx.Parsers.PlainText, nil}]
-    astify(walker, tree, tree.root, parsers ++ default_parsers, :find_parse)
+
+    default_parsers = [
+      {Olx.Parsers.PlainText, nil},
+      {Olx.Parsers.EnclosingTag,
+       start_delimiter: ">>", end_delimiter: ~r/^<</, enclosing_tag: "label"}
+    ]
+
+    astify(walker, tree, parent_id, parsers ++ default_parsers, :find_parse)
   end
 
   # No more input finished the parser
@@ -28,10 +38,26 @@ defmodule Olx.Parsers.TopLevel do
     {tree, walker}
   end
 
+  # No more input finished the parser
+  defp astify(
+         %Olx.Walker{rest: :barried} = walker,
+         tree,
+         parent_id,
+         parsers,
+         _
+       ) do
+
+    # one last chance
+    case select_parse(walker, tree, parent_id, parsers) do
+      {parser, opts} -> parser.parse(walker, tree, parent_id, opts)
+      _ -> {tree, walker}
+    end
+  end
+
   # Parser found, execute it
   defp astify(input, tree, parent_id, parsers, {parser, opts}) do
     {tree, walker} = parser.parse(input, tree, parent_id, opts)
-    astify(walker, tree, parent_id, parsers, nil)
+    astify(walker, tree, parent_id, parsers, :find_parse)
   end
 
   # Find parser
@@ -62,7 +88,6 @@ defmodule Olx.Parsers.TopLevel do
       Enum.filter(parsers, fn {parser, opts} ->
         parser.should_parse(walker, tree, parent_id, opts)
       end)
-
     select_parse(walker, filtered_parsers)
   end
 end
