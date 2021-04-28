@@ -2,6 +2,10 @@ defmodule Olx.Parsers.TopLevel do
   alias Olx.Walker
   @behaviour Olx.Parser
 
+  @moduledoc """
+  Top level parser\n
+  This parser selected which parser will be used based on `should_parse` call from other modules
+  """
 
   @impl Olx.Parser
   def should_parse(_, _, _, _), do: true
