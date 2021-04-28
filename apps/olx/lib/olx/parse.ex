@@ -11,7 +11,6 @@ defmodule Olx.Parser do
     * `pull_interval`- Time in miliseconds that should be pulled", default to `60s`
     * `bus_line_provider`- Default to `Crawler.CachexBusLineProvider`
   """
-  @callback parse(Walker.t(), tree(), ast_node(), keyword())::{ ast_node(), Walker.t()}
-  @callback should_parse(Walker.t(), tree(), node(), keyword())::boolean()
-
+  @callback parse(Walker.t(), tree(), ast_node(), keyword()) :: {ast_node(), Walker.t()}
+  @callback should_parse(Walker.t(), tree(), node(), keyword()) :: boolean()
 end
