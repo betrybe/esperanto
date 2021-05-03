@@ -44,8 +44,6 @@ defmodule Esperanto.ParseTest do
 
     {tree, _} = Olx.parse(input, parsers: [])
 
-    #IO.inspect(NaryTree.to_list(tree))
-    #NaryTree.print_tree(tree)
     %{
       children: [
         %{
@@ -64,6 +62,40 @@ defmodule Esperanto.ParseTest do
     } = NaryTree.to_map(tree)
 
     assert content == "Hello"
+  end
+
+  test "plain text with label and choice" do
+    input = ~S"""
+    >>Hello<<
+    ( ) Apple
+    """
+
+    {tree, _} = Olx.parse(input, parsers: [])
+
+    %{
+      children: [
+        %{
+          content: :empty,
+          name: "label",
+          children: [
+            %{
+              content: "Hello"
+            }
+          ]
+        },
+        %{
+          name: "choice",
+          content: :empty,
+          children: [
+            %{
+              content: content
+            }
+          ]
+        }
+      ]
+    } = NaryTree.to_map(tree)
+
+    assert String.trim(content) == "Apple"
   end
 
   # test "When using (x) Then the correct attribute is set to true" do

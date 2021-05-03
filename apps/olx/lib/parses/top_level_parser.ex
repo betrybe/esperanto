@@ -16,15 +16,15 @@ defmodule Olx.Parsers.TopLevel do
   end
 
   def parse(walker, tree, parent_id, opts) do
-    parsers = Keyword.get(opts, :parsers, [])
+    plain_text = {Olx.Parsers.PlainText, nil}
+    label = {Olx.Parsers.Label, nil}
+    choice = {Olx.Parsers.Choice, nil}
+    line_break = {Olx.Parsers.Br, nil}
 
-    default_parsers = [
-      {Olx.Parsers.PlainText, nil},
-      {Olx.Parsers.EnclosingTag,
-       start_delimiter: ">>", end_delimiter: ~r/^<</, enclosing_tag: "label"}
-    ]
+    default_parsers = [parsers: [plain_text, choice, line_break, label]]
+    opts = Keyword.merge(opts, default_parsers)
 
-    astify(walker, tree, parent_id, parsers ++ default_parsers, :find_parse)
+    astify(walker, tree, parent_id, opts, :find_parse)
   end
 
   # No more input finished the parser
@@ -32,7 +32,7 @@ defmodule Olx.Parsers.TopLevel do
          %Olx.Walker{input: "", rest: ""} = walker,
          tree,
          _parent_id,
-         _parsers,
+         _opts,
          _selected_parser
        ) do
     {tree, walker}
@@ -43,33 +43,32 @@ defmodule Olx.Parsers.TopLevel do
          %Olx.Walker{rest: :barried} = walker,
          tree,
          parent_id,
-         parsers,
+         opts,
          _
        ) do
-
     # one last chance
-    case select_parse(walker, tree, parent_id, parsers) do
-      {parser, opts} -> parser.parse(walker, tree, parent_id, opts)
+    case select_parse(walker, tree, parent_id, opts) do
+      {parser, _opts} -> parser.parse(walker, tree, parent_id, opts)
       _ -> {tree, walker}
     end
   end
 
   # Parser found, execute it
-  defp astify(input, tree, parent_id, parsers, {parser, opts}) do
+  defp astify(input, tree, parent_id, opts, {parser, _opts}) do
     {tree, walker} = parser.parse(input, tree, parent_id, opts)
-    astify(walker, tree, parent_id, parsers, :find_parse)
+    astify(walker, tree, parent_id, opts, :find_parse)
   end
 
   # Find parser
-  defp astify(walker, tree, parent_id, parsers, :find_parse) do
-    selected_parsers = select_parse(walker, tree, parent_id, parsers)
-    astify(walker, tree, parent_id, parsers, selected_parsers)
+  defp astify(walker, tree, parent_id, opts, :find_parse) do
+    selected_parsers = select_parse(walker, tree, parent_id, opts)
+    astify(walker, tree, parent_id, opts, selected_parsers)
   end
 
   # no parser found,  walk
-  defp astify(walker, tree, parent_id, parsers, :walk) do
+  defp astify(walker, tree, parent_id, opts, :walk) do
     walker = Walker.walk(walker)
-    astify(walker, tree, parent_id, parsers, :find_parse)
+    astify(walker, tree, parent_id, opts, :find_parse)
   end
 
   # Only one parse found, ready to go
@@ -82,12 +81,28 @@ defmodule Olx.Parsers.TopLevel do
     :walk
   end
 
+  # error more then one parser found. Grammar is ambiguous
+  defp select_parse(input, parsers) do
+    parsers =
+      parsers
+      |> Enum.map(&elem(&1, 0))
+      |> Enum.map(&Atom.to_string/1)
+      |> Enum.join(", ")
+
+    raise "Grammar is ambiguos! More then one parser found for input \"#{input.input}\": #{
+            parsers
+          }."
+  end
+
   # find parsers that should be executed
-  defp select_parse(walker, tree, parent_id, parsers) do
+  defp select_parse(walker, tree, parent_id, opts) do
+    parsers = Keyword.get(opts, :parsers)
+
     filtered_parsers =
       Enum.filter(parsers, fn {parser, opts} ->
         parser.should_parse(walker, tree, parent_id, opts)
       end)
+
     select_parse(walker, filtered_parsers)
   end
 end

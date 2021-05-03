@@ -1,5 +1,7 @@
 defmodule Olx.Walker do
-  defstruct [:input, :rest, line: 1, column: 1, barrier: ~r"$a", barriered: ""]
+  @never_match_regex ~r"$a"
+
+  defstruct [:input, :rest, line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
 
   @type t :: %__MODULE__{
           input: String.t(),
@@ -73,7 +75,7 @@ defmodule Olx.Walker do
       iex> Olx.Walker.start("a\nc")
       ...> |> Olx.Walker.with_barrier("\n")
       ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.destroy_barrier()
+      ...> |> Olx.Walker.destroy_barrier(false)
       ...> |> Olx.Walker.walk()
       %Olx.Walker{input: "a\n", rest: "c", column: 1, line: 2}
 
@@ -93,13 +95,14 @@ defmodule Olx.Walker do
 
       true ->
         {next, rest} = String.split_at(walker.rest, 1)
+        {line, column} = increment_line_and_column(next, walker.line, walker.column)
 
         %__MODULE__{
           walker
           | input: walker.input <> next,
             rest: rest,
-            line: walker.line + increment_line(next),
-            column: walker.column + increment_column(next)
+            line: line,
+            column: column
         }
     end
   end
@@ -123,17 +126,34 @@ defmodule Olx.Walker do
     __MODULE__.with_barrier(walker, Regex.compile!(barrier))
   end
 
-  @spec destroy_barrier(__MODULE__.t()) :: __MODULE__.t()
-  def destroy_barrier(walker) do
+  @spec destroy_barrier(__MODULE__.t(), boolean()) :: __MODULE__.t()
+  def destroy_barrier(walker, should_consume_barrier \\ true) do
     if !is_barried(walker) do
       raise "trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen"
     end
 
+    {rest, line, column} =
+      if should_consume_barrier do
+        [barried_content] =
+          Regex.scan(walker.barrier, walker.barriered)
+          |> List.flatten()
+          |> Enum.filter(fn s -> String.length(s) > 0 end)
+          |> Enum.take(1)
+
+        {line, column} = increment_line_and_column(barried_content, walker.line, walker.column)
+        rest = String.replace(walker.barriered, walker.barrier, "", global: false)
+        {rest, line, column}
+      else
+        {walker.barriered, walker.line, walker.column}
+      end
+
     %__MODULE__{
       walker
-      | barrier: ~r"$a",
-        rest: String.replace(walker.barriered, walker.barrier, "", global: false),
-        barriered: ""
+      | barrier: @never_match_regex,
+        rest: rest,
+        barriered: "",
+        line: line,
+        column: column
     }
   end
 
@@ -145,16 +165,47 @@ defmodule Olx.Walker do
       iex> Olx.Walker.consume_input(Olx.Walker.start("abc"))
       %Olx.Walker{input: "", rest: "bc", column: 1}
   """
-  @spec consume_input(__MODULE__.t()) :: __MODULE__.t()
-  def consume_input(walker) do
+  @spec consume_input(__MODULE__.t(), length :: integer()) :: __MODULE__.t()
+  def consume_input(walker, length \\ 0)
+
+  def consume_input(walker, 0) do
     %__MODULE__{
       walker
       | input: ""
     }
   end
 
-  defp increment_line("\n"), do: 1
+  def consume_input(walker, length) do
+    case walker.input do
+      :barried -> %__MODULE__{
+        walker
+        | input: "", barriered: String.slice(walker.input, length..-1) <> walker.barriered
+      }
+      _ -> %__MODULE__{
+        walker
+        | input: "", rest: String.slice(walker.input, length..-1) <> walker.barriered
+      }
+    end
+  end
+
+  defp increment_line_and_column(<<input::utf8, rest::binary>>, line, column) do
+    {line, column} = increment_line_and_column(input, line, column)
+    increment_line_and_column(rest, line, column)
+  end
+
+  defp increment_line_and_column(input, current_line, current_column) do
+    line = increment_line([input])
+    column = increment_column([input])
+
+    if line != current_line do
+      {line + current_line, 1 + column}
+    else
+      {line + current_line, current_column + column}
+    end
+  end
+
+  defp increment_line('\n'), do: 1
   defp increment_line(_), do: 0
-  defp increment_column("\n"), do: 0
-  defp increment_column(_), do: 1
+  defp increment_column('\n'), do: 1
+  defp increment_column(_), do: 0
 end
