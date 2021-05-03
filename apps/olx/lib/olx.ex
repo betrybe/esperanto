@@ -1,6 +1,5 @@
 defmodule Olx do
   alias Olx.Parsers.Problem
-  alias Olx.ASTNode
 
   @moduledoc """
   Documentation for `Olx`.

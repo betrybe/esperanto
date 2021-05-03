@@ -1,7 +1,7 @@
 defmodule Olx.Parser do
   alias Olx
-
-  @type tree() :: NaryTree.t()
+  alias Olx.Walker
+  @type tree() :: any()
 
   @doc """
   Parse given input
