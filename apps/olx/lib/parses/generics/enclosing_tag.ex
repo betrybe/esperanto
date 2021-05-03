@@ -1,6 +1,7 @@
 defmodule Olx.Parsers.EnclosingTag do
   alias Olx.Walker
   alias Olx.Parsers.TopLevel
+  alias Trybe.Esperanto.MatchUtility
 
   @doc """
   opts
@@ -28,13 +29,7 @@ defmodule Olx.Parsers.EnclosingTag do
 
       @impl Olx.Parser
       def parse(walker, tree, parent_id, opts) do
-        if !match(walker.input, @start_delimiter) do
-          delimiter_as_str = Regex.source(delimiter_as_regex(@start_delimiter))
-
-          raise "Expected to find #{delimiter_as_str} at line:#{walker.line},column:#{
-                  walker.column
-                }. Found: #{walker.input}"
-        end
+        MatchUtility.ensure_has_matched(walker, @start_delimiter)
 
         node = NaryTree.Node.new(@tag)
         tree = NaryTree.add_child(tree, node, parent_id)
@@ -50,28 +45,9 @@ defmodule Olx.Parsers.EnclosingTag do
 
       @impl Olx.Parser
       def should_parse(%Walker{input: input}, _, _, opts) do
-        match(input, @start_delimiter)
+        MatchUtility.match(input, @start_delimiter)
       end
 
-      defp match(input, delimiter) when is_binary(delimiter),
-        do: match(input, delimiter_as_regex(delimiter))
-
-      defp match(input, delimiter) do
-        hasMatched = String.match?(input, delimiter)
-
-        if hasMatched do
-          Logger.debug(
-            "#{__MODULE__} has matched for \"#{input}\" with \"#{Regex.source(delimiter)}\""
-          )
-        end
-
-        hasMatched
-      end
-
-      defp delimiter_as_regex(delimiter) when is_binary(delimiter),
-        do: Regex.escape(delimiter) |> Regex.compile!()
-
-      defp delimiter_as_regex(delimiter), do: delimiter
     end
   end
 end
