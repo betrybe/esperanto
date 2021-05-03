@@ -11,10 +11,3 @@ defmodule Olx.Parsers.Choice do
     end_delimiter: ~r/^\n/,
     enclosing_tag: "choice"
 end
-
-defmodule Olx.Parsers.Br do
-  use Olx.Parsers.EnclosingTag,
-    start_delimiter: ~r/^\ \ \n/,
-    end_delimiter: ~r/.*/,
-    enclosing_tag: :br
-end

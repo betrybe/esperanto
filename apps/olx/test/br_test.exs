@@ -36,7 +36,7 @@ defmodule Esperanto.BrParseTest do
           ]
         }
       ]
-    } = NaryTree.to_map(tree)
+    } = IO.inspect(NaryTree.to_map(tree))
 
     NaryTree.print_tree(tree, fn x -> "#{x.name}:#{x.content}" end)
     # assert content == "Hello\n"

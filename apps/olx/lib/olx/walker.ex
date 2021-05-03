@@ -177,14 +177,19 @@ defmodule Olx.Walker do
 
   def consume_input(walker, length) do
     case walker.input do
-      :barried -> %__MODULE__{
-        walker
-        | input: "", barriered: String.slice(walker.input, length..-1) <> walker.barriered
-      }
-      _ -> %__MODULE__{
-        walker
-        | input: "", rest: String.slice(walker.input, length..-1) <> walker.barriered
-      }
+      :barried ->
+        %__MODULE__{
+          walker
+          | input: "",
+            barriered: String.slice(walker.input, length..-1) <> walker.barriered
+        }
+
+      _ ->
+        %__MODULE__{
+          walker
+          | input: "",
+            rest: String.slice(walker.input, length..-1) <> walker.barriered
+        }
     end
   end
 

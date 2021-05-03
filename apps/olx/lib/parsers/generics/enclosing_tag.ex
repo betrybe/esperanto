@@ -47,7 +47,6 @@ defmodule Olx.Parsers.EnclosingTag do
       def should_parse(%Walker{input: input}, _, _, opts) do
         MatchUtility.match(input, @start_delimiter)
       end
-
     end
   end
 end
