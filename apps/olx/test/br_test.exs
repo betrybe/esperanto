@@ -22,23 +22,26 @@ defmodule Esperanto.BrParseTest do
     {tree, _} = Olx.parse(input, parsers: [])
 
     %{
-      name: :problem,
-      content: :empty,
       children: [
         %{
-          name: :p,
-          content: "a",
           children: [
             %{
+              content: :empty,
+              level: 2,
               name: :br,
-              content: :empty
-            }
-          ]
+            },
+            %{content: "b", level: 2, name: :p, }
+          ],
+          content: "a",
+          level: 1,
+          name: :p,
         }
-      ]
-    } = IO.inspect(NaryTree.to_map(tree))
+      ],
+      content: :empty,
+      level: 0,
+      name: :problem,
+      parent: :empty
+    } = NaryTree.to_map(tree)
 
-    NaryTree.print_tree(tree, fn x -> "#{x.name}:#{x.content}" end)
-    # assert content == "Hello\n"
   end
 end

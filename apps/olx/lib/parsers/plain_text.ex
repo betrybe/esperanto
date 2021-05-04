@@ -32,7 +32,7 @@ defmodule Olx.Parsers.PlainText do
     %NaryTree.Node{node | content: input}
   end
 
-  defp astify(input, %NaryTree.Node{name: :p, content: content} = node) when is_binary(content) do
+  defp astify(input, %NaryTree.Node{name: :p, content: content, children: []} = node) when is_binary(content) do
     %NaryTree.Node{node | content: content <> input}
   end
 
