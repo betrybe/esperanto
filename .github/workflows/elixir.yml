@@ -7,10 +7,31 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    name: Build and test
+  test:
     runs-on: ubuntu-latest
-
+    name: Test & Checks
+    strategy:
+      matrix:
+        otp: [21.3.8.10, 22.1.7]
+        elixir: [1.8.2, 1.9.4]
+    env:
+      MIX_ENV: test
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
+      - run: mix deps.get
+      - run: mix format --check-formatted          
+      - run: mix dialyzer       
+      - run: mix coveralls.github    
+  build:
+    if: github.ref == 'refs/heads/main'
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    needs: test
     steps:
     - uses: actions/checkout@v2
     - name: Set up Elixir
@@ -26,12 +47,6 @@ jobs:
         restore-keys: ${{ runner.os }}-mix-
     - name: Install dependencies
       run: mix deps.get
-    - name: Check Format    
-      run: mix format --check-formatted
-    - name: Run tests
-      env:
-        MIX_ENV: test
-      run: mix test --cover
     - name: Set to hex api key
       run:  mix hex.config api_key ${{ secrets.HEX_API_KEY }}
     - name: Publish to Hex.pm 
