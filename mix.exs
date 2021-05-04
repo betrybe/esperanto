@@ -15,7 +15,7 @@ defmodule Trybe.Esperanto.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ],
-      dialyzer: dialyzer(),
+      dialyzer: dialyzer()
     ]
   end
 
