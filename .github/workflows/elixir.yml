@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir -p priv/plts
           mix dialyzer --plt        
-      - run: mix dialyzer       
+      - run: mix dialyzer --no-check --halt-exit-status       
       - run: mix coveralls.github    
         env:
           MIX_ENV: test
