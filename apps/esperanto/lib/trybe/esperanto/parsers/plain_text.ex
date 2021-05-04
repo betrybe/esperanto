@@ -1,9 +1,9 @@
-defmodule Trybe.Esperanto.Parsers.PlainText do
-  alias Trybe.Esperanto.Walker
-  alias Trybe.Esperanto.Parsers.TopLevel
-  @behaviour Trybe.Esperanto.Parser
+defmodule Esperanto.Parsers.PlainText do
+  alias Esperanto.Walker
+  alias Esperanto.Parsers.TopLevel
+  @behaviour Esperanto.Parser
 
-  @impl Trybe.Esperanto.Parser
+  @impl Esperanto.Parser
 
   def parse(%Walker{input: ""} = walker, tree, _parent_id, _opts) do
     {tree, walker}
@@ -39,7 +39,7 @@ defmodule Trybe.Esperanto.Parsers.PlainText do
 
   defp astify(_input, _node), do: nil
 
-  @impl Trybe.Esperanto.Parser
+  @impl Esperanto.Parser
   def should_parse(%Walker{rest: ""}, _, _, _), do: true
   def should_parse(%Walker{rest: :barried}, _, _, _), do: true
   def should_parse(_, _, _, _), do: false

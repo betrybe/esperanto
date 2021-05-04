@@ -1,9 +1,9 @@
-defmodule Trybe.Esperanto.Parsers.TopLevel do
-  alias Trybe.Esperanto.Walker
-  @behaviour Trybe.Esperanto.Parser
+defmodule Esperanto.Parsers.TopLevel do
+  alias Esperanto.Walker
+  @behaviour Esperanto.Parser
   @default_parsers [
-    {Trybe.Esperanto.Parsers.PlainText, nil},
-    {Trybe.Esperanto.Parsers.Br, nil}
+    {Esperanto.Parsers.PlainText, nil},
+    {Esperanto.Parsers.Br, nil}
   ]
 
   def default_parsers, do: @default_parsers
@@ -12,10 +12,10 @@ defmodule Trybe.Esperanto.Parsers.TopLevel do
   Top level parser\n
   This parser selected which parser will be used based on `should_parse` call from other modules
   """
-  @impl Trybe.Esperanto.Parser
+  @impl Esperanto.Parser
   def should_parse(_, _, _, _), do: true
 
-  @impl Trybe.Esperanto.Parser
+  @impl Esperanto.Parser
   def parse(walker, nil, nil, opts) do
     tree = NaryTree.new(NaryTree.Node.new())
     parse(walker, tree, tree.root, opts)

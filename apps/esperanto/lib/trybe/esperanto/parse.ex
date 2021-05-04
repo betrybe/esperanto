@@ -1,5 +1,5 @@
-defmodule Trybe.Esperanto.Parser do
-  alias Trybe.Esperanto.Walker
+defmodule Esperanto.Parser do
+  alias Esperanto.Walker
   @type tree() :: any()
 
   @doc """

@@ -1,4 +1,4 @@
-defmodule Esperanto.MixProject do
+defmodule Trybe.Esperanto.MixProject do
   use Mix.Project
 
   def project do

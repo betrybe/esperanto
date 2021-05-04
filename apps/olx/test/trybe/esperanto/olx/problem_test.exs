@@ -1,5 +1,5 @@
-defmodule Trybe.Esperanto.Olx.ParseTest do
-  alias Trybe.Esperanto.Olx.Problem
+defmodule Esperanto.Olx.ParseTest do
+  alias Esperanto.Olx.Problem
   use ExUnit.Case
 
   test "top level AST is problem" do

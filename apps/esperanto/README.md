@@ -1,4 +1,4 @@
-# Trybe.Esperanto
+# Esperanto
 
 **TODO: Add description**
 

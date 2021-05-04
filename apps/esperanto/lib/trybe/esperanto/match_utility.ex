@@ -1,4 +1,4 @@
-defmodule Trybe.Esperanto.MatchUtility do
+defmodule Esperanto.MatchUtility do
   require Logger
 
   def ensure_has_matched(walker, delimiter) do

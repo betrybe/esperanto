@@ -1,4 +1,4 @@
-defmodule Trybe.Esperanto.WalkerTest do
+defmodule Esperanto.WalkerTest do
   use ExUnit.Case
-  doctest Trybe.Esperanto.Walker
+  doctest Esperanto.Walker
 end

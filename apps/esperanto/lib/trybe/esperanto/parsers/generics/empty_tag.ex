@@ -1,6 +1,6 @@
-defmodule Trybe.Esperanto.Parsers.Generics.EmptyTag do
-  alias Trybe.Esperanto.Walker
-  alias Trybe.Esperanto.MatchUtility
+defmodule Esperanto.Parsers.Generics.EmptyTag do
+  alias Esperanto.Walker
+  alias Esperanto.MatchUtility
 
   @spec __using__(keyword) ::
           {:__block__, [],
@@ -21,12 +21,12 @@ defmodule Trybe.Esperanto.Parsers.Generics.EmptyTag do
 
     quote do
       require Logger
-      @behaviour Trybe.Esperanto.Parser
+      @behaviour Esperanto.Parser
 
       @delimiter unquote(delimiter)
       @tag unquote(tag)
 
-      @impl Trybe.Esperanto.Parser
+      @impl Esperanto.Parser
       def parse(walker, tree, parent_id, opts) do
         MatchUtility.ensure_has_matched(walker, @delimiter)
 
@@ -36,7 +36,7 @@ defmodule Trybe.Esperanto.Parsers.Generics.EmptyTag do
         {tree, Walker.consume_input(walker)}
       end
 
-      @impl Trybe.Esperanto.Parser
+      @impl Esperanto.Parser
       def should_parse(%Walker{input: input}, _, _, opts) do
         MatchUtility.match(input, @delimiter)
       end

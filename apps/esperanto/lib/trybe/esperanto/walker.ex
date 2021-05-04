@@ -1,4 +1,4 @@
-defmodule Trybe.Esperanto.Walker do
+defmodule Esperanto.Walker do
   @never_match_regex ~r"$a"
 
   defstruct [:input, :rest, line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
@@ -17,14 +17,14 @@ defmodule Trybe.Esperanto.Walker do
 
   ## Examples
 
-      iex> Trybe.Esperanto.Walker.start("abc")
-      %Trybe.Esperanto.Walker{input: "a", rest: "bc"}
+      iex> Esperanto.Walker.start("abc")
+      %Esperanto.Walker{input: "a", rest: "bc"}
 
-      iex> Trybe.Esperanto.Walker.start("")
-      %Trybe.Esperanto.Walker{input: "", rest: ""}
+      iex> Esperanto.Walker.start("")
+      %Esperanto.Walker{input: "", rest: ""}
 
-      iex> Trybe.Esperanto.Walker.start("a")
-      %Trybe.Esperanto.Walker{input: "a", rest: ""}
+      iex> Esperanto.Walker.start("a")
+      %Esperanto.Walker{input: "a", rest: ""}
   """
   @spec start(String.t()) :: __MODULE__.t()
   def start(input) do
@@ -42,42 +42,42 @@ defmodule Trybe.Esperanto.Walker do
   ## Examples
 
       iex>
-      Trybe.Esperanto.Walker.start("abc") |> Trybe.Esperanto.Walker.walk()
-      %Trybe.Esperanto.Walker{input: "ab", rest: "c", column: 2}
+      Esperanto.Walker.start("abc") |> Esperanto.Walker.walk()
+      %Esperanto.Walker{input: "ab", rest: "c", column: 2}
 
-      iex> Trybe.Esperanto.Walker.start("a\nc") |> Trybe.Esperanto.Walker.walk()
-      %Trybe.Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
+      iex> Esperanto.Walker.start("a\nc") |> Esperanto.Walker.walk()
+      %Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
 
-      iex> Trybe.Esperanto.Walker.start("a\nc")
-      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
-      ...> |> Trybe.Esperanto.Walker.walk()
-      %Trybe.Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk()
+      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
-      iex> Trybe.Esperanto.Walker.start("a\nc")
-      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
-      ...> |> Trybe.Esperanto.Walker.walk()
-      ...> |> Trybe.Esperanto.Walker.walk()
-      ...> |> Trybe.Esperanto.Walker.walk()
-      ...> |> Trybe.Esperanto.Walker.walk()
-      %Trybe.Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk()
+      ...> |> Esperanto.Walker.walk()
+      ...> |> Esperanto.Walker.walk()
+      ...> |> Esperanto.Walker.walk()
+      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
 
-      iex> Trybe.Esperanto.Walker.start("a\nc")
-      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
-      ...> |> Trybe.Esperanto.Walker.walk()
-      %Trybe.Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk()
+      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
-      iex> Trybe.Esperanto.Walker.start("a\nc")
-      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
-      ...> |> Trybe.Esperanto.Walker.destroy_barrier()
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.destroy_barrier()
       ** (RuntimeError) trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen
 
-      iex> Trybe.Esperanto.Walker.start("a\nc")
-      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
-      ...> |> Trybe.Esperanto.Walker.walk()
-      ...> |> Trybe.Esperanto.Walker.destroy_barrier(false)
-      ...> |> Trybe.Esperanto.Walker.walk()
-      %Trybe.Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk()
+      ...> |> Esperanto.Walker.destroy_barrier(false)
+      ...> |> Esperanto.Walker.walk()
+      %Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
 
   """
   @spec walk(__MODULE__.t()) :: __MODULE__.t()
@@ -162,8 +162,8 @@ defmodule Trybe.Esperanto.Walker do
 
   ## Examples
 
-      iex> Trybe.Esperanto.Walker.consume_input(Trybe.Esperanto.Walker.start("abc"))
-      %Trybe.Esperanto.Walker{input: "", rest: "bc", column: 1}
+      iex> Esperanto.Walker.consume_input(Esperanto.Walker.start("abc"))
+      %Esperanto.Walker{input: "", rest: "bc", column: 1}
   """
   @spec consume_input(__MODULE__.t(), length :: integer()) :: __MODULE__.t()
   def consume_input(walker, length \\ 0)
