@@ -1,25 +1,26 @@
-defmodule Esperanto.BrParseTest do
-  alias Olx.Walker
+defmodule Trybe.Esperanto.Parsers.BrParseTest do
+  alias Trybe.Esperanto.Walker
+  alias Trybe.Esperanto.Parsers.TopLevel
   use ExUnit.Case
 
   test "when input matches the regex, Then should_parse has to return true" do
     tree = NaryTree.new(NaryTree.Node.new(:problem))
     walker = %Walker{input: "  \nOi"}
 
-    assert true == Olx.Parsers.Br.should_parse(walker, tree, tree.root, [])
+    assert true == Trybe.Esperanto.Parsers.Br.should_parse(walker, tree, tree.root, [])
   end
 
   test "when input does not matches the regex, Then should_parse has to return false" do
     tree = NaryTree.new(NaryTree.Node.new(:problem))
     walker = %Walker{input: "Oi  \nOi"}
 
-    assert false == Olx.Parsers.Br.should_parse(walker, tree, tree.root, [])
+    assert false == Trybe.Esperanto.Parsers.Br.should_parse(walker, tree, tree.root, [])
   end
 
   test "plain text with line break" do
     input = "a  \nb"
 
-    {tree, _} = Olx.parse(input, parsers: [])
+    {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
     %{
       children: [
@@ -28,20 +29,19 @@ defmodule Esperanto.BrParseTest do
             %{
               content: :empty,
               level: 2,
-              name: :br,
+              name: :br
             },
-            %{content: "b", level: 2, name: :p, }
+            %{content: "b", level: 2, name: :p}
           ],
           content: "a",
           level: 1,
-          name: :p,
+          name: :p
         }
       ],
       content: :empty,
       level: 0,
-      name: :problem,
+      name: :empty,
       parent: :empty
     } = NaryTree.to_map(tree)
-
   end
 end

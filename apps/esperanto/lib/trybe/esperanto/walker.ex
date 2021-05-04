@@ -1,4 +1,4 @@
-defmodule Olx.Walker do
+defmodule Trybe.Esperanto.Walker do
   @never_match_regex ~r"$a"
 
   defstruct [:input, :rest, line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
@@ -17,14 +17,14 @@ defmodule Olx.Walker do
 
   ## Examples
 
-      iex> Olx.Walker.start("abc")
-      %Olx.Walker{input: "a", rest: "bc"}
+      iex> Trybe.Esperanto.Walker.start("abc")
+      %Trybe.Esperanto.Walker{input: "a", rest: "bc"}
 
-      iex> Olx.Walker.start("")
-      %Olx.Walker{input: "", rest: ""}
+      iex> Trybe.Esperanto.Walker.start("")
+      %Trybe.Esperanto.Walker{input: "", rest: ""}
 
-      iex> Olx.Walker.start("a")
-      %Olx.Walker{input: "a", rest: ""}
+      iex> Trybe.Esperanto.Walker.start("a")
+      %Trybe.Esperanto.Walker{input: "a", rest: ""}
   """
   @spec start(String.t()) :: __MODULE__.t()
   def start(input) do
@@ -42,42 +42,42 @@ defmodule Olx.Walker do
   ## Examples
 
       iex>
-      Olx.Walker.start("abc") |> Olx.Walker.walk()
-      %Olx.Walker{input: "ab", rest: "c", column: 2}
+      Trybe.Esperanto.Walker.start("abc") |> Trybe.Esperanto.Walker.walk()
+      %Trybe.Esperanto.Walker{input: "ab", rest: "c", column: 2}
 
-      iex> Olx.Walker.start("a\nc") |> Olx.Walker.walk()
-      %Olx.Walker{input: "a\n", rest: "c", column: 1, line: 2}
+      iex> Trybe.Esperanto.Walker.start("a\nc") |> Trybe.Esperanto.Walker.walk()
+      %Trybe.Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.walk()
-      %Olx.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Trybe.Esperanto.Walker.start("a\nc")
+      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
+      ...> |> Trybe.Esperanto.Walker.walk()
+      %Trybe.Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.walk()
-      %Olx.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Trybe.Esperanto.Walker.start("a\nc")
+      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
+      ...> |> Trybe.Esperanto.Walker.walk()
+      ...> |> Trybe.Esperanto.Walker.walk()
+      ...> |> Trybe.Esperanto.Walker.walk()
+      ...> |> Trybe.Esperanto.Walker.walk()
+      %Trybe.Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.walk()
-      %Olx.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Trybe.Esperanto.Walker.start("a\nc")
+      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
+      ...> |> Trybe.Esperanto.Walker.walk()
+      %Trybe.Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.destroy_barrier()
+      iex> Trybe.Esperanto.Walker.start("a\nc")
+      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
+      ...> |> Trybe.Esperanto.Walker.destroy_barrier()
       ** (RuntimeError) trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.destroy_barrier(false)
-      ...> |> Olx.Walker.walk()
-      %Olx.Walker{input: "a\n", rest: "c", column: 1, line: 2}
+      iex> Trybe.Esperanto.Walker.start("a\nc")
+      ...> |> Trybe.Esperanto.Walker.with_barrier("\n")
+      ...> |> Trybe.Esperanto.Walker.walk()
+      ...> |> Trybe.Esperanto.Walker.destroy_barrier(false)
+      ...> |> Trybe.Esperanto.Walker.walk()
+      %Trybe.Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
 
   """
   @spec walk(__MODULE__.t()) :: __MODULE__.t()
@@ -162,8 +162,8 @@ defmodule Olx.Walker do
 
   ## Examples
 
-      iex> Olx.Walker.consume_input(Olx.Walker.start("abc"))
-      %Olx.Walker{input: "", rest: "bc", column: 1}
+      iex> Trybe.Esperanto.Walker.consume_input(Trybe.Esperanto.Walker.start("abc"))
+      %Trybe.Esperanto.Walker{input: "", rest: "bc", column: 1}
   """
   @spec consume_input(__MODULE__.t(), length :: integer()) :: __MODULE__.t()
   def consume_input(walker, length \\ 0)

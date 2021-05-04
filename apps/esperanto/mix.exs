@@ -1,9 +1,9 @@
-defmodule Olx.MixProject do
+defmodule Trybe.Esperanto.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :olx,
+      app: :esperanto,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -25,7 +25,6 @@ defmodule Olx.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:esperanto, in_umbrella: true},
       {:ex_doc, "~> 0.24.1", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:nary_tree, "~> 0.1.1"}

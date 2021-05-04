@@ -1,5 +1,5 @@
-defmodule Trybe.Esperanto.EmptyTag do
-  alias Olx.Walker
+defmodule Trybe.Esperanto.Parsers.Generics.EmptyTag do
+  alias Trybe.Esperanto.Walker
   alias Trybe.Esperanto.MatchUtility
 
   @spec __using__(keyword) ::
@@ -21,12 +21,12 @@ defmodule Trybe.Esperanto.EmptyTag do
 
     quote do
       require Logger
-      @behaviour Olx.Parser
+      @behaviour Trybe.Esperanto.Parser
 
       @delimiter unquote(delimiter)
       @tag unquote(tag)
 
-      @impl Olx.Parser
+      @impl Trybe.Esperanto.Parser
       def parse(walker, tree, parent_id, opts) do
         MatchUtility.ensure_has_matched(walker, @delimiter)
 
@@ -36,7 +36,7 @@ defmodule Trybe.Esperanto.EmptyTag do
         {tree, Walker.consume_input(walker)}
       end
 
-      @impl Olx.Parser
+      @impl Trybe.Esperanto.Parser
       def should_parse(%Walker{input: input}, _, _, opts) do
         MatchUtility.match(input, @delimiter)
       end

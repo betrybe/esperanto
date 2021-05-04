@@ -1,6 +1,5 @@
-defmodule Olx.Parser do
-  alias Olx
-  alias Olx.Walker
+defmodule Trybe.Esperanto.Parser do
+  alias Trybe.Esperanto.Walker
   @type tree() :: any()
 
   @doc """

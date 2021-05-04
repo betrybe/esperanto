@@ -1,9 +1,9 @@
-defmodule Olx.Parsers.PlainText do
-  alias Olx.Walker
-  alias Olx.Parsers.TopLevel
-  @behaviour Olx.Parser
+defmodule Trybe.Esperanto.Parsers.PlainText do
+  alias Trybe.Esperanto.Walker
+  alias Trybe.Esperanto.Parsers.TopLevel
+  @behaviour Trybe.Esperanto.Parser
 
-  @impl Olx.Parser
+  @impl Trybe.Esperanto.Parser
 
   def parse(%Walker{input: ""} = walker, tree, _parent_id, _opts) do
     {tree, walker}
@@ -32,13 +32,14 @@ defmodule Olx.Parsers.PlainText do
     %NaryTree.Node{node | content: input}
   end
 
-  defp astify(input, %NaryTree.Node{name: :p, content: content, children: []} = node) when is_binary(content) do
+  defp astify(input, %NaryTree.Node{name: :p, content: content, children: []} = node)
+       when is_binary(content) do
     %NaryTree.Node{node | content: content <> input}
   end
 
   defp astify(_input, _node), do: nil
 
-  @impl Olx.Parser
+  @impl Trybe.Esperanto.Parser
   def should_parse(%Walker{rest: ""}, _, _, _), do: true
   def should_parse(%Walker{rest: :barried}, _, _, _), do: true
   def should_parse(_, _, _, _), do: false
