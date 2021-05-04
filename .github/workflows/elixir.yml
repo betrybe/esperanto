@@ -57,6 +57,9 @@ jobs:
       run: mix deps.get
     - name: Set to hex api key
       run:  mix hex.config api_key ${{ secrets.HEX_API_KEY }}
-    - name: Publish to Hex.pm 
-      working-directory: apps/crawler
+    - name: Publish esperanto to Hex.pm 
+      working-directory: apps/esperanto
       run:  mix hex.publish --yes
+    - name: Publish olx to Hex.pm 
+      working-directory: apps/olx
+      run:  mix hex.publish --yes      
