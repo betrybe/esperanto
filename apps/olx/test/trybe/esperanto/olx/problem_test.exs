@@ -82,7 +82,7 @@ defmodule Trybe.Esperanto.Olx.ParseTest do
             %{
               content: "Hello",
               level: 2,
-              name: :p,
+              name: :p
             }
           ]
         },

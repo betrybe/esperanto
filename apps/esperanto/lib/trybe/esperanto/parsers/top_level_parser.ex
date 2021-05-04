@@ -96,6 +96,7 @@ defmodule Trybe.Esperanto.Parsers.TopLevel do
   # find parsers that should be executed
   defp select_parse(walker, tree, parent_id, opts) do
     parsers = Keyword.get(opts, :parsers)
+
     filtered_parsers =
       Enum.filter(parsers, fn {parser, opts} ->
         parser.should_parse(walker, tree, parent_id, opts)
