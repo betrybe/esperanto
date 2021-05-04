@@ -10,9 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: Test & Checks
-    env:
-      MIX_ENV: test
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
@@ -23,6 +20,9 @@ jobs:
       - run: mix format --check-formatted          
       - run: mix dialyzer       
       - run: mix coveralls.github    
+        env:
+          MIX_ENV: test
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
     if: github.ref == 'refs/heads/main'
     name: Build and deploy
