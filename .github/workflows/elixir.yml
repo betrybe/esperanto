@@ -10,19 +10,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: Test & Checks
-    strategy:
-      matrix:
-        otp: [21.3.8.10, 22.1.7]
-        elixir: [1.8.2, 1.9.4]
     env:
       MIX_ENV: test
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v1.0.0
-      - uses: erlef/setup-beam@v1
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
         with:
-          otp-version: ${{matrix.otp}}
-          elixir-version: ${{matrix.elixir}}
+          elixir-version: '1.11.4' # Define the elixir version [required]
+          otp-version: '22.3' # Define the OTP version [required]
       - run: mix deps.get
       - run: mix format --check-formatted          
       - run: mix dialyzer       
