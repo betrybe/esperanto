@@ -3,7 +3,8 @@ defmodule Esperanto.Parsers.TopLevel do
   @behaviour Esperanto.Parser
   @default_parsers [
     {Esperanto.Parsers.PlainText, nil},
-    {Esperanto.Parsers.Br, nil}
+    {Esperanto.Parsers.Br, nil},
+    {Esperanto.Parsers.Img, nil}
   ]
 
   def default_parsers, do: @default_parsers
@@ -102,6 +103,15 @@ defmodule Esperanto.Parsers.TopLevel do
         parser.should_parse(walker, tree, parent_id, opts)
       end)
 
-    select_parse(walker, filtered_parsers)
+    # case more than 1 parse is found, give priority to any other than PlainText
+    if Enum.count(filtered_parsers) > 1 do
+      filtered_parsers =
+        Enum.filter(filtered_parsers, fn {parser, _opts} ->
+          parser != Esperanto.Parsers.PlainText
+        end)
+      select_parse(walker, filtered_parsers)
+    else
+      select_parse(walker, filtered_parsers)
+    end
   end
 end
