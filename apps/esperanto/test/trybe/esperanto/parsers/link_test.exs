@@ -1,4 +1,4 @@
-defmodule Esperanto.Parsers.ImgParseTest do
+defmodule Esperanto.Parsers.LinkParseTest do
   alias Esperanto.Walker
   alias Esperanto.Parsers.TopLevel
   use ExUnit.Case
@@ -6,9 +6,9 @@ defmodule Esperanto.Parsers.ImgParseTest do
   describe "should_parse/4" do
     test "when input matches the regex, Then should_parse has to return true" do
       tree = NaryTree.new(NaryTree.Node.new(:problem))
-      walker = %Walker{input: "![alt](http://img.jpg) some "}
+      walker = %Walker{input: "[link](http://img.jpg) some "}
 
-      assert true == Esperanto.Parsers.Img.should_parse(walker, tree, tree.root, [])
+      assert true == Esperanto.Parsers.Link.should_parse(walker, tree, tree.root, [])
     end
 
     test "when input does not matches the regex, Then should_parse has to return false" do
@@ -19,8 +19,8 @@ defmodule Esperanto.Parsers.ImgParseTest do
     end
   end
 
-  test "plain text with img" do
-    input = "Some text ![alt](http://img.jpg)"
+  test "plain text with link" do
+    input = "Some text [link](http://img.jpg)"
 
     {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
@@ -29,9 +29,9 @@ defmodule Esperanto.Parsers.ImgParseTest do
         %{
           children: [
             %{
-              content: {:empty, %{alt: "alt", src: "http://img.jpg"}},
+              content: {"link", %{href: "http://img.jpg"}},
               level: 2,
-              name: "img"
+              name: "a"
             }
           ],
           content: "Some text ",

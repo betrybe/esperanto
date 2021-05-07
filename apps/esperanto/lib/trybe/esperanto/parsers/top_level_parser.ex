@@ -117,6 +117,7 @@ defmodule Esperanto.Parsers.TopLevel do
         Enum.filter(filtered_parsers, fn {parser, _opts} ->
           parser != Esperanto.Parsers.PlainText
         end)
+
       select_parse(walker, filtered_parsers)
     else
       select_parse(walker, filtered_parsers)

@@ -1,4 +1,9 @@
 defmodule Esperanto.Parsers.PlainText do
+
+  @moduledoc """
+  Parse content as a plain text <p>
+  """
+
   alias Esperanto.Walker
   alias Esperanto.Parsers.TopLevel
   @behaviour Esperanto.Parser

@@ -1,4 +1,7 @@
 defmodule Esperanto.Olx.Problem do
+  @moduledoc """
+  Parse and OLX problem
+  """
   alias Esperanto.Walker
   alias Esperanto.Parsers.TopLevel
 
