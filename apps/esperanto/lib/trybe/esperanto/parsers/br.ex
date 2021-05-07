@@ -1,5 +1,4 @@
 defmodule Esperanto.Parsers.Br do
-
   @moduledoc """
   Create a <br /> for each "  \\n"
   """

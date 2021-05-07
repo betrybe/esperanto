@@ -1,5 +1,4 @@
 defmodule Esperanto.Olx.Parsers.Choice do
-
   @moduledoc """
   Create a choice tag with all content between ( ) and \n
   """
