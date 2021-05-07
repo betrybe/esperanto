@@ -201,7 +201,7 @@ defmodule Esperanto.Walker do
         %__MODULE__{
           walker
           | input: "",
-            rest: String.slice(walker.input, length..-1) <> walker.barriered
+            rest: String.slice(walker.input, length..-1) <> walker.rest
         }
     end
   end
