@@ -1,5 +1,4 @@
 defmodule Esperanto.Olx.Parsers.Label do
-
   @moduledoc """
   Create a label tag
   """

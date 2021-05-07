@@ -1,5 +1,4 @@
 defmodule Esperanto.Walker do
-
   @moduledoc """
   Walker is used to go through input couting line and columns.
   Every parser is responsible to walk and leave the walker in the state he can continue

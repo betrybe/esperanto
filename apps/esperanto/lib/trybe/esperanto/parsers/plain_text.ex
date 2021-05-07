@@ -1,5 +1,4 @@
 defmodule Esperanto.Parsers.PlainText do
-
   @moduledoc """
   Parse content as a plain text <p>
   """
