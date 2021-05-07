@@ -1,4 +1,8 @@
 defmodule Esperanto.MatchUtility do
+  @moduledoc """
+  Utility used to match inputs
+  """
+
   require Logger
 
   def ensure_has_matched(walker, delimiter) do
@@ -13,15 +17,15 @@ defmodule Esperanto.MatchUtility do
     do: match(input, delimiter_as_regex(delimiter))
 
   def match(input, delimiter) do
-    hasMatched = String.match?(input, delimiter)
+    has_matched = String.match?(input, delimiter)
 
-    if hasMatched do
+    if has_matched do
       Logger.debug(
         "#{__MODULE__} has matched for \"#{input}\" with \"#{Regex.source(delimiter)}\""
       )
     end
 
-    hasMatched
+    has_matched
   end
 
   def delimiter_as_regex(delimiter) when is_binary(delimiter),

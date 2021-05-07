@@ -18,6 +18,7 @@ jobs:
           otp-version: '22.3' # Define the OTP version [required]
       - run: mix deps.get
       - run: mix format --check-formatted        
+      - run: mix credo
       - name: Retrieve PLT Cache
         uses: actions/cache@v1
         id: plt-cache

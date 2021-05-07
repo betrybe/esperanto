@@ -1,4 +1,7 @@
 defmodule Esperanto.Parser do
+  @moduledoc """
+  Parser interface
+  """
   alias Esperanto.Walker
   @type tree() :: any()
 

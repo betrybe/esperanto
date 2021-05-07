@@ -1,4 +1,10 @@
 defmodule Esperanto.Walker do
+
+  @moduledoc """
+  Walker is used to go through input couting line and columns.
+  Every parser is responsible to walk and leave the walker in the state he can continue
+  """
+
   @never_match_regex ~r"$a"
 
   defstruct [:input, :rest, line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
