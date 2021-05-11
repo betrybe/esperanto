@@ -31,4 +31,33 @@ defmodule Esperanto.Parser do
               parent_id :: integer(),
               opts :: keyword()
             ) :: boolean()
+
+  def to_xml(tree) do
+    map = NaryTree.to_map(tree)
+    ast = do_to_xml(map)
+    XmlBuilder.generate(ast, format: :none)
+  end
+
+  @spec do_to_xml(nil | maybe_improper_list | map) :: {any, any, [...]}
+  defp do_to_xml(treeMap) do
+    children = case treeMap[:children] do
+      nil -> []
+      :empty -> []
+      children -> Enum.map(children, fn
+        child -> do_to_xml(child)
+      end)
+    end
+
+    {content, attrs} = case treeMap[:content] do
+      {:empty, attrs} -> {"", attrs}
+      {content,attrs} -> {content, attrs}
+      :empty -> {"", %{}}
+      content -> {content, %{}}
+    end
+    tag  = treeMap[:name]
+    case tag do
+       :empty -> children
+       _ -> {tag, attrs,  [content] ++ children}
+    end
+  end
 end

@@ -31,6 +31,8 @@ defmodule Esperanto.Parsers.IndentedParseTest do
 
     {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
+    NaryTree.to_list(tree)
+
     %{
       children: [
         %{
