@@ -34,24 +34,17 @@ defmodule Esperanto.Parsers.InlineParseTest do
         %{
           children: [
             %{
-              children: [
-                %{
-                  content: "\n    Some\n     \tCode\n",
-                  level: 3,
-                  name: :code
-                }
-              ],
-              content: :empty,
+              content: "Some Code",
               level: 2,
-              name: :pre
+              name: :code
             },
             %{
-              content: " NoCode\n",
+              content: "\n NoCode\n",
               level: 2,
               name: :p
             }
           ],
-          content: "oi",
+          content: "oi ",
           level: 1,
           name: :p
         }
@@ -60,6 +53,6 @@ defmodule Esperanto.Parsers.InlineParseTest do
       level: 0,
       name: :empty,
       parent: :empty
-    } = IO.inspect(NaryTree.to_map(tree))
+    } = NaryTree.to_map(tree)
   end
 end

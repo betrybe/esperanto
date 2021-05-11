@@ -21,7 +21,7 @@ defmodule Esperanto.Parsers.InlineFencedCode do
   end
 
   defp walk_until_not_back_slash(walker) do
-    if (String.ends_with?(walker.input, "`")) do
+    if String.starts_with?(walker.rest, "`") do
       walker = Walker.walk(walker)
       walk_until_not_back_slash(walker)
     else
@@ -33,17 +33,20 @@ defmodule Esperanto.Parsers.InlineFencedCode do
     walker = walk_until_not_back_slash(walker)
     backup_walker = walker
     back_slash_count = String.length(walker.input)
+
     if back_slash_count > @max_inline_back_slash do
-      { walker, "" }
+      {walker, ""}
     else
-      Walker.consume_input(walker)
+      walker = Walker.consume_input(walker)
       regex = Regex.compile!("[`]{#{back_slash_count}}$")
+
       walker = Walker.walk_until(walker, regex)
+
       if walker.rest == "" and !Regex.match?(regex, walker.input) do
-        { backup_walker, "" }
+        {backup_walker, ""}
       else
-        { content, _ } = String.split_at(walker.input, -back_slash_count)
-        { Walker.consume_input(walker), content }
+        {content, _} = String.split_at(walker.input, -back_slash_count)
+        {Walker.consume_input(walker), content}
       end
     end
   end
@@ -51,5 +54,4 @@ defmodule Esperanto.Parsers.InlineFencedCode do
   @impl Esperanto.Parser
   def should_parse(%Walker{input: "`"}, _, _, _), do: true
   def should_parse(_, _, _, _), do: false
-
 end

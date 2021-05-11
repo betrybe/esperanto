@@ -23,12 +23,15 @@ defmodule Esperanto.Parsers.IndentedCode do
   defp remove_first_level_indent(walker, indent) when indent >= 4 do
     walker
   end
+
   defp remove_first_level_indent(%Walker{input: "", rest: ""}, indent) when indent < 4 do
     raise "Four level indention exected but not found"
   end
+
   defp remove_first_level_indent(%Walker{input: ""} = walker, indent) when indent < 4 do
     remove_first_level_indent(Walker.walk(walker), indent)
   end
+
   defp remove_first_level_indent(walker, indent) when indent < 4 do
     {input, _rest} = String.split_at(walker.input, 1)
     walker = Walker.consume_input(walker, 1)
