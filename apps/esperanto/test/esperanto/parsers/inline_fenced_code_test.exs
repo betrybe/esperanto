@@ -30,29 +30,29 @@ defmodule Esperanto.Parsers.InlineParseTest do
     assert {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
     assert %{
-      children: [
-        %{
-          children: [
-            %{
-              content: "Some Code",
-              level: 2,
-              name: :code
-            },
-            %{
-              content: "\n NoCode\n",
-              level: 2,
-              name: :p
-            }
-          ],
-          content: "oi ",
-          level: 1,
-          name: :p
-        }
-      ],
-      content: :empty,
-      level: 0,
-      name: :empty,
-      parent: :empty
-    } = NaryTree.to_map(tree)
+             children: [
+               %{
+                 children: [
+                   %{
+                     content: "Some Code",
+                     level: 2,
+                     name: :code
+                   },
+                   %{
+                     content: "\n NoCode\n",
+                     level: 2,
+                     name: :p
+                   }
+                 ],
+                 content: "oi ",
+                 level: 1,
+                 name: :p
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :empty,
+             parent: :empty
+           } = NaryTree.to_map(tree)
   end
 end

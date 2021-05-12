@@ -43,7 +43,7 @@ defmodule Esperanto.Parser do
 
   defp do_to_xml(tree_map) do
     children =
-      case treeMap[:children] do
+      case tree_map[:children] do
         nil ->
           []
 
@@ -56,8 +56,8 @@ defmodule Esperanto.Parser do
           end)
       end
 
-    {content, attrs} = get_content_and_attr(treeMap[:content])
-    tag = treeMap[:name]
+    {content, attrs} = get_content_and_attr(tree_map[:content])
+    tag = tree_map[:name]
 
     case tag do
       :empty -> children

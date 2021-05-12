@@ -34,36 +34,36 @@ defmodule Esperanto.Parsers.IndentedParseTest do
     NaryTree.to_list(tree)
 
     assert %{
-      children: [
-        %{
-          children: [
-            %{
-              children: [
-                %{
-                  content: "Some\n \tCode\n",
-                  level: 3,
-                  name: :code
-                }
-              ],
-              content: :empty,
-              level: 2,
-              name: :pre
-            },
-            %{
-              content: " NoCode\n",
-              level: 2,
-              name: :p
-            }
-          ],
-          content: "oi",
-          level: 1,
-          name: :p
-        }
-      ],
-      content: :empty,
-      level: 0,
-      name: :empty,
-      parent: :empty
-    } = NaryTree.to_map(tree)
+             children: [
+               %{
+                 children: [
+                   %{
+                     children: [
+                       %{
+                         content: "Some\n \tCode\n",
+                         level: 3,
+                         name: :code
+                       }
+                     ],
+                     content: :empty,
+                     level: 2,
+                     name: :pre
+                   },
+                   %{
+                     content: " NoCode\n",
+                     level: 2,
+                     name: :p
+                   }
+                 ],
+                 content: "oi",
+                 level: 1,
+                 name: :p
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :empty,
+             parent: :empty
+           } = NaryTree.to_map(tree)
   end
 end
