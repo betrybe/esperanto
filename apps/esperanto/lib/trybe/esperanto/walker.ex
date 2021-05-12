@@ -189,7 +189,7 @@ defmodule Esperanto.Walker do
   end
 
   def consume_input(walker, length) do
-    case walker.input do
+    case walker.rest do
       :barried ->
         %__MODULE__{
           walker
