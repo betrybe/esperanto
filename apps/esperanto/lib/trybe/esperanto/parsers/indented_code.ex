@@ -69,8 +69,7 @@ defmodule Esperanto.Parsers.IndentedCode do
     end)
     |> elem(0)
     |> Enum.reduce(0, fn
-      " ", acc -> acc + 1
-      "\t", acc -> acc + 4
+      val, acc -> acc + indent_for(val)
     end) > 3
   end
 
