@@ -70,7 +70,6 @@ defmodule Esperanto.Parsers.TopLevel do
 
   # no parser found,  walk
   defp astify(walker, tree, parent_id, opts, :walk) do
-    IO.puts()
     walker = Walker.walk(walker)
     astify(walker, tree, parent_id, opts, :find_parse)
   end
