@@ -40,7 +40,7 @@ defmodule Esperanto.Parsers.IndentedParseTest do
             %{
               children: [
                 %{
-                  content: "\n    Some\n     \tCode\n",
+                  content: "Some\n \tCode\n",
                   level: 3,
                   name: :code
                 }

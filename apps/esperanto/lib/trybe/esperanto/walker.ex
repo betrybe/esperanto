@@ -189,12 +189,12 @@ defmodule Esperanto.Walker do
   end
 
   def consume_input(walker, length) do
-    case walker.input do
+    case walker.rest do
       :barried ->
         %__MODULE__{
           walker
           | input: "",
-            barriered: String.slice(walker.input, length..-1) <> walker.barriered
+            rest: String.slice(walker.input, length..-1) <> walker.barriered
         }
 
       _ ->

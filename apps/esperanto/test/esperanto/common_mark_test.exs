@@ -1,4 +1,4 @@
-defmodule Esperanto.Parsers.BrParseTest do
+defmodule Esperanto.Parsers.CommonMarkTest do
   alias Esperanto.Parser
   alias Esperanto.Walker
   alias Esperanto.Parsers.TopLevel

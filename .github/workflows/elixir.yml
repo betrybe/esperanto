@@ -24,14 +24,14 @@ jobs:
         id: plt-cache
         with:
           path: priv/plts
-          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-plts-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          key: ${{ runner.os }}-plts-${{ hashFiles('**/mix.lock') }}
 
       - name: Create PLTs
         if: steps.plt-cache.outputs.cache-hit != 'true'
         run: |
           mkdir -p priv/plts
           mix dialyzer --plt        
-      - run: mix dialyzer --no-check --halt-exit-status       
+      - run: mix dialyzer --no-check
       - run: mix coveralls.github    
         env:
           MIX_ENV: test

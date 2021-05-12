@@ -40,6 +40,7 @@ defmodule Esperanto.Parser do
   end
 
   @spec do_to_xml(nil | maybe_improper_list | map) :: {any, any, [...]}
+
   defp do_to_xml(tree_map) do
     children =
       case treeMap[:children] do
