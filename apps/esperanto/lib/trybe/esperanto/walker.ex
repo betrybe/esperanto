@@ -6,7 +6,7 @@ defmodule Esperanto.Walker do
 
   @never_match_regex ~r"$a"
 
-  defstruct [:input, :rest, line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
+  defstruct [:input, rest: "", line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
 
   @type t :: %__MODULE__{
           input: String.t(),
@@ -109,6 +109,14 @@ defmodule Esperanto.Walker do
             line: line,
             column: column
         }
+    end
+  end
+
+  def walk_until(walker, regex) do
+    cond do
+      String.match?(walker.input, regex) -> walker
+      walker.rest == "" -> walker
+      true -> walk_until(walk(walker), regex)
     end
   end
 

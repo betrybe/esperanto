@@ -5,16 +5,11 @@ defmodule Esperanto.Parsers.TopLevel do
     {Esperanto.Parsers.PlainText, nil},
     {Esperanto.Parsers.Br, nil},
     {Esperanto.Parsers.Img, nil},
-    {Esperanto.Parsers.Link, nil}
+    {Esperanto.Parsers.Link, nil},
+    {Esperanto.Parsers.IndentedCode, nil}
   ]
 
-  @spec default_parsers :: [
-          {Esperanto.Parsers.Br, nil}
-          | {Esperanto.Parsers.Img, nil}
-          | {Esperanto.Parsers.Link, nil}
-          | {Esperanto.Parsers.PlainText, nil},
-          ...
-        ]
+  @spec default_parsers :: list()
   def default_parsers, do: @default_parsers
 
   @moduledoc """
