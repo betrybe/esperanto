@@ -33,7 +33,7 @@ defmodule Esperanto.Parsers.IndentedParseTest do
 
     NaryTree.to_list(tree)
 
-    %{
+    assert %{
       children: [
         %{
           children: [
