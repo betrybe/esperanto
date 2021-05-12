@@ -32,10 +32,6 @@ defmodule Esperanto.Parsers.IndentedCode do
     remove_first_level_indent(Walker.walk(walker), indent)
   end
 
-  defp remove_first_level_indent(%Walker{input: ""} = walker, indent) when indent < 4 do
-    remove_first_level_indent(Walker.walk(walker), indent)
-  end
-
   defp remove_first_level_indent(%Walker{input: <<"\n"::utf8, _rest::binary>>} = walker, indent)
        when indent == 0 do
     remove_first_level_indent(Walker.consume_input(walker, 1), indent)
@@ -78,8 +74,7 @@ defmodule Esperanto.Parsers.IndentedCode do
     end)
     |> elem(0)
     |> Enum.reduce(0, fn
-      " ", acc -> acc + 1
-      "\t", acc -> acc + 4
+      val, acc -> acc + indent_for(val)
     end) > 3
   end
 
