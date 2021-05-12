@@ -33,9 +33,10 @@ defmodule Esperanto.Parser do
             ) :: boolean()
 
   def to_xml(tree) do
-    map = NaryTree.to_map(tree)
-    ast = do_to_xml(map)
-    XmlBuilder.generate(ast, format: :none)
+    tree
+    |> NaryTree.to_map()
+    |> do_to_xml()
+    |> XmlBuilder.generate(format: :none)
   end
 
   @spec do_to_xml(nil | maybe_improper_list | map) :: {any, any, [...]}
