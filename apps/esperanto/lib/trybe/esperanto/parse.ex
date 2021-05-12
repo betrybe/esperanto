@@ -54,14 +54,7 @@ defmodule Esperanto.Parser do
           end)
       end
 
-    {content, attrs} =
-      case treeMap[:content] do
-        {:empty, attrs} -> {"", attrs}
-        {content, attrs} -> {content, attrs}
-        :empty -> {"", %{}}
-        content -> {content, %{}}
-      end
-
+    {content, attrs} = get_content_and_attr(treeMap[:content])
     tag = treeMap[:name]
 
     case tag do
@@ -69,4 +62,9 @@ defmodule Esperanto.Parser do
       _ -> {tag, attrs, [content] ++ children}
     end
   end
+
+  defp get_content_and_attr({:empty, attrs}), do: {"", attrs}
+  defp get_content_and_attr({content, attrs}), do: {content, attrs}
+  defp get_content_and_attr(:empty), do: {"", %{}}
+  defp get_content_and_attr(content), do: {content, %{}}
 end
