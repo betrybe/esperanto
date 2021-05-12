@@ -22,8 +22,9 @@ defmodule Esperanto.Parsers.InlineFencedCode do
 
   defp walk_until_not_back_slash(walker) do
     if String.starts_with?(walker.rest, "`") do
-      walker = Walker.walk(walker)
-      walk_until_not_back_slash(walker)
+      walker
+      |> Walker.walk()
+      |> walk_until_not_back_slash()
     else
       walker
     end

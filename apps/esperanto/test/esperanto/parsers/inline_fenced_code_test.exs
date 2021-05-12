@@ -27,9 +27,9 @@ defmodule Esperanto.Parsers.InlineParseTest do
      NoCode
     """
 
-    {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
+    assert {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
-    %{
+    assert %{
       children: [
         %{
           children: [
