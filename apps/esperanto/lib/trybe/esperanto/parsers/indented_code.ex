@@ -18,7 +18,31 @@ defmodule Esperanto.Parsers.IndentedCode do
     {tree, walker}
   end
 
+  defp remove_first_level_indent(walker, indent \\ 0)
+
+  defp remove_first_level_indent(walker, indent) when indent >= 4 do
+    walker
+  end
+  defp remove_first_level_indent(%Walker{input: "", rest: ""}, indent) when indent < 4 do
+    raise "Four level indention exected but not found"
+  end
+  defp remove_first_level_indent(%Walker{input: ""} = walker, indent) when indent < 4 do
+    remove_first_level_indent(Walker.walk(walker), indent)
+  end
+  defp remove_first_level_indent(%Walker{input: ""} = walker, indent) when indent < 4 do
+    remove_first_level_indent(Walker.walk(walker), indent)
+  end
+  defp remove_first_level_indent(%Walker{input: <<"\n"::utf8,_rest::binary>>} = walker, indent) when indent == 0 do
+    remove_first_level_indent(Walker.consume_input(walker, 1), indent)
+  end
+  defp remove_first_level_indent(walker, indent) when indent < 4 do
+    {input, _rest} = String.split_at(walker.input, 1)
+    walker = Walker.consume_input(walker, 1)
+    remove_first_level_indent(walker, indent + indent_for(input))
+  end
+
   defp get_content(walker, content \\ "") do
+    walker = remove_first_level_indent(walker)
     walker = Walker.walk_until(walker, ~r/\n$/)
     content = content <> walker.input
     walker = Walker.consume_input(walker)
@@ -52,4 +76,7 @@ defmodule Esperanto.Parsers.IndentedCode do
       "\t", acc -> acc + 4
     end) > 3
   end
+
+  defp indent_for(" "), do: 1
+  defp indent_for("\t"), do: 4
 end
