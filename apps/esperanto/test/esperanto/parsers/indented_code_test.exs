@@ -29,7 +29,7 @@ defmodule Esperanto.Parsers.IndentedParseTest do
      NoCode
     """
 
-    {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
+    assert {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
     NaryTree.to_list(tree)
 
