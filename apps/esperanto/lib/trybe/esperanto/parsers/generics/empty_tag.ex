@@ -1,6 +1,6 @@
 defmodule Esperanto.Parsers.Generics.EmptyTag do
-  alias Esperanto.Walker
   alias Esperanto.MatchUtility
+  alias Esperanto.Walker
 
   @spec __using__(keyword) ::
           {:__block__, [],

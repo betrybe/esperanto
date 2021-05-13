@@ -2,8 +2,10 @@ defmodule Esperanto.Parsers.Img do
   @moduledoc """
   Parse an image with the format ![alt](http://image.url)
   """
-  alias Esperanto.Walker
+
   alias Esperanto.MatchUtility
+  alias Esperanto.Walker
+
   @behaviour Esperanto.Parser
   @markdown_img_regex ~r/^!\[(?<alt>.*)\]\((?<src>.*?)\)/
 

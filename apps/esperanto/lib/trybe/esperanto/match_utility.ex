@@ -21,7 +21,7 @@ defmodule Esperanto.MatchUtility do
 
     if has_matched do
       Logger.debug(
-        "#{__MODULE__} has matched for \"#{input}\" with \"#{Regex.source(delimiter)}\""
+        "#{__MODULE__} has matched for '#{input}' with '#{Regex.source(delimiter)}'"
       )
     end
 

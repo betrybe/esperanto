@@ -1,7 +1,7 @@
 defmodule Esperanto.Parsers.Generics.EnclosingTag do
-  alias Esperanto.Walker
-  alias Esperanto.Parsers.TopLevel
   alias Esperanto.MatchUtility
+  alias Esperanto.Parsers.TopLevel
+  alias Esperanto.Walker
 
   @doc """
   opts

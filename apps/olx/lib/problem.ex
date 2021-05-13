@@ -2,8 +2,9 @@ defmodule Esperanto.Olx.Problem do
   @moduledoc """
   Parse and OLX problem
   """
-  alias Esperanto.Walker
+
   alias Esperanto.Parsers.TopLevel
+  alias Esperanto.Walker
 
   def parse(input) do
     label = {Esperanto.Olx.Parsers.Label, nil}

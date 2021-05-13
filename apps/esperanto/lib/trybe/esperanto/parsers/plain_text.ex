@@ -3,8 +3,8 @@ defmodule Esperanto.Parsers.PlainText do
   Parse content as a plain text <p>
   """
 
-  alias Esperanto.Walker
   alias Esperanto.Parsers.TopLevel
+  alias Esperanto.Walker
   @behaviour Esperanto.Parser
 
   @impl Esperanto.Parser

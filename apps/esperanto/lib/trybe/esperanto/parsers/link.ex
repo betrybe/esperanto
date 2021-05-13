@@ -2,8 +2,10 @@ defmodule Esperanto.Parsers.Link do
   @moduledoc """
   Parser a link in the format [link text](http.example.com)
   """
-  alias Esperanto.Walker
+
   alias Esperanto.MatchUtility
+  alias Esperanto.Walker
+
   @behaviour Esperanto.Parser
   @markdown_link_regex ~r/^\[(?<content>.*)\]\((?<href>.*?)\)/
 

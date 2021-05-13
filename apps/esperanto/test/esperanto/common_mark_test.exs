@@ -1,7 +1,7 @@
 defmodule Esperanto.Parsers.CommonMarkTest do
   alias Esperanto.Parser
-  alias Esperanto.Walker
   alias Esperanto.Parsers.TopLevel
+  alias Esperanto.Walker
   use ExUnit.Case
 
   test "example 1" do
