@@ -35,48 +35,48 @@ defmodule Esperanto.Parsers.FencedCodeTest do
     assert {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
     assert %{
-      children: [
-        %{
-          children: [
-            %{
-              content: "Some Code",
-              level: 2,
-              name: :code,
-            },
-            %{
-              children: [
-                %{
-                  children: [
-                    %{
-                      content: "\nsome\n   code\nblock\n",
-                      level: 4,
-                      name: :code,
-                    }
-                  ],
-                  content: :empty,
-                  level: 3,
-                  name: :pre,
-                },
-                %{
-                  content: "\n",
-                  level: 3,
-                  name: :p,
-                }
-              ],
-              content: "\n NoCode\n",
-              level: 2,
-              name: :p,
-            }
-          ],
-          content: "oi ",
-          level: 1,
-          name: :p,
-        }
-      ],
-      content: :empty,
-      level: 0,
-      name: :empty,
-      parent: :empty
-    } = NaryTree.to_map(tree)
+             children: [
+               %{
+                 children: [
+                   %{
+                     content: "Some Code",
+                     level: 2,
+                     name: :code
+                   },
+                   %{
+                     children: [
+                       %{
+                         children: [
+                           %{
+                             content: "\nsome\n   code\nblock\n",
+                             level: 4,
+                             name: :code
+                           }
+                         ],
+                         content: :empty,
+                         level: 3,
+                         name: :pre
+                       },
+                       %{
+                         content: "\n",
+                         level: 3,
+                         name: :p
+                       }
+                     ],
+                     content: "\n NoCode\n",
+                     level: 2,
+                     name: :p
+                   }
+                 ],
+                 content: "oi ",
+                 level: 1,
+                 name: :p
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :empty,
+             parent: :empty
+           } = NaryTree.to_map(tree)
   end
 end
