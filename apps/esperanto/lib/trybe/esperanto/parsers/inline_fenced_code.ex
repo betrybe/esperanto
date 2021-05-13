@@ -2,6 +2,8 @@ defmodule Esperanto.Parsers.InlineFencedCode do
   @moduledoc """
   Parse an idented code with 4 space or tab
   """
+
+  alias Esperanto.CodeUtility
   alias Esperanto.Walker
 
   @behaviour Esperanto.Parser
@@ -25,7 +27,7 @@ defmodule Esperanto.Parsers.InlineFencedCode do
   def should_parse(_, _, _, _), do: false
 
   defp get_content(walker) do
-    walker = walk_until_not_back_slash(walker)
+    walker = CodeUtility.walk_until_not_back_slash(walker)
     backup_walker = walker
     back_slash_count = String.length(walker.input)
 
@@ -43,16 +45,6 @@ defmodule Esperanto.Parsers.InlineFencedCode do
         {content, _} = String.split_at(walker.input, -back_slash_count)
         {Walker.consume_input(walker), content}
       end
-    end
-  end
-
-  defp walk_until_not_back_slash(walker) do
-    if String.starts_with?(walker.rest, "`") do
-      walker
-      |> Walker.walk()
-      |> walk_until_not_back_slash()
-    else
-      walker
     end
   end
 end
