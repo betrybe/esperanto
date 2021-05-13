@@ -1,0 +1,66 @@
+name: Elixir CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test & Checks
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
+        with:
+          elixir-version: '1.11.4' # Define the elixir version [required]
+          otp-version: '22.3' # Define the OTP version [required]
+      - run: mix deps.get
+      - run: mix format --check-formatted        
+      - run: mix credo --strict
+      - name: Retrieve PLT Cache
+        uses: actions/cache@v1
+        id: plt-cache
+        with:
+          path: priv/plts
+          key: ${{ runner.os }}-plts-${{ hashFiles('**/mix.lock') }}
+
+      - name: Create PLTs
+        if: steps.plt-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p priv/plts
+          mix dialyzer --plt        
+      - run: mix dialyzer --no-check
+      - run: mix coveralls.github    
+        env:
+          MIX_ENV: test
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build:
+    if: github.ref == 'refs/heads/main'
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Elixir
+      uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
+      with:
+        elixir-version: '1.11.4' # Define the elixir version [required]
+        otp-version: '22.3' # Define the OTP version [required]
+    - name: Restore dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+    - name: Install dependencies
+      run: mix deps.get
+    - name: Set to hex api key
+      run:  mix hex.config api_key ${{ secrets.HEX_API_KEY }}
+    - name: Publish esperanto to Hex.pm 
+      working-directory: apps/esperanto
+      run:  mix hex.publish --yes
+    - name: Publish olx to Hex.pm 
+      working-directory: apps/olx
+      run:  mix hex.publish --yes      

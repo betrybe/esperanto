@@ -1,9 +1,13 @@
-defmodule Trybe.Esperanto.MatchUtility do
+defmodule Esperanto.MatchUtility do
+  @moduledoc """
+  Utility used to match inputs
+  """
+
   require Logger
 
   def ensure_has_matched(walker, delimiter) do
     if !match(walker.input, delimiter) do
-      raise "Expected to find #{MatchUtility.delimiter_as_str(delimiter)} at line:#{walker.line},column:#{
+      raise "Expected to find #{__MODULE__.delimiter_as_string(delimiter)} at line:#{walker.line},column:#{
               walker.column
             }. Found: #{walker.input}"
     end
@@ -13,15 +17,13 @@ defmodule Trybe.Esperanto.MatchUtility do
     do: match(input, delimiter_as_regex(delimiter))
 
   def match(input, delimiter) do
-    hasMatched = String.match?(input, delimiter)
+    has_matched = String.match?(input, delimiter)
 
-    if hasMatched do
-      Logger.debug(
-        "#{__MODULE__} has matched for \"#{input}\" with \"#{Regex.source(delimiter)}\""
-      )
+    if has_matched do
+      Logger.debug("#{__MODULE__} has matched for '#{input}' with '#{Regex.source(delimiter)}'")
     end
 
-    hasMatched
+    has_matched
   end
 
   def delimiter_as_regex(delimiter) when is_binary(delimiter),

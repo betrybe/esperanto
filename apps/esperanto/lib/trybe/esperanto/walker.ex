@@ -1,7 +1,12 @@
-defmodule Olx.Walker do
+defmodule Esperanto.Walker do
+  @moduledoc """
+  Walker is used to go through input couting line and columns.
+  Every parser is responsible to walk and leave the walker in the state he can continue
+  """
+
   @never_match_regex ~r"$a"
 
-  defstruct [:input, :rest, line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
+  defstruct [:input, rest: "", line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
 
   @type t :: %__MODULE__{
           input: String.t(),
@@ -17,14 +22,14 @@ defmodule Olx.Walker do
 
   ## Examples
 
-      iex> Olx.Walker.start("abc")
-      %Olx.Walker{input: "a", rest: "bc"}
+      iex> Esperanto.Walker.start("abc")
+      %Esperanto.Walker{input: "a", rest: "bc"}
 
-      iex> Olx.Walker.start("")
-      %Olx.Walker{input: "", rest: ""}
+      iex> Esperanto.Walker.start("")
+      %Esperanto.Walker{input: "", rest: ""}
 
-      iex> Olx.Walker.start("a")
-      %Olx.Walker{input: "a", rest: ""}
+      iex> Esperanto.Walker.start("a")
+      %Esperanto.Walker{input: "a", rest: ""}
   """
   @spec start(String.t()) :: __MODULE__.t()
   def start(input) do
@@ -42,42 +47,42 @@ defmodule Olx.Walker do
   ## Examples
 
       iex>
-      Olx.Walker.start("abc") |> Olx.Walker.walk()
-      %Olx.Walker{input: "ab", rest: "c", column: 2}
+      Esperanto.Walker.start("abc") |> Esperanto.Walker.walk()
+      %Esperanto.Walker{input: "ab", rest: "c", column: 2}
 
-      iex> Olx.Walker.start("a\nc") |> Olx.Walker.walk()
-      %Olx.Walker{input: "a\n", rest: "c", column: 1, line: 2}
+      iex> Esperanto.Walker.start("a\nc") |> Esperanto.Walker.walk()
+      %Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.walk()
-      %Olx.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk()
+      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.walk()
-      %Olx.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk()
+      ...> |> Esperanto.Walker.walk()
+      ...> |> Esperanto.Walker.walk()
+      ...> |> Esperanto.Walker.walk()
+      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.walk()
-      %Olx.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk()
+      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.destroy_barrier()
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.destroy_barrier()
       ** (RuntimeError) trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen
 
-      iex> Olx.Walker.start("a\nc")
-      ...> |> Olx.Walker.with_barrier("\n")
-      ...> |> Olx.Walker.walk()
-      ...> |> Olx.Walker.destroy_barrier(false)
-      ...> |> Olx.Walker.walk()
-      %Olx.Walker{input: "a\n", rest: "c", column: 1, line: 2}
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk()
+      ...> |> Esperanto.Walker.destroy_barrier(false)
+      ...> |> Esperanto.Walker.walk()
+      %Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
 
   """
   @spec walk(__MODULE__.t()) :: __MODULE__.t()
@@ -104,6 +109,14 @@ defmodule Olx.Walker do
             line: line,
             column: column
         }
+    end
+  end
+
+  def walk_until(walker, regex) do
+    cond do
+      String.match?(walker.input, regex) -> walker
+      walker.rest == "" -> walker
+      true -> walk_until(walk(walker), regex)
     end
   end
 
@@ -162,8 +175,8 @@ defmodule Olx.Walker do
 
   ## Examples
 
-      iex> Olx.Walker.consume_input(Olx.Walker.start("abc"))
-      %Olx.Walker{input: "", rest: "bc", column: 1}
+      iex> Esperanto.Walker.consume_input(Esperanto.Walker.start("abc"))
+      %Esperanto.Walker{input: "", rest: "bc", column: 1}
   """
   @spec consume_input(__MODULE__.t(), length :: integer()) :: __MODULE__.t()
   def consume_input(walker, length \\ 0)
@@ -176,19 +189,19 @@ defmodule Olx.Walker do
   end
 
   def consume_input(walker, length) do
-    case walker.input do
+    case walker.rest do
       :barried ->
         %__MODULE__{
           walker
           | input: "",
-            barriered: String.slice(walker.input, length..-1) <> walker.barriered
+            rest: String.slice(walker.input, length..-1) <> walker.barriered
         }
 
       _ ->
         %__MODULE__{
           walker
           | input: "",
-            rest: String.slice(walker.input, length..-1) <> walker.barriered
+            rest: String.slice(walker.input, length..-1) <> walker.rest
         }
     end
   end

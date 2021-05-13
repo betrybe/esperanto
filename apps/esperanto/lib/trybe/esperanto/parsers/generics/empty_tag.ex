@@ -1,6 +1,6 @@
-defmodule Trybe.Esperanto.EmptyTag do
-  alias Olx.Walker
-  alias Trybe.Esperanto.MatchUtility
+defmodule Esperanto.Parsers.Generics.EmptyTag do
+  alias Esperanto.MatchUtility
+  alias Esperanto.Walker
 
   @spec __using__(keyword) ::
           {:__block__, [],
@@ -21,13 +21,13 @@ defmodule Trybe.Esperanto.EmptyTag do
 
     quote do
       require Logger
-      @behaviour Olx.Parser
+      @behaviour Esperanto.Parser
 
       @delimiter unquote(delimiter)
       @tag unquote(tag)
 
-      @impl Olx.Parser
-      def parse(walker, tree, parent_id, opts) do
+      @impl Esperanto.Parser
+      def parse(walker, tree, parent_id, _opts) do
         MatchUtility.ensure_has_matched(walker, @delimiter)
 
         node = NaryTree.Node.new(@tag)
@@ -36,7 +36,7 @@ defmodule Trybe.Esperanto.EmptyTag do
         {tree, Walker.consume_input(walker)}
       end
 
-      @impl Olx.Parser
+      @impl Esperanto.Parser
       def should_parse(%Walker{input: input}, _, _, opts) do
         MatchUtility.match(input, @delimiter)
       end

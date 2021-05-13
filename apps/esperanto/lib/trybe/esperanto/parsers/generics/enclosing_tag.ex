@@ -1,7 +1,7 @@
-defmodule Olx.Parsers.EnclosingTag do
-  alias Olx.Walker
-  alias Olx.Parsers.TopLevel
-  alias Trybe.Esperanto.MatchUtility
+defmodule Esperanto.Parsers.Generics.EnclosingTag do
+  alias Esperanto.MatchUtility
+  alias Esperanto.Parsers.TopLevel
+  alias Esperanto.Walker
 
   @doc """
   opts
@@ -21,13 +21,13 @@ defmodule Olx.Parsers.EnclosingTag do
 
     quote do
       require Logger
-      @behaviour Olx.Parser
+      @behaviour Esperanto.Parser
 
       @start_delimiter unquote(start_delimiter)
       @end_delimiter unquote(end_delimiter)
       @tag unquote(tag)
 
-      @impl Olx.Parser
+      @impl Esperanto.Parser
       def parse(walker, tree, parent_id, opts) do
         MatchUtility.ensure_has_matched(walker, @start_delimiter)
 
@@ -43,7 +43,7 @@ defmodule Olx.Parsers.EnclosingTag do
         {tree, Walker.destroy_barrier(walker)}
       end
 
-      @impl Olx.Parser
+      @impl Esperanto.Parser
       def should_parse(%Walker{input: input}, _, _, opts) do
         MatchUtility.match(input, @start_delimiter)
       end

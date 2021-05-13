@@ -1,35 +1,39 @@
-defmodule Olx.Parsers.TopLevel do
-  alias Olx.Walker
-  @behaviour Olx.Parser
+defmodule Esperanto.Parsers.TopLevel do
+  alias Esperanto.Walker
+  @behaviour Esperanto.Parser
+  @default_parsers [
+    {Esperanto.Parsers.PlainText, nil},
+    {Esperanto.Parsers.Br, nil},
+    {Esperanto.Parsers.Img, nil},
+    {Esperanto.Parsers.Link, nil},
+    {Esperanto.Parsers.IndentedCode, nil},
+    {Esperanto.Parsers.InlineFencedCode, nil}
+  ]
+
+  @spec default_parsers :: list()
+  def default_parsers, do: @default_parsers
 
   @moduledoc """
   Top level parser\n
   This parser selected which parser will be used based on `should_parse` call from other modules
   """
-  @impl Olx.Parser
+  @impl Esperanto.Parser
   def should_parse(_, _, _, _), do: true
 
-  @impl Olx.Parser
+  @impl Esperanto.Parser
   def parse(walker, nil, nil, opts) do
-    tree = NaryTree.new()
+    tree = NaryTree.new(NaryTree.Node.new())
     parse(walker, tree, tree.root, opts)
   end
 
   def parse(walker, tree, parent_id, opts) do
-    plain_text = {Olx.Parsers.PlainText, nil}
-    label = {Olx.Parsers.Label, nil}
-    choice = {Olx.Parsers.Choice, nil}
-    line_break = {Olx.Parsers.Br, nil}
-
-    default_parsers = [parsers: [plain_text, choice, line_break, label]]
-    opts = Keyword.merge(opts, default_parsers)
-
+    opts = Keyword.merge([parsers: @default_parsers], opts)
     astify(walker, tree, parent_id, opts, :find_parse)
   end
 
   # No more input finished the parser
   defp astify(
-         %Olx.Walker{input: "", rest: ""} = walker,
+         %Walker{input: "", rest: ""} = walker,
          tree,
          _parent_id,
          _opts,
@@ -40,7 +44,7 @@ defmodule Olx.Parsers.TopLevel do
 
   # No more input finished the parser
   defp astify(
-         %Olx.Walker{rest: :barried} = walker,
+         %Walker{rest: :barried} = walker,
          tree,
          parent_id,
          opts,
@@ -103,6 +107,16 @@ defmodule Olx.Parsers.TopLevel do
         parser.should_parse(walker, tree, parent_id, opts)
       end)
 
-    select_parse(walker, filtered_parsers)
+    # case more than 1 parse is found, give priority to any other than PlainText
+    if Enum.count(filtered_parsers) > 1 do
+      filtered_parsers =
+        Enum.filter(filtered_parsers, fn {parser, _opts} ->
+          parser != Esperanto.Parsers.PlainText
+        end)
+
+      select_parse(walker, filtered_parsers)
+    else
+      select_parse(walker, filtered_parsers)
+    end
   end
 end
