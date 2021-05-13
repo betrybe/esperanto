@@ -1,7 +1,8 @@
 defmodule Esperanto.Parsers.InlineParseTest do
-  alias Esperanto.Walker
-  alias Esperanto.Parsers.TopLevel
+
   alias Esperanto.Parsers.InlineFencedCode
+  alias Esperanto.Parsers.TopLevel
+  alias Esperanto.Walker
 
   use ExUnit.Case
 

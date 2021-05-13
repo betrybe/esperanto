@@ -30,7 +30,7 @@ defmodule Esperanto.Parsers.BrParseTest do
   test "plain text with line break" do
     {tree, _} =
       "a  \nb"
-      |> Walker.start(input)
+      |> Walker.start()
       |> TopLevel.parse(nil, nil, [])
 
     %{
