@@ -33,15 +33,17 @@ defmodule Esperanto.Parser do
             ) :: boolean()
 
   def to_xml(tree) do
-    map = NaryTree.to_map(tree)
-    ast = do_to_xml(map)
-    XmlBuilder.generate(ast, format: :none)
+    tree
+    |> NaryTree.to_map()
+    |> do_to_xml()
+    |> XmlBuilder.generate(format: :none)
   end
 
   @spec do_to_xml(nil | maybe_improper_list | map) :: {any, any, [...]}
-  defp do_to_xml(treeMap) do
+
+  defp do_to_xml(tree_map) do
     children =
-      case treeMap[:children] do
+      case tree_map[:children] do
         nil ->
           []
 
@@ -54,8 +56,8 @@ defmodule Esperanto.Parser do
           end)
       end
 
-    {content, attrs} = get_content_and_attr(treeMap[:content])
-    tag = treeMap[:name]
+    {content, attrs} = get_content_and_attr(tree_map[:content])
+    tag = tree_map[:name]
 
     case tag do
       :empty -> children
