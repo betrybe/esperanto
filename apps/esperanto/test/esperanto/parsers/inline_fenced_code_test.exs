@@ -1,5 +1,4 @@
 defmodule Esperanto.Parsers.InlineParseTest do
-
   alias Esperanto.Parsers.InlineFencedCode
   alias Esperanto.Parsers.TopLevel
   alias Esperanto.Walker

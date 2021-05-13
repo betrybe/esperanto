@@ -1,5 +1,4 @@
 defmodule Esperanto.Parsers.LinkParseTest do
-
   alias Esperanto.Parsers.Img
   alias Esperanto.Parsers.Link
   alias Esperanto.Parsers.TopLevel

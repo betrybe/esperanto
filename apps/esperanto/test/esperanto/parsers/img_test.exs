@@ -1,5 +1,4 @@
 defmodule Esperanto.Parsers.ImgParseTest do
-
   alias Esperanto.Parsers.Img
   alias Esperanto.Parsers.TopLevel
   alias Esperanto.Walker

@@ -20,9 +20,7 @@ defmodule Esperanto.MatchUtility do
     has_matched = String.match?(input, delimiter)
 
     if has_matched do
-      Logger.debug(
-        "#{__MODULE__} has matched for '#{input}' with '#{Regex.source(delimiter)}'"
-      )
+      Logger.debug("#{__MODULE__} has matched for '#{input}' with '#{Regex.source(delimiter)}'")
     end
 
     has_matched
