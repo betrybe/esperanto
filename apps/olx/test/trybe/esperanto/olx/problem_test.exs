@@ -86,8 +86,7 @@ defmodule Esperanto.Olx.ParseTest do
              level: 0,
              name: :problem,
              parent: :empty
-           } =
-             NaryTree.to_map(tree)
+           } = NaryTree.to_map(tree)
   end
 
   test "plain text with label and choice" do
