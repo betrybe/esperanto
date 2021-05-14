@@ -12,7 +12,6 @@ defmodule Esperanto.Olx.ParseTest do
     %NaryTree{
       nodes: %{
         ^root => %NaryTree.Node{
-          children: [],
           content: :empty,
           id: ^root,
           level: 0,
@@ -31,11 +30,26 @@ defmodule Esperanto.Olx.ParseTest do
 
     {tree, _} = Problem.parse(input)
 
-    %{
-      children: [%{content: content}]
-    } = NaryTree.to_map(tree)
-
-    assert content == "Hello\n"
+    assert %{
+             children: [
+               %{
+                 children: [
+                   %{
+                     content: "Hello\n",
+                     level: 2,
+                     name: :p
+                   }
+                 ],
+                 content: :empty,
+                 level: 1,
+                 name: :multiplechoiceresponse
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :problem,
+             parent: :empty
+           } = NaryTree.to_map(tree)
   end
 
   test "plain text with label" do
@@ -48,19 +62,32 @@ defmodule Esperanto.Olx.ParseTest do
     assert %{
              children: [
                %{
-                 content: {:empty, %{}},
-                 name: :label,
                  children: [
-                   %{content: "Hello", level: 2, name: :p}
-                 ]
-               },
-               %{content: "\n", level: 1, name: :p}
+                   %{
+                     children: [
+                       %{
+                         content: "Hello",
+                         level: 3,
+                         name: :p
+                       }
+                     ],
+                     content: {:empty, %{}},
+                     level: 2,
+                     name: :label
+                   },
+                   %{content: "\n", level: 2, name: :p}
+                 ],
+                 content: :empty,
+                 level: 1,
+                 name: :multiplechoiceresponse
+               }
              ],
              content: :empty,
              level: 0,
              name: :problem,
              parent: :empty
-           } = NaryTree.to_map(tree)
+           } =
+             NaryTree.to_map(tree)
   end
 
   test "plain text with label and choice" do
@@ -76,42 +103,53 @@ defmodule Esperanto.Olx.ParseTest do
              children: [
                %{
                  children: [
-                   %{content: "Hello", level: 2, name: :p}
-                 ],
-                 content: {:empty, %{}},
-                 level: 1,
-                 name: :label
-               },
-               %{
-                 children: [
                    %{
                      children: [
                        %{
-                         content: " Apple",
+                         content: "Hello",
                          level: 3,
                          name: :p
                        }
                      ],
-                     content: {:empty, %{correct: false}},
+                     content: {:empty, %{}},
                      level: 2,
-                     name: :choice
+                     name: :label
                    },
                    %{
                      children: [
                        %{
-                         content: " Orange",
+                         children: [
+                           %{
+                             content: " Apple",
+                             level: 4,
+                             name: :p
+                           }
+                         ],
+                         content: {:empty, %{correct: false}},
                          level: 3,
-                         name: :p
+                         name: :choice
+                       },
+                       %{
+                         children: [
+                           %{
+                             content: " Orange",
+                             level: 4,
+                             name: :p
+                           }
+                         ],
+                         content: {:empty, %{correct: true}},
+                         level: 3,
+                         name: :choice
                        }
                      ],
-                     content: {:empty, %{correct: true}},
+                     content: {:empty, %{type: "MultipleChoice"}},
                      level: 2,
-                     name: :choice
+                     name: :choicegroup
                    }
                  ],
-                 content: {:empty, %{:type => "MultipleChoice"}},
+                 content: :empty,
                  level: 1,
-                 name: :choicegroup
+                 name: :multiplechoiceresponse
                }
              ],
              content: :empty,
