@@ -23,6 +23,30 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
     tag = Keyword.get(options, :enclosing_tag)
     surrounding_tag = Keyword.get(options, :surrounding_tag, nil)
 
+    create_node_bloc =
+      if surrounding_tag do
+        quote do
+          parent = NaryTree.get(tree, parent_id)
+
+          tree =
+            case find_surrounding(parent, tree) do
+              nil ->
+                surrounding = NaryTree.Node.new(@surrounding_tag, {:empty, @surrounding_attrs})
+
+                tree
+                |> NaryTree.add_child(surrounding, parent_id)
+                |> NaryTree.add_child(node, surrounding.id)
+
+              surrounding ->
+                NaryTree.add_child(tree, node, surrounding.id)
+            end
+        end
+      else
+        quote do
+          tree = NaryTree.add_child(tree, node, parent_id)
+        end
+      end
+
     quote do
       require Logger
       @behaviour Esperanto.Parser
@@ -39,28 +63,7 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
         MatchUtility.ensure_has_matched(walker, @start_delimiter)
         node = NaryTree.Node.new(@tag, {:empty, @attrs})
 
-        # // TODO provavelmente existe um jeito mais elegante de resolver isso
-        # // Com with talvez?
-        tree =
-          case @surrounding_tag do
-            nil ->
-              NaryTree.add_child(tree, node, parent_id)
-
-            _ ->
-              parent = NaryTree.get(tree, parent_id)
-
-              case find_surrounding(parent, tree) do
-                nil ->
-                  surrounding = NaryTree.Node.new(@surrounding_tag, {:empty, @surrounding_attrs})
-
-                  tree
-                  |> NaryTree.add_child(surrounding, parent_id)
-                  |> NaryTree.add_child(node, surrounding.id)
-
-                surrounding ->
-                  NaryTree.add_child(tree, node, surrounding.id)
-              end
-          end
+        unquote(create_node_bloc)
 
         {tree, walker} =
           walker
