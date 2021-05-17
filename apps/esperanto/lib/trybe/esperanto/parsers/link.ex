@@ -3,7 +3,7 @@ defmodule Esperanto.Parsers.Link do
   Parser a link in the format [link text](http.example.com)
   """
 
-  alias Esperanto.MatchUtility
+  alias Esperanto.ParserUtility
   alias Esperanto.Walker
 
   @behaviour Esperanto.Parser
@@ -11,7 +11,7 @@ defmodule Esperanto.Parsers.Link do
 
   @impl Esperanto.Parser
   def parse(walker, tree, parent_id, _opts) do
-    MatchUtility.ensure_has_matched(walker, @markdown_link_regex)
+    ParserUtility.ensure_has_matched(walker, @markdown_link_regex)
     captures = Regex.named_captures(@markdown_link_regex, walker.input)
     content = {captures["content"], %{:href => captures["href"]}}
     node = NaryTree.Node.new("a", content)
@@ -22,5 +22,5 @@ defmodule Esperanto.Parsers.Link do
 
   @impl Esperanto.Parser
   def should_parse(%Walker{input: input}, _, _, _),
-    do: MatchUtility.match(input, @markdown_link_regex)
+    do: ParserUtility.match(input, @markdown_link_regex)
 end

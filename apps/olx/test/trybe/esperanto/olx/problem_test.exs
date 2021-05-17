@@ -157,4 +157,87 @@ defmodule Esperanto.Olx.ParseTest do
              parent: :empty
            } = NaryTree.to_map(tree)
   end
+
+  test "plain text with label, choice and choice hint" do
+    input = ~S"""
+    >>Hello<<
+    ( ) Apple {{incorrect}}
+    (x) Orange {{correct}}
+    """
+
+    {tree, _} = Problem.parse(input)
+
+    assert %{
+             children: [
+               %{
+                 children: [
+                   %{
+                     children: [
+                       %{
+                         content: "Hello",
+                         level: 3,
+                         name: :p
+                       }
+                     ],
+                     content: {:empty, %{}},
+                     level: 2,
+                     name: :label
+                   },
+                   %{
+                     children: [
+                       %{
+                         children: [
+                           %{
+                             content: " Apple ",
+                             level: 4,
+                             name: :p
+                           },
+                           %{
+                             children: [
+                               %{content: "incorrect", level: 5, name: :p}
+                             ],
+                             content: {:empty, %{}},
+                             level: 4,
+                             name: :choicehint
+                           }
+                         ],
+                         content: {:empty, %{correct: false}},
+                         level: 3,
+                         name: :choice
+                       },
+                       %{
+                         children: [
+                           %{
+                             content: " Orange ",
+                             level: 4,
+                             name: :p
+                           },
+                           %{
+                             children: [%{content: "correct", level: 5, name: :p}],
+                             content: {:empty, %{}},
+                             level: 4,
+                             name: :choicehint
+                           }
+                         ],
+                         content: {:empty, %{correct: true}},
+                         level: 3,
+                         name: :choice
+                       }
+                     ],
+                     content: {:empty, %{type: "MultipleChoice"}},
+                     level: 2,
+                     name: :choicegroup
+                   }
+                 ],
+                 content: :empty,
+                 level: 1,
+                 name: :multiplechoiceresponse
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :problem,
+             parent: :empty
+           } = NaryTree.to_map(tree)
+  end
 end

@@ -3,6 +3,7 @@ defmodule Esperanto.Parsers.PlainText do
   Parse content as a plain text <p>
   """
 
+  alias Esperanto.ParserUtility
   alias Esperanto.Parsers.TopLevel
   alias Esperanto.Walker
   @behaviour Esperanto.Parser
@@ -15,24 +16,27 @@ defmodule Esperanto.Parsers.PlainText do
 
   def parse(walker, tree, parent_id, opts) do
     {input, _rest} = String.split_at(walker.input, 1)
-    node = NaryTree.get(tree, parent_id)
 
-    {tree, parent_id} =
-      case astify(input, node) do
+    sibiling =
+      NaryTree.get(tree, parent_id)
+      |> ParserUtility.find_sibiling(tree)
+
+    {tree, _parent_id} =
+      case astify(input, sibiling) do
         nil ->
           new_node = NaryTree.Node.new(:p, input)
           tree = NaryTree.add_child(tree, new_node, parent_id)
           {tree, new_node.id}
 
         updated_node ->
-          {_, tree} = NaryTree.get_and_update(tree, parent_id, &{&1, updated_node})
-          {tree, parent_id}
+          {node, tree} = NaryTree.get_and_update(tree, updated_node.id, &{&1, updated_node})
+          {tree, node.id}
       end
 
     TopLevel.parse(Walker.consume_input(walker, 1), tree, parent_id, opts)
   end
 
-  defp astify(input, %NaryTree.Node{name: :p, content: :empty} = node) do
+  defp astify(input, %NaryTree.Node{name: :p, content: :empty, children: []} = node) do
     %NaryTree.Node{node | content: input}
   end
 

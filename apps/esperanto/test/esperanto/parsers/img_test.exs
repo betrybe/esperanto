@@ -25,25 +25,23 @@ defmodule Esperanto.Parsers.ImgParseTest do
 
     {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
-    %{
-      children: [
-        %{
-          children: [
-            %{
-              content: {:empty, %{alt: "alt", src: "http://img.jpg"}},
-              level: 2,
-              name: "img"
-            }
-          ],
-          content: "Some text ",
-          level: 1,
-          name: :p
-        }
-      ],
-      content: :empty,
-      level: 0,
-      name: :empty,
-      parent: :empty
-    } = NaryTree.to_map(tree)
+    assert %{
+             children: [
+               %{
+                 content: "Some text ",
+                 level: 1,
+                 name: :p
+               },
+               %{
+                 content: {:empty, %{alt: "alt", src: "http://img.jpg"}},
+                 level: 1,
+                 name: "img"
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :empty,
+             parent: :empty
+           } = NaryTree.to_map(tree)
   end
 end

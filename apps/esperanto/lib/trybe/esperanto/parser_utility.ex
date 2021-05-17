@@ -1,9 +1,17 @@
-defmodule Esperanto.MatchUtility do
+defmodule Esperanto.ParserUtility do
   @moduledoc """
   Utility used to match inputs
   """
 
   require Logger
+
+  def find_sibiling(nil, _tree), do: nil
+
+  def find_sibiling(parent, tree),
+    do:
+      parent
+      |> NaryTree.children(tree)
+      |> List.last()
 
   def ensure_has_matched(walker, delimiter) do
     if !match(walker.input, delimiter) do

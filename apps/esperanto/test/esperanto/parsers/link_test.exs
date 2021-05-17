@@ -27,25 +27,23 @@ defmodule Esperanto.Parsers.LinkParseTest do
 
     {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
 
-    %{
-      children: [
-        %{
-          children: [
-            %{
-              content: {"link", %{href: "http://img.jpg"}},
-              level: 2,
-              name: "a"
-            }
-          ],
-          content: "Some text ",
-          level: 1,
-          name: :p
-        }
-      ],
-      content: :empty,
-      level: 0,
-      name: :empty,
-      parent: :empty
-    } = NaryTree.to_map(tree)
+    assert %{
+             children: [
+               %{
+                 content: "Some text ",
+                 level: 1,
+                 name: :p
+               },
+               %{
+                 content: {"link", %{href: "http://img.jpg"}},
+                 level: 1,
+                 name: "a"
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :empty,
+             parent: :empty
+           } = NaryTree.to_map(tree)
   end
 end
