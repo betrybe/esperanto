@@ -12,7 +12,7 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
   """
 
   @moduledoc """
-  Simple enclose the contents between `:start_delimiter` and :`end_delimiter`
+  Simple enclose the contents between `:start_delimiter` and `:end_delimiter`
   with the `enclosing_tag` and `attrs` specified
   It's possible to surround all siblings together with the `surround` tag if specified
   """
