@@ -11,6 +11,7 @@ defmodule Esperanto.MixProject do
       lockfile: "../../mix.lock",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
+      package: package(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
@@ -26,6 +27,16 @@ defmodule Esperanto.MixProject do
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  defp package() do
+    [
+      name: "esperanto",
+      licenses: ["Apache-2.0"],
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE*
+                CHANGELOG*),
+      links: %{"GitHub" => "https://github.com/betrybe/esperanto"}
     ]
   end
 

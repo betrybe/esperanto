@@ -7,7 +7,8 @@ defmodule Esperanto.Parsers.TopLevel do
     {Esperanto.Parsers.Img, nil},
     {Esperanto.Parsers.Link, nil},
     {Esperanto.Parsers.IndentedCode, nil},
-    {Esperanto.Parsers.InlineFencedCode, nil}
+    {Esperanto.Parsers.InlineFencedCode, nil},
+    {Esperanto.Parsers.FencedCode, nil}
   ]
 
   @spec default_parsers :: list()

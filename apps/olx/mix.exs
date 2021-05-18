@@ -9,6 +9,7 @@ defmodule Olx.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
+      package: package(),
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -26,6 +27,16 @@ defmodule Olx.MixProject do
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  defp package() do
+    [
+      name: "esperanto_olx",
+      licenses: ["Apache-2.0"],
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE*
+                CHANGELOG*),
+      links: %{"GitHub" => "https://github.com/betrybe/esperanto"}
     ]
   end
 

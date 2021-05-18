@@ -7,10 +7,23 @@ defmodule Esperanto.Olx.Problem do
   alias Esperanto.Walker
 
   def parse(input) do
-    label = {Esperanto.Olx.Parsers.Label, nil}
-    choice = {Esperanto.Olx.Parsers.Choice, nil}
-    tree = NaryTree.new(NaryTree.Node.new(:problem))
+    parsers = [
+      {Esperanto.Olx.Parsers.Label, nil},
+      {Esperanto.Olx.Parsers.IncorrectChoice, nil},
+      {Esperanto.Olx.Parsers.CorrectChoice, nil}
+    ]
+
     input = Walker.start(input)
-    TopLevel.parse(input, tree, tree.root, parsers: TopLevel.default_parsers() ++ [label, choice])
+    multiple_choice_response = NaryTree.Node.new(:multiplechoiceresponse)
+
+    tree =
+      NaryTree.Node.new(:problem)
+      |> NaryTree.new()
+      |> NaryTree.add_child(multiple_choice_response)
+
+    tree =
+      TopLevel.parse(input, tree, multiple_choice_response.id,
+        parsers: TopLevel.default_parsers() ++ parsers
+      )
   end
 end
