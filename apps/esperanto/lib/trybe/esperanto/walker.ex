@@ -142,6 +142,7 @@ defmodule Esperanto.Walker do
   @spec destroy_barrier(__MODULE__.t(), boolean()) :: __MODULE__.t()
   def destroy_barrier(walker, should_consume_barrier \\ true) do
     if !is_barried(walker) do
+      IO.inspect(walker)
       raise "trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen"
     end
 

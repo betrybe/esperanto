@@ -8,7 +8,9 @@ defmodule Esperanto.Parsers.TopLevel do
     {Esperanto.Parsers.Link, nil},
     {Esperanto.Parsers.IndentedCode, nil},
     {Esperanto.Parsers.InlineFencedCode, nil},
-    {Esperanto.Parsers.FencedCode, nil}
+    {Esperanto.Parsers.FencedCode, nil},
+    {Esperanto.Parsers.Italic, nil},
+    {Esperanto.Parsers.Bold, nil},
   ]
 
   @spec default_parsers :: list()

@@ -17,7 +17,7 @@ defmodule Esperanto.Parser do
   @callback parse(walker :: Walker.t(), tree :: tree(), parent_id :: integer(), opts :: keyword()) ::
               {tree(), Walker.t()}
   @doc """
-  Parse given input
+  Check if parser should handle current walker input
   paremters:
     * `walker`- Parse is responsible to walk trough input
     * `tree`- Current AST tree
@@ -31,6 +31,17 @@ defmodule Esperanto.Parser do
               parent_id :: integer(),
               opts :: keyword()
             ) :: boolean()
+
+  @doc """
+  Enchant parser returning a new tree
+  paremters:
+    * `tree`- Current AST tree
+    * `tree`- the node being created
+    * `parent_id`- id of the parent node
+  returns: a new enchanted tree
+  """
+  @callback enchant_parser(tree(), NaryTree.Node.t(), integer()) :: tree()
+  @optional_callbacks enchant_parser: 3
 
   def to_xml(tree) do
     tree
@@ -61,9 +72,11 @@ defmodule Esperanto.Parser do
 
     case tag do
       :empty -> children
+      :p -> {tag, attrs, [String.trim(content)] ++ children}
       _ -> {tag, attrs, [content] ++ children}
     end
   end
+
 
   defp get_content_and_attr({:empty, attrs}), do: {"", attrs}
   defp get_content_and_attr({content, attrs}), do: {content, attrs}
