@@ -1,5 +1,4 @@
 defmodule Esperanto.Parsers.Generics.EnclosingTag do
-
   alias Esperanto.Parsers.TopLevel
   alias Esperanto.ParserUtility
   alias Esperanto.Walker
