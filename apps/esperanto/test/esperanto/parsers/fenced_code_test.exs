@@ -13,7 +13,8 @@ defmodule Esperanto.Parsers.FencedCodeTest do
       assert true == FencedCode.should_parse(walker, tree, tree.root, [])
     end
 
-    test "when input does not matches the regex, Then should_parse has to return false" do
+
+    test "when input does not match the regex, Then should_parse has to return false" do
       tree = NaryTree.new(NaryTree.Node.new(:problem))
       walker = %Walker{input: "``"}
 
