@@ -72,7 +72,10 @@ defmodule Esperanto.Parser do
 
     case tag do
       :empty -> children
-      :p -> {tag, attrs, [String.trim(content)] ++ children}
+      :p -> case String.trim(content) do
+        "" -> children
+        content -> {tag, attrs, [content] ++ children}
+        end
       _ -> {tag, attrs, [content] ++ children}
     end
   end
