@@ -1,0 +1,52 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Quais as principais vantagens de colocar a pasta</p>
+         <code>node_modules</code>
+         <p>no</p>
+         <code>.gitignore</code>
+         <p>?</p>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="true">
+            <p>Não subir arquivos desnecessários para o</p>
+            <strong>
+               <p>git</p>
+            </strong>
+            <p>, fazendo com que a aplicação da sua máquina para o</p>
+            <strong>
+               <p>GitHub</p>
+            </strong>
+            <p>, ou vice-versa, suba mais rápido.</p>
+            <choicehint>
+               <p>Correto. A pasta node_modules costuma ser muito pesada, o que pode tornar extremamente demorado subir sua aplicação com ela para o GitHub ou baixá-la de lá para a sua máquina posteriormente. Essa demora é completamente evitável, uma vez que todas as dependências já estão listadas no arquivo package.json, que é bem mais leve e suficiente para garantir que, posteriormente, ao baixar novamente o projeto, apenas com um npm install todas as dependências sejam novamente instaladas.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>Não ver mais a pasta no espaço de trabalho do VsCode.</p>
+            <choicehint>
+               <p>Alternativa incorreta. A pasta não precisa ser enviada para o seu sistema de versionamento, mas você ainda precisará dela enquanto estiver trabalhando na aplicação. A inserção da pasta no .gitignore não a exclui ou a torna oculta no seu espaço de trabalho.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>Desinstalar as dependências que não serão mais usadas.</p>
+            <choicehint>
+               <p>Alternativa incorreta, pois inserir a pasta node_modules no .gitignore só evita que ela seja commitada e enviada para seus sistemas de versionamento de código (git, GitHub e afins), não desinstala nenhuma dependência.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>Ignorar as dependências enquanto trabalha na aplicação.</p>
+            <choicehint>
+               <p>Alternativa incorreta. Ao trabalhar em uma aplicação, você precisa que as dependências necessárias estejam instaladas e funcionando, logo, elas não podem ser ignoradas. Inserir a pasta node_modules no .gitignore só evita que ela seja commitada e enviada para seus sistemas de versionamento de código (git, GitHub e afins), não exclui ou impede o funcionamento das dependências instaladas.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>Não precisar dar um novo npm install ao baixar a aplicação do GitHub.</p>
+            <choicehint>
+               <p>Alternativa incorreta, uma vez que se a pasta node_modules não foi adicionada aos arquivos commitados, ao baixar sua aplicação do GitHub, nenhuma das dependências estará instalada na aplicação. Logo, você terá que rodar o comando npm install para que todos os módulos listados no package.json sejam instalados no projeto novamente.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

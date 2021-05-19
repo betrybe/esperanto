@@ -11,13 +11,21 @@
             <code>Node</code>
             <p>que utilizamos para instalar os pacotes em nossas aplicações React.</p>
             <choicehint>
-               <p>Como o nome sugere, *Node Package Manager*, o</p>
+               <p>Como o nome sugere,</p>
+               <em>
+                  <p>Node Package Manager</p>
+               </em>
+               <p>, o</p>
                <code>npm</code>
                <p>, é um gerenciador de pacotes do</p>
                <code>Node</code>
                <p>. Existem vários outros gerenciadores de pacotes, como o</p>
                <code>Yarn</code>
-               <p>, por exemplo, mas aqui na **Trybe** sempre priorizamos o uso do</p>
+               <p>, por exemplo, mas aqui na</p>
+               <strong>
+                  <p>Trybe</p>
+               </strong>
+               <p>sempre priorizamos o uso do</p>
                <code>npm</code>
                <p>.</p>
             </choicehint>

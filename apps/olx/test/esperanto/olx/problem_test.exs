@@ -114,6 +114,7 @@ defmodule Esperanto.Olx.ParseTest do
                      level: 2,
                      name: :label
                    },
+                   %{content: "\n", level: 2, name: :p},
                    %{
                      children: [
                        %{
@@ -183,6 +184,7 @@ defmodule Esperanto.Olx.ParseTest do
                      level: 2,
                      name: :label
                    },
+                   %{content: "\n", level: 2, name: :p},
                    %{
                      children: [
                        %{

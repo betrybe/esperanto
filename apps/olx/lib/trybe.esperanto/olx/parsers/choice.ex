@@ -4,7 +4,7 @@ defmodule Esperanto.Olx.Parsers.IncorrectChoice do
   """
 
   use Esperanto.Parsers.Generics.EnclosingTag,
-    start_delimiter: ~r/\(\ \)/,
+    start_delimiter: ~r/^\(\ \)/,
     end_delimiter: ~r/^\n/,
     enclosing_tag: :choice,
     attrs: %{:correct => false},
@@ -18,7 +18,7 @@ defmodule Esperanto.Olx.Parsers.CorrectChoice do
   """
 
   use Esperanto.Parsers.Generics.EnclosingTag,
-    start_delimiter: ~r/\(x\)/,
+    start_delimiter: ~r/^\(x\)/,
     end_delimiter: ~r/^\n/,
     enclosing_tag: :choice,
     attrs: %{:correct => true},
