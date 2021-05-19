@@ -12,7 +12,6 @@ defmodule Esperanto.Olx.Problem do
       {Esperanto.Olx.Parsers.IncorrectChoice, nil},
       {Esperanto.Olx.Parsers.CorrectChoice, nil},
       {Esperanto.Olx.Parsers.ChoiceHint, nil},
-      {Esperanto.Olx.Parsers.CorrectChoice, nil}
     ]
 
     input = Walker.start(input)
