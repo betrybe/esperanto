@@ -33,12 +33,12 @@ defmodule Esperanto.Parsers.ItalicTest do
              children: [
                %{content: "oi ", level: 1, name: :p},
                %{
-                content: {:empty, %{}},
-                level: 1,
-                name: :em,
-                children: [%{content: "Some italic", level: 2, name: :p}],
-              },
-              %{content: "\n no italic\n", level: 1, name: :p}
+                 content: {:empty, %{}},
+                 level: 1,
+                 name: :em,
+                 children: [%{content: "Some italic", level: 2, name: :p}]
+               },
+               %{content: "\n no italic\n", level: 1, name: :p}
              ],
              content: :empty,
              level: 0,
