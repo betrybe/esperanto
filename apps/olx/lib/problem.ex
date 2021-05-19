@@ -12,6 +12,7 @@ defmodule Esperanto.Olx.Problem do
       {Esperanto.Olx.Parsers.IncorrectChoice, nil},
       {Esperanto.Olx.Parsers.CorrectChoice, nil},
       {Esperanto.Olx.Parsers.ChoiceHint, nil}
+      {Esperanto.Olx.Parsers.CorrectChoice, nil}
     ]
 
     input = Walker.start(input)
@@ -21,6 +22,7 @@ defmodule Esperanto.Olx.Problem do
       NaryTree.Node.new(:problem)
       |> NaryTree.new()
       |> NaryTree.add_child(multiple_choice_response)
+
 
     TopLevel.parse(input, tree, multiple_choice_response.id,
       parsers: TopLevel.default_parsers() ++ parsers

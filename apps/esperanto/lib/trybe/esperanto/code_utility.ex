@@ -1,6 +1,6 @@
 defmodule Esperanto.CodeUtility do
   @moduledoc """
-  Ulities functions to parse code
+  Utilities functions to parse code
   """
 
   alias Esperanto.Walker
