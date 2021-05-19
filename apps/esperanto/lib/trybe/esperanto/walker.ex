@@ -84,6 +84,13 @@ defmodule Esperanto.Walker do
       ...> |> Esperanto.Walker.walk()
       %Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
 
+      Walker until ignores barrier
+
+      iex> Esperanto.Walker.start("a\nc")
+      ...> |> Esperanto.Walker.with_barrier("\n")
+      ...> |> Esperanto.Walker.walk_until(~r/c/)
+      %Esperanto.Walker{barrier: [~r/\n/, ~r/$a/], column: 1, input: "a\nc", line: 2, rest: ""}
+
   """
   @spec walk(__MODULE__.t()) :: __MODULE__.t()
   def walk(walker) do
@@ -98,17 +105,7 @@ defmodule Esperanto.Walker do
             barriered: walker.rest
         }
 
-      true ->
-        {next, rest} = String.split_at(walker.rest, 1)
-        {line, column} = increment_line_and_column(next, walker.line, walker.column)
-
-        %__MODULE__{
-          walker
-          | input: walker.input <> next,
-            rest: rest,
-            line: line,
-            column: column
-        }
+      true -> do_walk(walker)
     end
   end
 
@@ -116,7 +113,7 @@ defmodule Esperanto.Walker do
     cond do
       String.match?(walker.input, regex) -> walker
       walker.rest == "" -> walker
-      true -> walk_until(walk(walker), regex)
+      true -> walk_until(do_walk(walker), regex)
     end
   end
 
@@ -142,7 +139,6 @@ defmodule Esperanto.Walker do
   @spec destroy_barrier(__MODULE__.t(), boolean()) :: __MODULE__.t()
   def destroy_barrier(walker, should_consume_barrier \\ true) do
     if !is_barried(walker) do
-      IO.inspect(walker)
       raise "trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen"
     end
 
@@ -150,11 +146,7 @@ defmodule Esperanto.Walker do
 
     {rest, line, column} =
       if should_consume_barrier do
-        [barried_content] =
-          Regex.scan(barrier, walker.barriered)
-          |> List.flatten()
-          |> Enum.filter(fn s -> String.length(s) > 0 end)
-          |> Enum.take(1)
+        barried_content = strip_from_regex(walker.barriered, barrier)
 
         {line, column} = increment_line_and_column(barried_content, walker.line, walker.column)
         rest = String.replace(walker.barriered, barrier, "", global: false)
@@ -209,6 +201,31 @@ defmodule Esperanto.Walker do
             rest: String.slice(walker.input, length..-1) <> walker.rest
         }
     end
+  end
+
+  def consume_input_matching_regex(walker, regex) do
+    lenght = String.length(strip_from_regex(walker.input, regex))
+    consume_input(walker, lenght)
+  end
+
+  defp strip_from_regex(input, regex) do
+    Regex.scan(regex, input)
+      |> List.flatten()
+      |> Enum.filter(fn s -> String.length(s) > 0 end)
+      |> List.first()
+  end
+
+  defp do_walk(walker) do
+    {next, rest} = String.split_at(walker.rest, 1)
+    {line, column} = increment_line_and_column(next, walker.line, walker.column)
+
+    %__MODULE__{
+      walker
+      | input: walker.input <> next,
+        rest: rest,
+        line: line,
+        column: column
+    }
   end
 
   defp increment_line_and_column(<<input::utf8, rest::binary>>, line, column) do
