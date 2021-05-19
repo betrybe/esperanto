@@ -1,5 +1,5 @@
 defmodule Esperanto.Parsers.Generics.EmptyTag do
-  alias Esperanto.MatchUtility
+  alias Esperanto.ParserUtility
   alias Esperanto.Walker
 
   @spec __using__(keyword) ::
@@ -28,7 +28,7 @@ defmodule Esperanto.Parsers.Generics.EmptyTag do
 
       @impl Esperanto.Parser
       def parse(walker, tree, parent_id, _opts) do
-        MatchUtility.ensure_has_matched(walker, @delimiter)
+        ParserUtility.ensure_has_matched(walker, @delimiter)
 
         node = NaryTree.Node.new(@tag)
         tree = NaryTree.add_child(tree, node, parent_id)
@@ -38,7 +38,7 @@ defmodule Esperanto.Parsers.Generics.EmptyTag do
 
       @impl Esperanto.Parser
       def should_parse(%Walker{input: input}, _, _, opts) do
-        MatchUtility.match(input, @delimiter)
+        ParserUtility.match(input, @delimiter)
       end
     end
   end

@@ -33,26 +33,16 @@ defmodule Esperanto.Parsers.BrParseTest do
       |> Walker.start()
       |> TopLevel.parse(nil, nil, [])
 
-    %{
-      children: [
-        %{
-          children: [
-            %{
-              content: :empty,
-              level: 2,
-              name: :br
-            },
-            %{content: "b", level: 2, name: :p}
-          ],
-          content: "a",
-          level: 1,
-          name: :p
-        }
-      ],
-      content: :empty,
-      level: 0,
-      name: :empty,
-      parent: :empty
-    } = NaryTree.to_map(tree)
+    assert %{
+             children: [
+               %{content: "a", level: 1, name: :p},
+               %{content: :empty, level: 1, name: :br},
+               %{content: "b", level: 1, name: :p}
+             ],
+             content: :empty,
+             level: 0,
+             name: :empty,
+             parent: :empty
+           } = NaryTree.to_map(tree)
   end
 end

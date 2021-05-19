@@ -6,13 +6,13 @@ defmodule Esperanto.Walker do
 
   @never_match_regex ~r"$a"
 
-  defstruct [:input, rest: "", line: 1, column: 1, barrier: @never_match_regex, barriered: ""]
+  defstruct [:input, rest: "", line: 1, column: 1, barrier: [@never_match_regex], barriered: ""]
 
   @type t :: %__MODULE__{
           input: String.t(),
           rest: String.t() | atom(),
           line: integer(),
-          barrier: Regex.t(),
+          barrier: [Regex.t()],
           barriered: String.t(),
           column: integer()
         }
@@ -56,7 +56,7 @@ defmodule Esperanto.Walker do
       iex> Esperanto.Walker.start("a\nc")
       ...> |> Esperanto.Walker.with_barrier("\n")
       ...> |> Esperanto.Walker.walk()
-      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      %Esperanto.Walker{barrier: [~r/\n/, ~r/$a/], barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
       iex> Esperanto.Walker.start("a\nc")
       ...> |> Esperanto.Walker.with_barrier("\n")
@@ -64,13 +64,13 @@ defmodule Esperanto.Walker do
       ...> |> Esperanto.Walker.walk()
       ...> |> Esperanto.Walker.walk()
       ...> |> Esperanto.Walker.walk()
-      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      %Esperanto.Walker{barrier: [~r/\n/, ~r/$a/], barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
 
       iex> Esperanto.Walker.start("a\nc")
       ...> |> Esperanto.Walker.with_barrier("\n")
       ...> |> Esperanto.Walker.walk()
-      %Esperanto.Walker{barrier: ~r/\n/, barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
+      %Esperanto.Walker{barrier: [~r/\n/, ~r/$a/], barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
 
       iex> Esperanto.Walker.start("a\nc")
       ...> |> Esperanto.Walker.with_barrier("\n")
@@ -91,7 +91,7 @@ defmodule Esperanto.Walker do
       is_barried(walker) ->
         walker
 
-      String.match?(walker.rest, walker.barrier) ->
+      String.match?(walker.rest, List.first(walker.barrier)) ->
         %__MODULE__{
           walker
           | rest: :barried,
@@ -131,7 +131,7 @@ defmodule Esperanto.Walker do
   def with_barrier(walker, %Regex{} = barrier) do
     %__MODULE__{
       walker
-      | barrier: barrier
+      | barrier: [barrier] ++ walker.barrier
     }
   end
 
@@ -145,24 +145,28 @@ defmodule Esperanto.Walker do
       raise "trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen"
     end
 
+    barrier = List.first(walker.barrier)
+
     {rest, line, column} =
       if should_consume_barrier do
         [barried_content] =
-          Regex.scan(walker.barrier, walker.barriered)
+          Regex.scan(barrier, walker.barriered)
           |> List.flatten()
           |> Enum.filter(fn s -> String.length(s) > 0 end)
           |> Enum.take(1)
 
         {line, column} = increment_line_and_column(barried_content, walker.line, walker.column)
-        rest = String.replace(walker.barriered, walker.barrier, "", global: false)
+        rest = String.replace(walker.barriered, barrier, "", global: false)
         {rest, line, column}
       else
         {walker.barriered, walker.line, walker.column}
       end
 
+    {_, new_barrier} = List.pop_at(walker.barrier, 0)
+
     %__MODULE__{
       walker
-      | barrier: @never_match_regex,
+      | barrier: new_barrier,
         rest: rest,
         barriered: "",
         line: line,

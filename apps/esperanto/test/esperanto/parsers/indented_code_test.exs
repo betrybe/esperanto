@@ -35,30 +35,16 @@ defmodule Esperanto.Parsers.IndentedParseTest do
 
     assert %{
              children: [
+               %{content: "oi", level: 1, name: :p},
                %{
                  children: [
-                   %{
-                     children: [
-                       %{
-                         content: "Some\n \tCode\n",
-                         level: 3,
-                         name: :code
-                       }
-                     ],
-                     content: :empty,
-                     level: 2,
-                     name: :pre
-                   },
-                   %{
-                     content: " NoCode\n",
-                     level: 2,
-                     name: :p
-                   }
+                   %{content: "Some\n \tCode\n", level: 2, name: :code}
                  ],
-                 content: "oi",
+                 content: :empty,
                  level: 1,
-                 name: :p
-               }
+                 name: :pre
+               },
+               %{content: " NoCode\n", level: 1, name: :p}
              ],
              content: :empty,
              level: 0,

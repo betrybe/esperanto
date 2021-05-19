@@ -36,42 +36,22 @@ defmodule Esperanto.Parsers.FencedCodeTest do
 
     assert %{
              children: [
+               %{content: "oi ", level: 1, name: :p},
+               %{content: "Some Code", level: 1, name: :code},
+               %{content: "\n NoCode\n", level: 1, name: :p},
                %{
                  children: [
                    %{
-                     content: "Some Code",
+                     content: "\nsome\n   code\nblock\n",
                      level: 2,
                      name: :code
-                   },
-                   %{
-                     children: [
-                       %{
-                         children: [
-                           %{
-                             content: "\nsome\n   code\nblock\n",
-                             level: 4,
-                             name: :code
-                           }
-                         ],
-                         content: :empty,
-                         level: 3,
-                         name: :pre
-                       },
-                       %{
-                         content: "\n",
-                         level: 3,
-                         name: :p
-                       }
-                     ],
-                     content: "\n NoCode\n",
-                     level: 2,
-                     name: :p
                    }
                  ],
-                 content: "oi ",
+                 content: :empty,
                  level: 1,
-                 name: :p
-               }
+                 name: :pre
+               },
+               %{content: "\n", level: 1, name: :p}
              ],
              content: :empty,
              level: 0,

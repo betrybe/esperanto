@@ -1,6 +1,6 @@
 defmodule Esperanto.Parsers.Generics.EnclosingTag do
-  alias Esperanto.MatchUtility
   alias Esperanto.Parsers.TopLevel
+  alias Esperanto.ParserUtility
   alias Esperanto.Walker
 
   @doc """
@@ -60,7 +60,8 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
 
       @impl Esperanto.Parser
       def parse(walker, tree, parent_id, opts) do
-        MatchUtility.ensure_has_matched(walker, @start_delimiter)
+        ParserUtility.ensure_has_matched(walker, @start_delimiter)
+
         node = NaryTree.Node.new(@tag, {:empty, @attrs})
 
         unquote(create_node_bloc)
@@ -76,14 +77,12 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
 
       @impl Esperanto.Parser
       def should_parse(%Walker{input: input}, _, _, opts) do
-        MatchUtility.match(input, @start_delimiter)
+        ParserUtility.match(input, @start_delimiter)
       end
 
       defp find_surrounding(parent, tree),
         do:
-          parent
-          |> NaryTree.children(tree)
-          |> List.last()
+          ParserUtility.find_sibiling(parent, tree)
           |> find_surrounding(tree, parent.id)
 
       # node is arealdy surrounded with the desire tag
@@ -97,8 +96,8 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
 
       defp find_surrounding(
              _sibiling,
-             tree,
-             parent_id
+             _tree,
+             _parent_id
            ) do
         nil
       end
