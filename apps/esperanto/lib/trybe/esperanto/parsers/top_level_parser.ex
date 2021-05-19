@@ -10,7 +10,7 @@ defmodule Esperanto.Parsers.TopLevel do
     {Esperanto.Parsers.InlineFencedCode, nil},
     {Esperanto.Parsers.FencedCode, nil},
     {Esperanto.Parsers.Italic, nil},
-    {Esperanto.Parsers.Bold, nil},
+    {Esperanto.Parsers.Bold, nil}
   ]
 
   @spec default_parsers :: list()

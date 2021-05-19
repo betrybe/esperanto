@@ -105,7 +105,8 @@ defmodule Esperanto.Walker do
             barriered: walker.rest
         }
 
-      true -> do_walk(walker)
+      true ->
+        do_walk(walker)
     end
   end
 
@@ -210,9 +211,9 @@ defmodule Esperanto.Walker do
 
   defp strip_from_regex(input, regex) do
     Regex.scan(regex, input)
-      |> List.flatten()
-      |> Enum.filter(fn s -> String.length(s) > 0 end)
-      |> List.first()
+    |> List.flatten()
+    |> Enum.filter(fn s -> String.length(s) > 0 end)
+    |> List.first()
   end
 
   defp do_walk(walker) do

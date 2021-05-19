@@ -33,12 +33,12 @@ defmodule Esperanto.Parsers.BoldTest do
              children: [
                %{content: "oi ", level: 1, name: :p},
                %{
-                content: {:empty, %{}},
-                level: 1,
-                name: :strong,
-                children: [%{content: "Some bold", level: 2, name: :p}],
-              },
-              %{content: "\n no bold\n", level: 1, name: :p}
+                 content: {:empty, %{}},
+                 level: 1,
+                 name: :strong,
+                 children: [%{content: "Some bold", level: 2, name: :p}]
+               },
+               %{content: "\n no bold\n", level: 1, name: :p}
              ],
              content: :empty,
              level: 0,

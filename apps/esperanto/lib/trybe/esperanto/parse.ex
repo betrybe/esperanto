@@ -71,15 +71,19 @@ defmodule Esperanto.Parser do
     tag = tree_map[:name]
 
     case tag do
-      :empty -> children
-      :p -> case String.trim(content) do
-        "" -> children
-        content -> {tag, attrs, [content] ++ children}
+      :empty ->
+        children
+
+      :p ->
+        case String.trim(content) do
+          "" -> children
+          content -> {tag, attrs, [content] ++ children}
         end
-      _ -> {tag, attrs, [content] ++ children}
+
+      _ ->
+        {tag, attrs, [content] ++ children}
     end
   end
-
 
   defp get_content_and_attr({:empty, attrs}), do: {"", attrs}
   defp get_content_and_attr({content, attrs}), do: {content, attrs}

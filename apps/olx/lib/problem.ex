@@ -15,11 +15,12 @@ defmodule Esperanto.Olx.Problem do
       {Esperanto.Olx.Parsers.ChoiceHint, nil}
     ]
 
-    walker = if String.ends_with?(input, "\n") do
-      Walker.start(input)
-    else
-      Walker.start(input <> "\n")
-    end
+    walker =
+      if String.ends_with?(input, "\n") do
+        Walker.start(input)
+      else
+        Walker.start(input <> "\n")
+      end
 
     multiple_choice_response = NaryTree.Node.new(:multiplechoiceresponse)
 
