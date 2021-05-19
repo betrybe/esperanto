@@ -34,8 +34,7 @@ defmodule Esperanto.MixProject do
     [
       name: "esperanto",
       licenses: ["Apache-2.0"],
-      files: ~w(lib .formatter.exs mix.exs README* LICENSE*
-                CHANGELOG*),
+      files: ~w(lib .formatter.exs mix.exs README*),
       links: %{"GitHub" => "https://github.com/betrybe/esperanto"}
     ]
   end
