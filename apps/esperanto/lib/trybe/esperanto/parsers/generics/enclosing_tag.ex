@@ -67,7 +67,7 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
 
         {tree, walker} =
           walker
-          |> Walker.consume_input()
+          |> Walker.consume_input_matching_regex(@start_delimiter)
           |> Walker.with_barrier(@end_delimiter)
           |> TopLevel.parse(tree, node.id, opts)
 
