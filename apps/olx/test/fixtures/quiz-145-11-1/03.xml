@@ -5,6 +5,7 @@
          <code>node_modules</code>
          <p>?</p>
       </label>
+      <br></br>
       <choicegroup type="MultipleChoice">
          <choice correct="false">
             <code>nvm install</code>
@@ -43,6 +44,14 @@
          <choice correct="true">
             <code>npm init</code>
             <choicehint>
+               <p>Alternativa incorreta. O comando</p>
+               <code>npm init</code>
+               <p>cria um arquivo package.json, onde serão listadas todas as dependências da sua aplicação.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <code>node-modules install</code>
+            <choicehint>
                <p>O comando</p>
                <code>node-modules install</code>
                <p>não existe. A instalação dos módulos e dependências do projeto acontece por meio do comando</p>
@@ -50,16 +59,7 @@
                <p>.</p>
             </choicehint>
          </choice>
-         <choice correct="false">
-            <code>node-modules install</code>
-            <choicehint>
-               <p>Quais as principais vantagens de colocar a pasta</p>
-               <code>node_modules</code>
-               <p>no</p>
-               <code>.gitignore</code>
-               <p>?</p>
-            </choicehint>
-         </choice>
       </choicegroup>
    </multiplechoiceresponse>
 </problem>
+

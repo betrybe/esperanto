@@ -5,6 +5,7 @@
          <code>node_modules</code>
          <p>?</p>
       </label>
+      <br></br>
       <choicegroup type="MultipleChoice">
          <choice correct="false">
             <p>Listar as dependências do projeto.</p>

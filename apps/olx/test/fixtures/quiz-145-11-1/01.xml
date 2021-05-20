@@ -5,6 +5,7 @@
          <code>npm</code>
          <p>?</p>
       </label>
+      <br></br>
       <choicegroup type="MultipleChoice">
          <choice correct="true">
             <p>É um gerenciador de pacotes do</p>

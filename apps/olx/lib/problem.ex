@@ -22,7 +22,6 @@ defmodule Esperanto.Olx.Problem do
         Walker.start(input <> "\n")
       end
 
-    input = Walker.start(input)
     multiple_choice_response = NaryTree.Node.new(:multiplechoiceresponse)
 
     tree =
@@ -40,8 +39,5 @@ defmodule Esperanto.Olx.Problem do
     |> parse()
     |> elem(0)
     |> Parser.to_xml()
-    TopLevel.parse(input, tree, multiple_choice_response.id,
-      parsers: TopLevel.default_parsers() ++ parsers
-    )
   end
 end

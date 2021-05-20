@@ -15,10 +15,12 @@ defmodule Esperanto.Olx.RealExamples do
           file = unquote(file)
           dir = unquote(dir)
 
+
           parsersed_xml =
             (@fixtures_path <> dir <> file <> ".md")
             |> File.read!()
             |> Problem.to_xml()
+
 
           expected_xml =
             (@fixtures_path <> dir <> file <> ".xml")
