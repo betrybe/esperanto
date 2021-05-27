@@ -26,7 +26,7 @@ Ex:
 the following markdown:
 
 ```
->>Which of the following is an example of a vegetable?||You can select only one option.<<
+>>Which of the following is an example of a vegetable?
 
 ( ) apple {{An apple is the fertilized ovary that comes from an apple tree
 and contains seeds classifying it as a fruit.}}
@@ -45,7 +45,6 @@ generate the following xml:
 <problem>
   <multiplechoiceresponse>
     <label>Which of the following is an example of a vegetable?</label>
-    <description>You can select only one option.</description>
     <choicegroup type="MultipleChoice">
       <choice correct="false">apple
         <choicehint>An apple is the fertilized ovary that comes from an apple
