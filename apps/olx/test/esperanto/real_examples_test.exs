@@ -4,7 +4,10 @@ defmodule Esperanto.Olx.RealExamples do
 
   @fixtures_path "test/fixtures/"
 
-  for dir <- ["quiz-145-11-1/"] do
+  for dir <- [
+    "quiz-145-11-1/",
+    "quiz-148-12-1/"
+    ] do
     describe "dir #{dir}" do
       for file <-
             (@fixtures_path <> dir)
@@ -21,13 +24,12 @@ defmodule Esperanto.Olx.RealExamples do
             |> File.read!()
             |> Problem.to_xml()
 
-
           expected_xml =
             (@fixtures_path <> dir <> file <> ".xml")
             |> File.read!()
-            |> String.split("\n")
-            |> Enum.map(&String.trim/1)
-            |> Enum.join("")
+            |> String.trim()
+            |> String.replace(~r/>[[:blank:]\n]+</, "><")
+
 
           assert parsersed_xml == expected_xml
         end

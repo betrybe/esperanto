@@ -34,10 +34,10 @@ defmodule Esperanto.Olx.Problem do
     )
   end
 
-  def to_xml(input) do
+  def to_xml(input, opts \\ []) do
     input
     |> parse()
     |> elem(0)
-    |> Parser.to_xml()
+    |> Parser.to_xml(opts)
   end
 end

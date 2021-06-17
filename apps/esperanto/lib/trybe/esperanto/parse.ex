@@ -43,11 +43,12 @@ defmodule Esperanto.Parser do
   @callback enchant_parser(tree(), NaryTree.Node.t(), integer()) :: tree()
   @optional_callbacks enchant_parser: 3
 
-  def to_xml(tree) do
+  def to_xml(tree, opts \\ []) do
+    opts = Keyword.merge(opts, format: :none)
     tree
     |> NaryTree.to_map()
     |> do_to_xml()
-    |> XmlBuilder.generate(format: :none)
+    |> XmlBuilder.generate(opts)
   end
 
   @spec do_to_xml(nil | maybe_improper_list | map) :: {any, any, [...]}

@@ -16,7 +16,7 @@ defmodule Esperanto.Parsers.InlineFencedCode do
     if content == "" do
       {tree, walker}
     else
-      code = NaryTree.Node.new(:code, content)
+      code = NaryTree.Node.new(:code, CodeUtility.escape(content))
       tree = NaryTree.add_child(tree, code, parent_id)
       {tree, walker}
     end
