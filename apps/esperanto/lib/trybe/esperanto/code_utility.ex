@@ -14,4 +14,14 @@ defmodule Esperanto.CodeUtility do
       walker
     end
   end
+
+
+  def escape(text) do
+    String.replace(text, ~w(& < > "), &do_escape/1)
+  end
+
+  defp do_escape("&"), do: "&amp;"
+  defp do_escape("<"), do: "&lt;"
+  defp do_escape(">"), do: "&gt;"
+  defp do_escape("\""), do: "&quot;"
 end

@@ -2,6 +2,17 @@ defmodule Esperanto.Olx.ParseTest do
   alias Esperanto.Olx.Problem
   use ExUnit.Case
 
+   test "sintaxe inválida" do
+    input = ~S"""
+     {{não fechei o enunciado
+      oi
+    """
+    {tree, _} = Problem.parse(input)
+
+  end
+
+
+
   test "top level AST is problem" do
     input = ~S"""
     """
@@ -159,6 +170,28 @@ defmodule Esperanto.Olx.ParseTest do
            } = NaryTree.to_map(tree)
   end
 
+  test "choice with fenced code" do
+    input = ~S"""
+    >>Qual dos blocos de código a seguir utiliza corretamente a sintaxe `JSX` para inserir uma lista à aplicação?<<
+    ( )
+    ```
+    const task = (value, value2) => {
+      return(
+        <ol className="taskList">
+          <li>{value}</li>
+        </ol>
+        <ol className="taskList2">
+          <li>{value2}</li>
+        </ol>
+      )
+    }
+    """
+
+
+    {tree, _} = Problem.parse(input)
+
+    assert %{ childre: [] } = tree
+  end
   test "plain text with label, choice and choice hint" do
     input = ~S"""
     >>Hello<<

@@ -1,0 +1,47 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Complete corretamente o bloco de código a seguir:</p>
+         <pre>
+            <code>
+import React from `react`;
+
+class App extends React.component {
+    _______(props) {
+        _______this()
+            this.handleClick = this._______.bind(this)
+    }
+
+    handleClick() {
+        console.log('clicou aqui!')
+    }
+
+    render() {
+        return &lt;button onClick={this.handleClick}&gt;Clique aqui!&lt;/button&gt;
+    }
+}
+
+export default App;
+</code>
+         </pre>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <p>event, super, state.</p>
+         </choice>
+         <choice correct="false">
+            <p>constructor, super, handleClick.</p>
+         </choice>
+         <choice correct="false">
+            <p>setState, handleClick, props.</p>
+         </choice>
+         <choice correct="false">
+            <p>constructor, event, state.</p>
+         </choice>
+         <choice correct="false">
+            <p>setState, this.super, handleClick</p>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+
