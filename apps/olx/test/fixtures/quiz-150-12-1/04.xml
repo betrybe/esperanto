@@ -1,0 +1,69 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Leia as afirmações a seguir e marque a alternativa que apresenta as afirmações corretas.
+
+I. Não se deve fazer atribuições diretamente com</p>
+         <code>this.state</code>
+         <p>para atualizar um estado.
+
+II. Usamos o this.setState() para definir o estado inicial de um componente.
+
+III. Devemos usar</p>
+         <code>this.setState(novoEstado)</code>
+         <p>sempre que quisermos atualizar o estado de um componente.
+
+IV. Não se deve utilizar o this.setState passando callbacks.</p>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <p>II e IV.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Para definir o estado inicial de um componente utilizamos o</p>
+               <code>this.state</code>
+               <p>. Além disso, para garantir a ordem correta de atualização de um estado devemos passar</p>
+               <code>callbacks</code>
+               <p>, recebendo como parâmetros o estado anterior e as</p>
+               <code>props</code><p>do componente na função</p>
+               <code>setState</code>
+               <p>, para garantir que as atualizações de estado aconteçam uma depois da outra.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>I e II.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Para definir o estado inicial de um componente utilizamos o</p>
+            <code>this.state</code><p>.</p></choicehint>
+         </choice>
+         <choice correct="true">
+            <p>I e III.</p>
+            <choicehint>
+                <p>Essa alternativa está correta. Não devemos fazer atribuições diretamente com</p>
+                <code>this.state</code><p>para atualizar um estado. Em vez disso, devemos utilizar o</p>
+                <code>this.setState(novoEstado)</code>
+                <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>II e III.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Para definir o estado inicial de um componente utilizamos o</p>
+               <code>this.state</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>III e IV.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Para garantir a ordem correta de atualização de um estado devemos passar</p>
+               <code>callbacks</code>
+               <p>recebendo como parâmetros o estado anterior e as</p>
+               <code>props</code><p>do componente na função</p>
+               <code>setState</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

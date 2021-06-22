@@ -1,0 +1,68 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Sobre event handlers em</p>
+         <code>React</code>
+         <p>, julgue as afirmações verdadeiras ou falsas e assinale a alternativa que apresenta a sequência correta.</p>
+         <br></br>
+         <br></br>
+         <p>1. Funções que tratam eventos devem ser vinculadas aos seus respectivos elementos com</p>
+         <code>{this.minhaFuncao}</code>
+         <p>.</p>
+         <br></br>
+         <p>2. Funções que tratam eventos devem ser vinculadas aos seus respectivos elementos com</p>
+         <code>{() =&gt; this.minhaFuncao('Meu parametro')}</code>
+         <p>.</p>
+         <br></br>
+         <p>3. Funções que tratam eventos podem estar tanto dentro da classe do componente quanto fora dela, as duas maneiras são igualmente corretas.</p>
+         <br></br>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="true">
+            <p>V, V, F.</p>
+            <choicehint>
+               <p>Essa alternativa está correta. Funções que tratam eventos devem ser vinculadas aos seus respectivos elementos com</p>
+               <code>{this.minhaFuncao}</code><p>ou com</p><code>{() =&gt; this.minhaFuncao('Meu parametro')}</code>
+               <p>. Embora uma função que trate eventos funcione estando fora da classe, esta não é a maneira correta de se criar eventos em</p>
+               <code>React</code>
+               <p>, pois se a função se refere ao componente, ela deve ser parte de sua classe.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>V, F, V.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Funções que tratam eventos podem ser vinculadas aos seus respectivos elementos tanto com</p>
+               <code>{this.minhaFuncao}</code><p>, quanto com</p>
+               <code>{() =&gt; this.minhaFuncao('Meu parametro')}</code>
+               <p>. Além disso, se tratando de eventos em</p><code>React</code>
+               <p>, se uma função se refere ao componente, ela deve ser parte de sua classe.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>F, F, V.</p>
+               <choicehint>
+               <p>Essa alternativa está incorreta. Funções que tratam eventos devem ser vinculadas aos seus respectivos elementos com</p>
+               <code>{this.minhaFuncao}</code><p>ou com</p>
+               <code>{() =&gt; this.minhaFuncao('Meu parametro')}</code>
+               <p>. Embora uma função que trate eventos funcione estando fora da classe, esta não é a maneira correta de se criar eventos em</p>
+               <code>React</code><p>, pois se a função se refere ao componente, ela deve ser parte de sua classe.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>V, F, F.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Funções que tratam eventos podem ser vinculadas aos seus respectivos elementos tanto com</p>
+               <code>{this.minhaFuncao}</code><p>, quanto com</p>
+               <code>{() =&gt; this.minhaFuncao('Meu parametro')}</code>
+               <p>. Além disso, se tratando de eventos em</p><code>React</code>
+               <p>, se uma função se refere ao componente, ela deve ser parte de sua classe.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>V, V, V.</p>
+            <choicehint><p>Essa alternativa está incorreta. Se tratando de eventos em</p><code>React</code><p>, se uma função se refere ao componente, o correto é que ela faça parte de sua classe.</p></choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

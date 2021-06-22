@@ -28,18 +28,83 @@ export default App;
       <choicegroup type="MultipleChoice">
          <choice correct="false">
             <p>event, super, state.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A primeira lacuna se refere ao método</p>
+               <code>constructor</code>
+               <p>, necessário para se fazer o</p>
+               <em><p>bind</p></em>
+               <p>manualmente a uma função. Em seguida, a segunda lacuna se refere a função</p>
+               <code>super()</code>
+               <p>, que dispensa o</p><em><p>this</p></em>
+               <p>e fica dentro do</p>
+               <code>construtor</code>
+               <p>, garantindo que a lógica interna do</p>
+               <code>React</code>
+               <p>rode antes da nossa. Na terceira lacuna, no momento do</p>
+               <em><p>bind</p></em>
+               <p>, a sintaxe correta é</p>
+               <code>this.nomeDaSuaFunção = this.nomeDaSuaFunção.bind(this)</code>
+               <p>.</p>
+            </choicehint>
          </choice>
          <choice correct="true">
             <p>constructor, super, handleClick.</p>
+            <choicehint>
+               <p>Essa alternativa está correta. Para conseguir fazer o bind manualmente a uma função, precisamos do método</p>
+               <code>constructor</code>
+               <p>. Dentro dele, chamamos a função</p>
+               <code>super()</code>
+               <p>para garantir que a lógica interna do React rode</p>
+               <strong><p>antes</p></strong>
+               <p>da nossa. Ao fazer o</p>
+               <code>bind</code><p>, a sintaxe é</p>
+               <code>this.nomeDaSuaFunção = this.nomeDaSuaFunção.bind(this)</code>
+               <p>.</p>
+            </choicehint>
          </choice>
          <choice correct="false">
             <p>setState, handleClick, props.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A primeira lacuna se refere ao método</p>
+               <code>constructor</code>
+               <p>, necessário para se fazer o</p><em><p>bind</p></em>
+               <p>manualmente a uma função. Em seguida, a segunda lacuna se refere a função</p>
+               <code>super()</code><p>, que dispensa o</p><em><p>this</p></em><p>e fica dentro do</p>
+               <code>construtor</code>
+               <p>, garantindo que a lógica interna do</p>
+               <code>React</code><p>rode antes da nossa. Na terceira lacuna, no momento do</p>
+               <em><p>bind</p></em><p>, a sintaxe correta é</p>
+               <code>this.nomeDaSuaFunção = this.nomeDaSuaFunção.bind(this)</code>
+               <p>.</p>
+            </choicehint>
          </choice>
          <choice correct="false">
             <p>constructor, event, state.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A primeira lacuna é realmente preenchida pelo método</p>
+               <code>constructor</code><p>, porém, dentro deste deveríamos chamar a função</p>
+               <code>super()</code><p>para garantir que a lógica interna do</p>
+               <code>React</code><p>rode antes da nossa. Ao fazer o</p><em><p>bind</p></em>
+               <p>, a sintaxe correta é</p>
+               <code>this.nomeDaSuaFunção = this.nomeDaSuaFunção.bind(this)</code>
+               <p>.</p>
+            </choicehint>
          </choice>
          <choice correct="false">
             <p>setState, this.super, handleClick</p>
+            <choicehint>
+            <p>Essa alternativa está incorreta. A primeira lacuna se refere ao método</p>
+            <code>constructor</code><p>, necessário para se fazer o</p><em><p>bind</p></em>
+            <p>manualmente a uma função. Em seguida, a segunda lacuna se refere a função</p>
+            <code>super()</code><p>, que dispensa o</p>
+            <em><p>this</p></em><p>e fica dentro do</p>
+            <code>construtor</code>
+            <p>, garantindo que a lógica interna do</p><code>React</code>
+            <p>rode antes da nossa. Na terceira lacuna, no momento do</p>
+            <em><p>bind</p></em><p>, a sintaxe correta é</p>
+            <code>this.nomeDaSuaFunção = this.nomeDaSuaFunção.bind(this)</code>
+            <p>.</p>
+            </choicehint>
          </choice>
       </choicegroup>
    </multiplechoiceresponse>

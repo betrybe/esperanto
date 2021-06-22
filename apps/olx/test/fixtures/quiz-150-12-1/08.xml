@@ -1,0 +1,132 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Um contador de cliques feito em</p>
+         <code>React</code>
+         <p>tem no componente pai o estado responsável pela contagem de cliques e a função que atualiza o estado, como você pode ver a seguir:</p>
+         <pre>
+            <code>
+class ComponentePai extends React.Component {
+  constructor() {
+    super();
+
+    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      numeroDeCliques: 0,
+    };
+  }
+
+   handleClick() {
+    this.setState((estadoAnterior) =&gt; ({
+      numeroDeCliques: estadoAnterior.numeroDeCliques + 1,
+    }));
+  }
+}
+</code>
+         </pre>
+         <br></br>
+         <p>Sabendo que a função de atualização do estado é passada para o componente filho por</p>
+         <code>props</code>
+         <p>, marque a alternativa que apresenta a forma correta de atualizar o estado do número de cliques no componente pai, a partir do componente filho.</p>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="true">
+            <br></br>
+            <pre>
+               <code>
+class ComponenteFilho extends React.Component {
+  render() {
+    const { handleClick } = this.props;
+
+    return (&lt;button type=&quot;button&quot; onClick={handleClick} &gt;Contar cliques!&lt;/button&gt;);
+  }
+}
+</code>
+            </pre>
+            <choicehint>
+              <p>Essa alternativa está correta. A função que altera o estado do componente pai chega ao componente filho via</p>
+              <code>props</code><p>, é desestruturada, e passada no</p>
+              <code>onClick</code><p>do elemento do componente filho, que deve disparar a atualização.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+class ComponenteFilho extends React.Component {
+  render() {
+    const { handleClick } = this.props;
+
+    return (&lt;button type=&quot;button&quot;&gt;{handleClick}&lt;/button&gt;);
+  }
+}
+</code>
+            </pre>
+            <choicehint>
+              <p>Essa alternativa está incorreta. A função de alterar o número de cliques passada pelo componente pai deve estar dentro do</p>
+              <code>onClick</code><p>para funcionar.</p>
+            </choicehint>            
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+class ComponenteFilho extends React.Component {
+  render() {
+
+    return (&lt;button type=&quot;button&quot; onClick={handleClick} &gt;Contar cliques!&lt;/button&gt;);
+  }
+}
+</code>
+            </pre>
+            <choicehint>
+              <p>Essa alternativa está incorreta. Uma vez que não está desestruturando a prop com a função de alterar o número de cliques passada pelo componente pai, deveria haver na chamada do</p>
+              <code>onClick</code><p>um</p><code>this.props.handleClick</code>
+              <p>, do contrário, handleClick será undefined.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+class ComponenteFilho extends React.Component {
+  render() {
+    return (&lt;button type=&quot;button&quot; onClick={this.props.handleClick()} &gt;Contar cliques!&lt;/button&gt;);
+  }
+}
+</code>
+            </pre>
+            <choicehint>
+              <p>Essa alternativa está incorreta. No</p>
+              <code>onClick</code>
+              <p>deve ser passada só a função, que será chamada no momento do clique. Ao setar uma chamada da função, a aplicação pode entrar em</p>
+              <em><p>looping</p></em><p>de renderização e quebrar.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+class ComponenteFilho extends React.Component {
+ constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+
+    render() {
+        return (&lt;button type=&quot;button&quot; onClick={this.handleClick} &gt;Contar cliques!&lt;/button&gt;);
+    }
+}
+</code>
+            </pre>
+          <choicehint>
+          <p>Essa alternativa está incorreta. A função que altera o estado do componente pai chega ao componente filho via</p>
+          <code>props</code>
+          <p>, portanto não é necessário fazer o bind dela novamente, apenas desestruturá-la e passá-la no</p>
+          <code>onClick</code><p>do componente filho, cujo evento deve atualizar o estado do componente pai.</p>
+          </choicehint>            
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+
