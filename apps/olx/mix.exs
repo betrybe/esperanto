@@ -44,6 +44,9 @@ defmodule Olx.MixProject do
     [
       {:esperanto, in_umbrella: true},
       {:nary_tree, "~> 0.1.1"},
+      {:sweet_xml, "~> 0.6.6"},
+      {:elixir_xml_to_map, "~> 2.0"},
+      {:elixir_map_to_xml, "~> 0.1.0"},
       {:ex_doc, "~> 0.24.1", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0", only: :dev, runtime: false},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},

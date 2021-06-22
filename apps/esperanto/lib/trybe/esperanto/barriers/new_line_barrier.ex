@@ -2,9 +2,10 @@ defmodule Esperanto.Barriers.NewLineBarrier do
   alias Esperanto.Walker
   @behaviour Esperanto.Barrier
 
-  def should_bar(%Walker{ input: input, rest: rest }) do
+  def should_bar(%Walker{input: input, rest: rest}) do
     input != "  " and String.match?(rest, ~r/^\n/)
   end
+
   def destroy_barrier(walker) do
     BarrierUtility.assert_walker_is_barried(walker)
     barried_content = Walker.strip_from_regex(walker.barriered, ~r/^\n/)

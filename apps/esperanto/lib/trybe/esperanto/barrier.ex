@@ -14,5 +14,4 @@ defmodule Esperanto.Barrier do
   returns: A new walker without the barrier`
   """
   @callback destroy_barrier(walker :: Walker.t()) :: Walker.t()
-
 end

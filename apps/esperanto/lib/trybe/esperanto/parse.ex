@@ -45,6 +45,7 @@ defmodule Esperanto.Parser do
 
   def to_xml(tree, opts \\ []) do
     opts = Keyword.merge(opts, format: :none)
+
     tree
     |> NaryTree.to_map()
     |> do_to_xml()
