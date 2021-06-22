@@ -5,9 +5,9 @@ defmodule Esperanto.Olx.RealExamples do
   @fixtures_path "test/fixtures/"
 
   for dir <- [
-    "quiz-145-11-1/",
-    "quiz-148-12-1/"
-    ] do
+        "quiz-145-11-1/",
+        "quiz-148-12-1/"
+      ] do
     describe "dir #{dir}" do
       for file <-
             (@fixtures_path <> dir)
@@ -17,7 +17,6 @@ defmodule Esperanto.Olx.RealExamples do
         test "file #{file} " do
           file = unquote(file)
           dir = unquote(dir)
-
 
           parsersed_xml =
             (@fixtures_path <> dir <> file <> ".md")
@@ -29,7 +28,6 @@ defmodule Esperanto.Olx.RealExamples do
             |> File.read!()
             |> String.trim()
             |> String.replace(~r/>[[:blank:]\n]+</, "><")
-
 
           assert parsersed_xml == expected_xml
         end

@@ -3,8 +3,12 @@ defmodule Esperanto.Parsers.Italic do
   Create a choice tag with all content between ( ) and \n
   """
 
+  defmodule ItalicBarrier do
+    use Esperanto.Barriers.RegexBarrier, delimiter: ~r/^\*(?=[^\*])/
+  end
+
   use Esperanto.Parsers.Generics.EnclosingTag,
     start_delimiter: ~r/^\*(?=[^\*])/,
-    end_delimiter: ~r/^\*(?=[^\*])/,
+    barrier: ItalicBarrier,
     enclosing_tag: :em
 end

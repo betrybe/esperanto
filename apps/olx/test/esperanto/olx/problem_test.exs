@@ -2,16 +2,20 @@ defmodule Esperanto.Olx.ParseTest do
   alias Esperanto.Olx.Problem
   use ExUnit.Case
 
-   test "sintaxe inválida" do
+  test "sintaxe inválida" do
     input = ~S"""
      {{não fechei o enunciado
       oi
     """
-    {tree, _} = Problem.parse(input)
 
+    assert_raise(
+      RuntimeError,
+      "trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen",
+      fn ->
+        Problem.parse(input)
+      end
+    )
   end
-
-
 
   test "top level AST is problem" do
     input = ~S"""
@@ -171,27 +175,64 @@ defmodule Esperanto.Olx.ParseTest do
   end
 
   test "choice with fenced code" do
-    input = ~S"""
-    >>Qual dos blocos de código a seguir utiliza corretamente a sintaxe `JSX` para inserir uma lista à aplicação?<<
-    ( )
+    # manual added leading white space to avoid beeing trimmed by IDEs
+    input = ~s"""
+    ( )#{" "}#{" "}
     ```
-    const task = (value, value2) => {
-      return(
-        <ol className="taskList">
-          <li>{value}</li>
-        </ol>
-        <ol className="taskList2">
-          <li>{value2}</li>
-        </ol>
-      )
-    }
+    code
+    ```
     """
-
 
     {tree, _} = Problem.parse(input)
 
-    assert %{ childre: [] } = tree
+    assert %{
+      children: [
+        %{
+          children: [
+            %{
+              children: [
+                %{
+                  children: [
+                    %{
+                      content: :empty,
+                      level: 4,
+                      name: :br,
+                    },
+                    %{
+                      children: [
+                        %{
+                          content: "\ncode\n",
+                          level: 5,
+                          name: :code,
+                        }
+                      ],
+                      content: :empty,
+                      level: 4,
+                      name: :pre,
+                    }
+                  ],
+                  content: {:empty, %{correct: false}},
+                  level: 3,
+                  name: :choice,
+                }
+              ],
+              content: {:empty, %{type: "MultipleChoice"}},
+              level: 2,
+              name: :choicegroup,
+            }
+          ],
+          content: :empty,
+          level: 1,
+          name: :multiplechoiceresponse,
+        }
+      ],
+      content: :empty,
+      level: 0,
+      name: :problem,
+      parent: :empty
+    } = NaryTree.to_map(tree)
   end
+
   test "plain text with label, choice and choice hint" do
     input = ~S"""
     >>Hello<<

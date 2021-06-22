@@ -5,7 +5,7 @@ defmodule Esperanto.Olx.Parsers.IncorrectChoice do
 
   use Esperanto.Parsers.Generics.EnclosingTag,
     start_delimiter: ~r/^\(\ \)/,
-    end_delimiter: ~r/^\n/,
+    barrier: Esperanto.Barriers.NewLineBarrier,
     enclosing_tag: :choice,
     attrs: %{:correct => false},
     surrounding_tag: :choicegroup,
@@ -19,7 +19,7 @@ defmodule Esperanto.Olx.Parsers.CorrectChoice do
 
   use Esperanto.Parsers.Generics.EnclosingTag,
     start_delimiter: ~r/^\(x\)/,
-    end_delimiter: ~r/^\n/,
+    barrier: Esperanto.Barriers.NewLineBarrier,
     enclosing_tag: :choice,
     attrs: %{:correct => true},
     surrounding_tag: :choicegroup,
