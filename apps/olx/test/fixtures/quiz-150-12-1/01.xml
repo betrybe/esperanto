@@ -29,7 +29,7 @@ export default App;
          <choice correct="false">
             <p>event, super, state.</p>
          </choice>
-         <choice correct="false">
+         <choice correct="true">
             <p>constructor, super, handleClick.</p>
          </choice>
          <choice correct="false">

@@ -6,7 +6,7 @@ defmodule Esperanto.Olx.RealExamples do
 
   for dir <- [
         "quiz-145-11-1/",
-        "quiz-148-12-1/"
+        "quiz-150-12-1/"
       ] do
     describe "dir #{dir}" do
       for file <-

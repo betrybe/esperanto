@@ -1,0 +1,47 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Observe o bloco de código a seguir e marque a alternativa que apresenta o trecho de código responsável por dar acesso aos objetos padrão de uma classe React a um método.</p>
+         <pre>
+            <code>
+import React from `react`;
+
+class App extends React.component {
+    constructor(props) {
+        super.this()
+            this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick() {
+        console.log('clicou aqui!')
+    }
+
+    render() {
+        return &lt;button onClick={this.handleClick}&gt;Clique aqui!&lt;/button&gt;
+    }
+}
+
+export default App;
+</code>
+         </pre>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <p>class App extends React.Component</p>
+         </choice>
+         <choice correct="false">
+            <p>constructor(props)</p>
+         </choice>
+         <choice correct="false">
+            <p>super()</p>
+         </choice>
+         <choice correct="true">
+            <p>this.handleClick = this.handleClick.bind(this)</p>
+         </choice>
+         <choice correct="false">
+            <p>this.handleClick()</p>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+
