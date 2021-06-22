@@ -54,6 +54,7 @@ defmodule Esperanto.Olx.Problem do
     element
     |> :xmerl.export_simple_content(:xmerl_xml)
     |> List.flatten()
+    |> to_string()
   end
 
   defp question_to_struct(element) do
