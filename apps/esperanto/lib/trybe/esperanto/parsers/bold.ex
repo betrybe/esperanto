@@ -3,8 +3,12 @@ defmodule Esperanto.Parsers.Bold do
   Create a choice tag with all content between ( ) and \n
   """
 
+  defmodule BoldBarrier do
+    use Esperanto.Barriers.RegexBarrier, delimiter: ~r/^\*\*/
+  end
+
   use Esperanto.Parsers.Generics.EnclosingTag,
     start_delimiter: ~r/^\*\*/,
-    end_delimiter: ~r/^\*\*/,
+    barrier: BoldBarrier,
     enclosing_tag: :strong
 end

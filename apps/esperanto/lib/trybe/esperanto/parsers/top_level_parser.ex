@@ -1,4 +1,5 @@
 defmodule Esperanto.Parsers.TopLevel do
+  require Logger
   alias Esperanto.Walker
   @behaviour Esperanto.Parser
   @default_parsers [
@@ -62,6 +63,7 @@ defmodule Esperanto.Parsers.TopLevel do
 
   # Parser found, execute it
   defp astify(input, tree, parent_id, opts, {parser, _opts}) do
+    Logger.debug("Using parse #{parser} #{readable_walker(input)}")
     {tree, walker} = parser.parse(input, tree, parent_id, opts)
     astify(walker, tree, parent_id, opts, :find_parse)
   end
@@ -75,6 +77,7 @@ defmodule Esperanto.Parsers.TopLevel do
   # no parser found,  walk
   defp astify(walker, tree, parent_id, opts, :walk) do
     walker = Walker.walk(walker)
+    #Logger.debug("No parse found for #{readable_walker(walker)} walking...")
     astify(walker, tree, parent_id, opts, :find_parse)
   end
 
@@ -120,6 +123,21 @@ defmodule Esperanto.Parsers.TopLevel do
       select_parse(walker, filtered_parsers)
     else
       select_parse(walker, filtered_parsers)
+    end
+  end
+
+  defp readable_walker(%Walker{input: input, rest: :barried}) do
+    "input: #{readable_string(input)} rest: :barried"
+  end
+
+  defp readable_walker(%Walker{input: input, rest: rest}) do
+    "input: #{readable_string(input)}  rest: #{readable_string(rest)}"
+  end
+
+  defp readable_string(input) do
+    case String.length(input) > 10 do
+       true -> inspect(String.slice(input, 0..4) <> "..." <> String.slice(input, -5..-1))
+       _ -> inspect(input)
     end
   end
 end
