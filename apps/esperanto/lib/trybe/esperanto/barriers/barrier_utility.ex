@@ -1,5 +1,4 @@
 defmodule BarrierUtility do
-
   alias Esperanto.Walker
 
   @spec assert_walker_is_barried(Walker.t()) :: nil
@@ -8,5 +7,4 @@ defmodule BarrierUtility do
       raise "trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen"
     end
   end
-
 end

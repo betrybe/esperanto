@@ -18,7 +18,9 @@ defmodule Esperanto.Barriers.RegexBarrier do
 
         barried_content = Walker.strip_from_regex(walker.barriered, @barrier)
 
-        {line, column} = Walker.increment_line_and_column(barried_content, walker.line, walker.column)
+        {line, column} =
+          Walker.increment_line_and_column(barried_content, walker.line, walker.column)
+
         rest = String.replace(walker.barriered, @barrier, "", global: false)
 
         {_, new_barriers} = List.pop_at(walker.barriers, 0)

@@ -15,7 +15,6 @@ defmodule Esperanto.CodeUtility do
     end
   end
 
-
   def escape(text) do
     String.replace(text, ~w(& < > "), &do_escape/1)
   end

@@ -90,6 +90,7 @@ defmodule Esperanto.Walker do
   @spec with_barrier(__MODULE__.t(), any()) :: __MODULE__.t()
   def with_barrier(walker, barrier) do
     Logger.debug("Creating barrier #{barrier}")
+
     %__MODULE__{
       walker
       | barriers: [barrier] ++ walker.barriers

@@ -186,51 +186,51 @@ defmodule Esperanto.Olx.ParseTest do
     {tree, _} = Problem.parse(input)
 
     assert %{
-      children: [
-        %{
-          children: [
-            %{
-              children: [
-                %{
-                  children: [
-                    %{
-                      content: :empty,
-                      level: 4,
-                      name: :br,
-                    },
-                    %{
-                      children: [
-                        %{
-                          content: "\ncode\n",
-                          level: 5,
-                          name: :code,
-                        }
-                      ],
-                      content: :empty,
-                      level: 4,
-                      name: :pre,
-                    }
-                  ],
-                  content: {:empty, %{correct: false}},
-                  level: 3,
-                  name: :choice,
-                }
-              ],
-              content: {:empty, %{type: "MultipleChoice"}},
-              level: 2,
-              name: :choicegroup,
-            }
-          ],
-          content: :empty,
-          level: 1,
-          name: :multiplechoiceresponse,
-        }
-      ],
-      content: :empty,
-      level: 0,
-      name: :problem,
-      parent: :empty
-    } = NaryTree.to_map(tree)
+             children: [
+               %{
+                 children: [
+                   %{
+                     children: [
+                       %{
+                         children: [
+                           %{
+                             content: :empty,
+                             level: 4,
+                             name: :br
+                           },
+                           %{
+                             children: [
+                               %{
+                                 content: "\ncode\n",
+                                 level: 5,
+                                 name: :code
+                               }
+                             ],
+                             content: :empty,
+                             level: 4,
+                             name: :pre
+                           }
+                         ],
+                         content: {:empty, %{correct: false}},
+                         level: 3,
+                         name: :choice
+                       }
+                     ],
+                     content: {:empty, %{type: "MultipleChoice"}},
+                     level: 2,
+                     name: :choicegroup
+                   }
+                 ],
+                 content: :empty,
+                 level: 1,
+                 name: :multiplechoiceresponse
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :problem,
+             parent: :empty
+           } = NaryTree.to_map(tree)
   end
 
   test "plain text with label, choice and choice hint" do
@@ -315,5 +315,34 @@ defmodule Esperanto.Olx.ParseTest do
              name: :problem,
              parent: :empty
            } = NaryTree.to_map(tree)
+  end
+
+  test "converting to struct" do
+    input = ~S"""
+    >>Hello<<
+    ( ) Apple {{incorrect}}
+    (x) Orange {{correct}}
+    """
+
+    problem =
+      input
+      |> Problem.to_xml()
+      |> Problem.to_struct()
+
+    assert %{
+             choices: [
+               %{
+                 choicehint: '<p>incorrect</p>',
+                 content: '<p>Apple</p>',
+                 is_correct: 'false'
+               },
+               %{
+                 choicehint: '<p>correct</p>',
+                 content: '<p>Orange</p>',
+                 is_correct: 'true'
+               }
+             ],
+             question: '<label><p>Hello</p></label>'
+           } == problem
   end
 end
