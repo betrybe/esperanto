@@ -32,8 +32,8 @@ defmodule Esperanto.Cli do
 
     HTTPoison.start()
 
-    quiz_id = create_quiz(chapter_id)
-    create_questions(quiz_id, questions)
+    create_quiz(chapter_id, questions)
+    # create_questions(quiz_id, questions)
   end
 
   defp create_questions(quiz_id, questions) do
@@ -44,17 +44,8 @@ defmodule Esperanto.Cli do
 
   defp create_question(quiz_id, question) do
     payload = Poison.encode!(%{
-      question: Map.put(question, :quiz_id, quiz_id) |> Map.delete(:alternatives)
+      question: Map.put(question, :quiz_id, quiz_id)
     })
-
-    random = :rand.uniform(1000)
-
-    question[:title]
-      |> String.graphemes()
-      |> IO.inspect()
-
-    file = File.open!("hello#{random}.json", [:write])
-    :ok = IO.binwrite(file, payload)
 
     %HTTPoison.Response{body: body} =
       HTTPoison.post!(
@@ -63,22 +54,21 @@ defmodule Esperanto.Cli do
         [{"Content-Type", "application/json"}]
       )
 
-    IO.inspect(body)
-
-
     question_id = Poison.decode!(body)["data"]["id"]
 
     Logger.info("Question created with id: #{question_id}")
     question_id
   end
 
-  defp create_quiz(chapter_id) do
+  defp create_quiz(chapter_id, questions) do
     %HTTPoison.Response{body: body} =
       HTTPoison.post!(
         "localhost:4000/api/quiz",
-        Poison.encode!(%{quiz: %{chapter_id: chapter_id}}),
+        Poison.encode!(build_quiz_json(chapter_id, questions)),
         [{"Content-Type", "application/json"}]
       )
+
+    IO.inspect(body)
 
     quiz_id = Poison.decode!(body)["data"]["id"]
 
@@ -92,9 +82,18 @@ defmodule Esperanto.Cli do
 
   defp build_alternaties_json(alternative) do
     %{
-      justification: alternative[:choice_hint],
+      justification: alternative[:choicehint],
       answer: alternative[:is_correct],
       text: alternative[:content]
+    }
+  end
+
+  defp build_quiz_json(chapter_id, questions) do
+    %{
+      quiz: %{
+        chapter_id: chapter_id,
+        questions: questions
+      }
     }
   end
 
