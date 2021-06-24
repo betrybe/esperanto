@@ -4,6 +4,9 @@ defmodule Esperanto.Olx.Parsers.ChoiceHint do
   """
 
   defmodule ChoiceHintBarrier do
+    @moduledoc """
+    Choicehint delimited by `}}`
+    """
     use Esperanto.Barriers.RegexBarrier, delimiter: ~r/^}}/
   end
 

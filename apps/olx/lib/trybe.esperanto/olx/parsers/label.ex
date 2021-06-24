@@ -4,6 +4,9 @@ defmodule Esperanto.Olx.Parsers.Label do
   """
 
   defmodule LabelBarrier do
+    @moduledoc """
+    Label delimited by `<<`
+    """
     use Esperanto.Barriers.RegexBarrier, delimiter: ~r/^<</
   end
 

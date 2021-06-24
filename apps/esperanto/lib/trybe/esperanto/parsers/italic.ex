@@ -4,6 +4,9 @@ defmodule Esperanto.Parsers.Italic do
   """
 
   defmodule ItalicBarrier do
+    @moduledoc """
+    Italiz delimited by `*`
+    """
     use Esperanto.Barriers.RegexBarrier, delimiter: ~r/^\*(?=[^\*])/
   end
 

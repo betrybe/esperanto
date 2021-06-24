@@ -12,7 +12,7 @@ defmodule Esperanto.Cli do
 
   ## Examples
 
-      ./esperanto_cli -d ../olx/test/fixtures/quiz-150-12-1/
+      ./esperanto_cli  -c 537fc0f4-1be1-4cd8-8333-9432fa722672 -d ../olx/test/fixtures/quiz-150-12-1/
 
   """
   def main(args) do
@@ -43,9 +43,10 @@ defmodule Esperanto.Cli do
   end
 
   defp create_question(quiz_id, question) do
-    payload = Poison.encode!(%{
-      question: Map.put(question, :quiz_id, quiz_id)
-    })
+    payload =
+      Poison.encode!(%{
+        question: Map.put(question, :quiz_id, quiz_id)
+      })
 
     %HTTPoison.Response{body: body} =
       HTTPoison.post!(
@@ -63,12 +64,10 @@ defmodule Esperanto.Cli do
   defp create_quiz(chapter_id, questions) do
     %HTTPoison.Response{body: body} =
       HTTPoison.post!(
-        "localhost:4000/api/quiz",
+        "https://stg.quiz-api.betrybe.com/api/quiz",
         Poison.encode!(build_quiz_json(chapter_id, questions)),
         [{"Content-Type", "application/json"}]
       )
-
-    IO.inspect(body)
 
     quiz_id = Poison.decode!(body)["data"]["id"]
 

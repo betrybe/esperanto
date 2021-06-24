@@ -2,8 +2,8 @@ defmodule Esperanto.Parsers.IndentedCode do
   @moduledoc """
   Parse an idented code with 4 space or tab
   """
-  alias Esperanto.Walker
   alias Esperanto.CodeUtility
+  alias Esperanto.Walker
 
   @behaviour Esperanto.Parser
 

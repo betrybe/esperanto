@@ -1,4 +1,7 @@
 defmodule Esperanto.Barriers.RegexBarrier do
+  @moduledoc """
+  Barrie an walker by the given `:delimiter` regex
+  """
   alias Esperanto.Walker
 
   defmacro __using__(options) do

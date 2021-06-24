@@ -4,6 +4,9 @@ defmodule Esperanto.Parsers.Bold do
   """
 
   defmodule BoldBarrier do
+    @moduledoc """
+    Bold delimited by `**`
+    """
     use Esperanto.Barriers.RegexBarrier, delimiter: ~r/^\*\*/
   end
 

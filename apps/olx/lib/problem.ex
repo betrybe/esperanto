@@ -68,7 +68,7 @@ defmodule Esperanto.Olx.Problem do
     import SweetXml
 
     element
-    |> xpath(~x"./label"l)
+    |> xpath(~x"./label/*"l)
     |> to_xml_str()
   end
 
