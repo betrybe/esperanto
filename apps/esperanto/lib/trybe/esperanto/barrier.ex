@@ -1,4 +1,11 @@
 defmodule Esperanto.Barrier do
+  alias Esperanto.Walker
+
+  @moduledoc """
+  An interface responsible to stop the walker
+  and also return a new walker with the barrier desotroyed
+  """
+
   @doc """
   Check if parser should barrier the walker
   paremters:

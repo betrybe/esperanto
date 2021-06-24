@@ -1,4 +1,7 @@
 defmodule Esperanto.Barriers.NewLineBarrier do
+  @moduledoc """
+  Barrie an walker by ignoring `  \n`
+  """
   alias Esperanto.Walker
   @behaviour Esperanto.Barrier
 

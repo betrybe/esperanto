@@ -1,4 +1,7 @@
 defmodule BarrierUtility do
+  @moduledoc """
+  BArrier utility module
+  """
   alias Esperanto.Walker
 
   @spec assert_walker_is_barried(Walker.t()) :: nil
