@@ -332,17 +332,17 @@ defmodule Esperanto.Olx.ParseTest do
     assert %{
              choices: [
                %{
-                 choicehint: '<p>incorrect</p>',
-                 content: '<p>Apple</p>',
-                 is_correct: 'false'
+                 choicehint: "<p>incorrect</p>",
+                 content: "<p>Apple</p>",
+                 is_correct: "false"
                },
                %{
-                 choicehint: '<p>correct</p>',
-                 content: '<p>Orange</p>',
-                 is_correct: 'true'
+                 choicehint: "<p>correct</p>",
+                 content: "<p>Orange</p>",
+                 is_correct: "true"
                }
              ],
-             question: '<label><p>Hello</p></label>'
+             question: "<p>Hello</p>"
            } == problem
   end
 end
