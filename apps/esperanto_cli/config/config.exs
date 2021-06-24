@@ -17,4 +17,4 @@ import Config
 #       metadata: [:user_id]
 #
 config :esperanto_cli,
-      quiz_api_url: System.get_env("QUIZ_API_URL", "https://stg.quiz-api.betrybe.com")
+  quiz_api_url: System.get_env("QUIZ_API_URL", "https://stg.quiz-api.betrybe.com")
