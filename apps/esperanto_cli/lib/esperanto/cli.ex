@@ -64,7 +64,7 @@ defmodule Esperanto.Cli do
   defp create_quiz(chapter_id, questions) do
     %HTTPoison.Response{body: body} =
       HTTPoison.post!(
-        "https://stg.quiz-api.betrybe.com/api/quiz",
+        Application.fetch_env!(:esperanto_cli, :quiz_api_url) <> "/api/quiz",
         Poison.encode!(build_quiz_json(chapter_id, questions)),
         [{"Content-Type", "application/json"}]
       )
