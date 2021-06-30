@@ -201,7 +201,7 @@ defmodule Esperanto.Olx.ParseTest do
                            %{
                              children: [
                                %{
-                                 content: "\ncode\n",
+                                 content: "code\n",
                                  level: 5,
                                  name: :code
                                }

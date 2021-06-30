@@ -42,7 +42,40 @@ defmodule Esperanto.Parsers.FencedCodeTest do
                %{
                  children: [
                    %{
-                     content: "\nsome\n   code\nblock\n",
+                     content: "some\n   code\nblock\n",
+                     level: 2,
+                     name: :code
+                   }
+                 ],
+                 content: :empty,
+                 level: 1,
+                 name: :pre
+               },
+               %{content: "\n", level: 1, name: :p}
+             ],
+             content: :empty,
+             level: 0,
+             name: :empty,
+             parent: :empty
+           } = NaryTree.to_map(tree)
+  end
+
+  test "parse source with language" do
+    input = """
+    ```javascript
+    var language = javascript
+    ```
+    """
+
+    assert {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
+
+    assert %{
+             children: [
+               %{
+                 children: [
+                   %{
+                     content:
+                       {"var language = javascript\n", %{"class" => "language-javascript"}},
                      level: 2,
                      name: :code
                    }

@@ -44,7 +44,7 @@ defmodule Esperanto.Parser do
   @optional_callbacks enchant_parser: 3
 
   def to_xml(tree, opts \\ []) do
-    opts = Keyword.merge(opts, format: :none)
+    opts = Keyword.merge([format: :none], opts)
 
     tree
     |> NaryTree.to_map()
