@@ -34,6 +34,7 @@ defmodule Olx.MixProject do
     [
       name: "esperanto_olx",
       licenses: ["Apache-2.0"],
+      description: "Olx extensions for esperanto",
       files: ~w(lib .formatter.exs mix.exs README*),
       links: %{"GitHub" => "https://github.com/betrybe/esperanto"}
     ]
