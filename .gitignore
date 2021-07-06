@@ -26,7 +26,4 @@ erl_crash.dump
 priv/
 
 *.DS_Store
-apps/olx/test/fixtures/
 apps/esperanto_cli/
-apps/esperanto_cli/quiz-final-137-8
-apps/esperanto_cli/esperanto_cli

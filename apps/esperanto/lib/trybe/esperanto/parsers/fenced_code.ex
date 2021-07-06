@@ -14,7 +14,6 @@ defmodule Esperanto.Parsers.FencedCode do
   end
 
   defp astify({walker, ""}, tree, _parent_id), do: {tree, walker}
-
   defp astify({walker, tag}, tree, parent_id) do
     pre = NaryTree.Node.new(:pre)
     code = NaryTree.Node.new(:code, tag)
