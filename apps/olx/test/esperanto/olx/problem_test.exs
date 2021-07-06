@@ -2,6 +2,21 @@ defmodule Esperanto.Olx.ParseTest do
   alias Esperanto.Olx.Problem
   use ExUnit.Case
 
+  test "sintaxe inválida" do
+    input = ~S"""
+     {{não fechei o enunciado
+      oi
+    """
+
+    assert_raise(
+      RuntimeError,
+      "trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen",
+      fn ->
+        Problem.parse(input)
+      end
+    )
+  end
+
   test "top level AST is problem" do
     input = ~S"""
     """
@@ -114,6 +129,7 @@ defmodule Esperanto.Olx.ParseTest do
                      level: 2,
                      name: :label
                    },
+                   %{content: "\n", level: 2, name: :p},
                    %{
                      children: [
                        %{
@@ -137,6 +153,65 @@ defmodule Esperanto.Olx.ParseTest do
                            }
                          ],
                          content: {:empty, %{correct: true}},
+                         level: 3,
+                         name: :choice
+                       }
+                     ],
+                     content: {:empty, %{type: "MultipleChoice"}},
+                     level: 2,
+                     name: :choicegroup
+                   }
+                 ],
+                 content: :empty,
+                 level: 1,
+                 name: :multiplechoiceresponse
+               }
+             ],
+             content: :empty,
+             level: 0,
+             name: :problem,
+             parent: :empty
+           } = NaryTree.to_map(tree)
+  end
+
+  test "choice with fenced code" do
+    # manual added leading white space to avoid beeing trimmed by IDEs
+    input = ~s"""
+    ( )#{" "}#{" "}
+    ```
+    code
+    ```
+    """
+
+    {tree, _} = Problem.parse(input)
+
+    assert %{
+             children: [
+               %{
+                 children: [
+                   %{
+                     children: [
+                       %{
+                         children: [
+                           %{
+                             content: :empty,
+                             level: 4,
+                             name: :br
+                           },
+                           %{
+                             children: [
+                               %{
+                                 content: "\ncode\n",
+                                 level: 5,
+                                 name: :code
+                               }
+                             ],
+                             content: :empty,
+                             level: 4,
+                             name: :pre
+                           }
+                         ],
+                         content: {:empty, %{correct: false}},
                          level: 3,
                          name: :choice
                        }
@@ -183,6 +258,7 @@ defmodule Esperanto.Olx.ParseTest do
                      level: 2,
                      name: :label
                    },
+                   %{content: "\n", level: 2, name: :p},
                    %{
                      children: [
                        %{
@@ -239,5 +315,34 @@ defmodule Esperanto.Olx.ParseTest do
              name: :problem,
              parent: :empty
            } = NaryTree.to_map(tree)
+  end
+
+  test "converting to struct" do
+    input = ~S"""
+    >>Hello<<
+    ( ) Apple {{incorrect}}
+    (x) Orange {{correct}}
+    """
+
+    problem =
+      input
+      |> Problem.to_xml()
+      |> Problem.to_struct()
+
+    assert %{
+             choices: [
+               %{
+                 choicehint: "<p>incorrect</p>",
+                 content: "<p>Apple</p>",
+                 is_correct: "false"
+               },
+               %{
+                 choicehint: "<p>correct</p>",
+                 content: "<p>Orange</p>",
+                 is_correct: "true"
+               }
+             ],
+             question: "<p>Hello</p>"
+           } == problem
   end
 end

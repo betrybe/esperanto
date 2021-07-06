@@ -1,0 +1,59 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Complete corretamente as lacunas de forma a criar um event handler genérico para atualizar estados de vários componentes em um formulário.</p>
+         <br></br>
+         <pre>
+            <code>
+handleChange({ _________ }) {
+const { name } = target;
+const value = target.type === 'checkbox' ? target.checked : target.value;
+
+  this.setState({
+    [ _______ ]: ________,
+  });
+}
+</code>
+         </pre>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <p>target, props, name.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A primeira lacuna é realmente preenchida pela desestruturação do</p>
+               <code>target</code>
+               <p>no parâmetro da função. No entanto, na interpolação usamos o nome (que será igual à respectiva chave no estado do componente) como chave e como valor aquele associado ao disparo do evento capturado.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>props, name, value.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A primeira lacuna se refere à desestruturação do</p><code>target</code>
+               <p>no parâmetro da função. As outras duas preenchem corretamente as lacunas referentes à interpolação da chave e o valor correspondente ao disparo do evento capturado.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>props, target, name.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A primeira lacuna é destinada à desestruturação do</p><code>target</code>
+               <p>no parâmetro da função. A partir dele atribuímos a cada elemento um nome igual à respectiva chave no estado do componente. Em seguida, recuperamos o nome do componente que disparou o evento e seu valor associado ao disparo. As duas lacunas seguintes seriam corretamente preenchidas por name e value, para que a interpolação fosse feita usando o nome do componente como chave do estado e como valor aquele capturado do disparo do evento.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <p>target, name, value.</p>
+            <choicehint>
+               <p>Essa alternativa está correta. A primeira lacuna é preenchida pela desestruturação do</p><code>target</code>
+               <p>no parâmetro da função. A partir dele atribuímos a cada elemento um nome igual à respectiva chave no estado do componente. Em seguida, recuperamos o nome do componente que disparou o evento e seu valor associado ao disparo. Por último, interpolamos o nome do componente como chave do estado e definimos como valor aquele capturado do disparo.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>target, value, checked.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A primeira lacuna é realmente preenchida pela desestruturação do</p><code>target</code>
+               <p>no parâmetro da função. No entanto, na interpolação usamos o nome (que será igual à respectiva chave no estado do componente) como chave e como valor aquele associado ao disparo do evento capturado.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

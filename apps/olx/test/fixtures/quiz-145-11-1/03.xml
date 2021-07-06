@@ -1,0 +1,65 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Qual comando é responsável por instalar as dependências do projeto e criar a pasta</p>
+         <code>node_modules</code>
+         <p>?</p>
+      </label>
+      <br></br>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <code>nvm install</code>
+            <choicehint>
+               <p>O comando</p>
+               <code>nvm install</code>
+               <p>seguido do número de uma versão do</p>
+               <code>Node</code>
+               <p>ou simplesmente da palavra "node", é utilizado para instalar uma versão do</p>
+               <code>Node</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <code>npx install</code>
+            <choicehint>
+               <p>O comando</p>
+               <code>npx install</code>
+               <p>não existe, pois é um executor de pacotes do</p>
+               <code>npm</code>
+               <p>que simplesmente executa os pacotes, sem instalá-los.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <code>npm install</code>
+            <choicehint>
+               <p>Esta é a alternativa correta. Com</p>
+               <code>npm install</code>
+               <p>instalamos as dependências do projeto na pasta</p>
+               <code>node_modules</code>
+               <p>. Se não houver uma pasta</p>
+               <code>node_modules</code>
+               <p>, o comando cria uma antes de instalar as dependências.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <code>npm init</code>
+            <choicehint>
+               <p>Alternativa incorreta. O comando</p>
+               <code>npm init</code>
+               <p>cria um arquivo package.json, onde serão listadas todas as dependências da sua aplicação.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <code>node-modules install</code>
+            <choicehint>
+               <p>O comando</p>
+               <code>node-modules install</code>
+               <p>não existe. A instalação dos módulos e dependências do projeto acontece por meio do comando</p>
+               <code>npm install</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

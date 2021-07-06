@@ -4,15 +4,16 @@ defmodule Esperanto.Walker do
   Every parser is responsible to walk and leave the walker in the state he can continue
   """
 
-  @never_match_regex ~r"$a"
+  alias Esperanto.Barriers.NeverMatchBarrier
+  require Logger
 
-  defstruct [:input, rest: "", line: 1, column: 1, barrier: [@never_match_regex], barriered: ""]
+  defstruct [:input, rest: "", line: 1, column: 1, barriers: [NeverMatchBarrier], barriered: ""]
 
   @type t :: %__MODULE__{
           input: String.t(),
           rest: String.t() | atom(),
           line: integer(),
-          barrier: [Regex.t()],
+          barriers: list(),
           barriered: String.t(),
           column: integer()
         }
@@ -52,38 +53,6 @@ defmodule Esperanto.Walker do
 
       iex> Esperanto.Walker.start("a\nc") |> Esperanto.Walker.walk()
       %Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
-
-      iex> Esperanto.Walker.start("a\nc")
-      ...> |> Esperanto.Walker.with_barrier("\n")
-      ...> |> Esperanto.Walker.walk()
-      %Esperanto.Walker{barrier: [~r/\n/, ~r/$a/], barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
-
-      iex> Esperanto.Walker.start("a\nc")
-      ...> |> Esperanto.Walker.with_barrier("\n")
-      ...> |> Esperanto.Walker.walk()
-      ...> |> Esperanto.Walker.walk()
-      ...> |> Esperanto.Walker.walk()
-      ...> |> Esperanto.Walker.walk()
-      %Esperanto.Walker{barrier: [~r/\n/, ~r/$a/], barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
-
-
-      iex> Esperanto.Walker.start("a\nc")
-      ...> |> Esperanto.Walker.with_barrier("\n")
-      ...> |> Esperanto.Walker.walk()
-      %Esperanto.Walker{barrier: [~r/\n/, ~r/$a/], barriered: "\nc", column: 1, input: "a", line: 1, rest: :barried}
-
-      iex> Esperanto.Walker.start("a\nc")
-      ...> |> Esperanto.Walker.with_barrier("\n")
-      ...> |> Esperanto.Walker.destroy_barrier()
-      ** (RuntimeError) trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen
-
-      iex> Esperanto.Walker.start("a\nc")
-      ...> |> Esperanto.Walker.with_barrier("\n")
-      ...> |> Esperanto.Walker.walk()
-      ...> |> Esperanto.Walker.destroy_barrier(false)
-      ...> |> Esperanto.Walker.walk()
-      %Esperanto.Walker{input: "a\n", rest: "c", column: 1, line: 2}
-
   """
   @spec walk(__MODULE__.t()) :: __MODULE__.t()
   def walk(walker) do
@@ -91,7 +60,7 @@ defmodule Esperanto.Walker do
       is_barried(walker) ->
         walker
 
-      String.match?(walker.rest, List.first(walker.barrier)) ->
+      List.first(walker.barriers).should_bar(walker) ->
         %__MODULE__{
           walker
           | rest: :barried,
@@ -99,16 +68,7 @@ defmodule Esperanto.Walker do
         }
 
       true ->
-        {next, rest} = String.split_at(walker.rest, 1)
-        {line, column} = increment_line_and_column(next, walker.line, walker.column)
-
-        %__MODULE__{
-          walker
-          | input: walker.input <> next,
-            rest: rest,
-            line: line,
-            column: column
-        }
+        do_walk(walker)
     end
   end
 
@@ -116,7 +76,7 @@ defmodule Esperanto.Walker do
     cond do
       String.match?(walker.input, regex) -> walker
       walker.rest == "" -> walker
-      true -> walk_until(walk(walker), regex)
+      true -> walk_until(do_walk(walker), regex)
     end
   end
 
@@ -127,51 +87,21 @@ defmodule Esperanto.Walker do
   Prevents walker from go fetch more content with the rest matches the barrier
   until the barrier is destroyed
   """
-  @spec with_barrier(__MODULE__.t(), String.t() | Regex.t()) :: __MODULE__.t()
-  def with_barrier(walker, %Regex{} = barrier) do
-    %__MODULE__{
-      walker
-      | barrier: [barrier] ++ walker.barrier
-    }
-  end
-
-  def with_barrier(walker, barrier) when is_binary(barrier) do
-    __MODULE__.with_barrier(walker, Regex.compile!(barrier))
-  end
-
-  @spec destroy_barrier(__MODULE__.t(), boolean()) :: __MODULE__.t()
-  def destroy_barrier(walker, should_consume_barrier \\ true) do
-    if !is_barried(walker) do
-      raise "trying to destroy a barrier of an unbarrier Walker. This shouldn`t never happen"
-    end
-
-    barrier = List.first(walker.barrier)
-
-    {rest, line, column} =
-      if should_consume_barrier do
-        [barried_content] =
-          Regex.scan(barrier, walker.barriered)
-          |> List.flatten()
-          |> Enum.filter(fn s -> String.length(s) > 0 end)
-          |> Enum.take(1)
-
-        {line, column} = increment_line_and_column(barried_content, walker.line, walker.column)
-        rest = String.replace(walker.barriered, barrier, "", global: false)
-        {rest, line, column}
-      else
-        {walker.barriered, walker.line, walker.column}
-      end
-
-    {_, new_barrier} = List.pop_at(walker.barrier, 0)
+  @spec with_barrier(__MODULE__.t(), any()) :: __MODULE__.t()
+  def with_barrier(walker, barrier) do
+    Logger.debug("Creating barrier #{barrier}")
 
     %__MODULE__{
       walker
-      | barrier: new_barrier,
-        rest: rest,
-        barriered: "",
-        line: line,
-        column: column
+      | barriers: [barrier] ++ walker.barriers
     }
+  end
+
+  @spec destroy_barrier(__MODULE__.t()) :: __MODULE__.t()
+  def destroy_barrier(walker) do
+    barrier = List.first(walker.barriers)
+    Logger.debug("Destroyng barrier #{barrier}")
+    barrier.destroy_barrier(walker)
   end
 
   @doc ~S"""
@@ -210,12 +140,37 @@ defmodule Esperanto.Walker do
     end
   end
 
-  defp increment_line_and_column(<<input::utf8, rest::binary>>, line, column) do
+  def consume_input_matching_regex(walker, regex) do
+    lenght = String.length(strip_from_regex(walker.input, regex))
+    consume_input(walker, lenght)
+  end
+
+  def strip_from_regex(input, regex) do
+    Regex.scan(regex, input)
+    |> List.flatten()
+    |> Enum.filter(fn s -> String.length(s) > 0 end)
+    |> List.first()
+  end
+
+  defp do_walk(walker) do
+    {next, rest} = String.split_at(walker.rest, 1)
+    {line, column} = increment_line_and_column(next, walker.line, walker.column)
+
+    %__MODULE__{
+      walker
+      | input: walker.input <> next,
+        rest: rest,
+        line: line,
+        column: column
+    }
+  end
+
+  def increment_line_and_column(<<input::utf8, rest::binary>>, line, column) do
     {line, column} = increment_line_and_column(input, line, column)
     increment_line_and_column(rest, line, column)
   end
 
-  defp increment_line_and_column(input, current_line, current_column) do
+  def increment_line_and_column(input, current_line, current_column) do
     line = increment_line([input])
     column = increment_column([input])
 

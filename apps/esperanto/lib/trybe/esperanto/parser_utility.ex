@@ -25,13 +25,7 @@ defmodule Esperanto.ParserUtility do
     do: match(input, delimiter_as_regex(delimiter))
 
   def match(input, delimiter) do
-    has_matched = String.match?(input, delimiter)
-
-    if has_matched do
-      Logger.debug("#{__MODULE__} has matched for '#{input}' with '#{Regex.source(delimiter)}'")
-    end
-
-    has_matched
+    String.match?(input, delimiter)
   end
 
   def delimiter_as_regex(delimiter) when is_binary(delimiter),

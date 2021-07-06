@@ -1,0 +1,80 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Observe o bloco de código a seguir e marque a alternativa que apresenta o trecho de código responsável por dar acesso aos objetos padrão de uma classe React a um método.</p>
+         <pre>
+            <code>
+import React from `react`;
+
+class App extends React.component {
+    constructor(props) {
+        super.this()
+            this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick() {
+        console.log('clicou aqui!')
+    }
+
+    render() {
+        return &lt;button onClick={this.handleClick}&gt;Clique aqui!&lt;/button&gt;
+    }
+}
+
+export default App;
+</code>
+         </pre>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <p>class App extends React.Component</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta, pois se refere à sintaxe da criação de um componente de classe</p>
+               <code>React</code><p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>constructor(props)</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta, pois</p><code>constructor()</code>
+               <p>é a primeira função a ser executada quando um componente</p>
+               <code>React</code>
+               <p>é colocado na tela do navegador. Toda a lógica interna que o</p>
+               <code>React</code>
+               <p>adiciona aos seus componentes começa a ser inclusa neles nesse momento.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>super()</p>
+               <choicehint>
+               <p>Essa alternativa está incorreta. A função</p>
+               <code>super()</code>
+               <p>é chamada para garantir que a lógica interna do</p>
+               <code>React</code>
+               <p>rode antes da sua. Se não for assim, o código não funcionará.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <p>this.handleClick = this.handleClick.bind(this)</p>
+            <choicehint>
+               <p>Essa alternativa está correta. O</p>
+               <code>this</code><p>, dentro das classes de componentes</p>
+               <code>React</code>
+               <p>, é um objeto enorme que contém, basicamente, tudo que concerne àquele componente dentro da aplicação. A função</p>
+               <code>this.minhaFuncao = this.minhaFuncao.bind(this)</code>
+               <p>vincula "manualmente" o</p><code>this</code><p>à nossa função, permitindo que o objeto</p>
+               <code>this</code><p>esteja acessível à ela.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>this.handleClick()</p>
+               <choicehint>
+               <p>Essa alternativa está incorreta. No bloco de código apresentado, a função</p>
+               <code>handleClick()</code>
+               <p>é responsável por determinar o que acontecerá quando o botão da página for clicado.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

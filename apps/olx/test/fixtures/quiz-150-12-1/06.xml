@@ -1,0 +1,97 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Marque a alternativa cujo bloco de código corresponde à forma correta de atualizar um contador incrementando + 1 a seu estado sempre que o botão for clicado.</p>
+         <br></br>
+         <pre>
+            <code>
+this.state = {
+  numeroDeCliques: 0
+}
+</code>
+         </pre>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+this.setState({
+  numeroDeCliques: this.numeroDeCliques + 1
+})
+</code>
+            </pre>
+            <choicehint>
+               <p>Essa alternativa está incorreta, pois o estado do</p>
+               <code>React</code>
+               <p>é atualizado de forma assíncrona. Sem passar uma</p>
+               <code>callback</code>
+               <p>à função</p>
+               <code>setState</code>
+               <p>para que a atualização seja feita com base no estado anterior, não há como garantir que as atualizações do estado acontecerão uma depois da outra.</p>
+            </choicehint>   
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+this.setState({
+  numeroDeCliques: 1
+})
+</code>
+            </pre>
+             <choicehint>
+               <p>Essa alternativa está incorreta, pois o bloco de código apenas muda o estado para 1, não implementa qualquer incremento.</p>
+            </choicehint>         
+         </choice>
+         <choice correct="true">
+            <br></br>
+            <pre>
+               <code>
+this.setState((estadoAnterior, _props) =&gt; ({
+  numeroDeCliques: estadoAnterior.numeroDeCliques + 1
+}))
+</code>
+            </pre>
+            <choicehint>
+               <p>Essa alternativa está correta. A atualização está sendo feita da forma certa, passando uma</p>
+               <code>callback</code>
+               <p>à função</p>
+               <code>setState</code><p>com o estado anterior e as</p>
+               <code>props</code><p>do componente como parâmetros, a fim de garantir que as atualizações sejam feitas na ordem correta.</p>
+            </choicehint>  
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+this.setState((estadoAnterior, _props) =&gt; ({
+  numeroDeCliques: estadoAnterior + 1
+}))
+</code>
+            </pre>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Apesar de utilizar o método correto,</p>
+               <code>setState</code><p>, e uma</p><code>callback</code>
+               <p>, a função não está acessando a chave que guarda o estado, neste caso</p>
+               <code>numeroDeCliques</code><p>, para somar 1 a seu estado anterior.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+this.state((estadoAnterior, _props) =&gt; ({
+  numeroDeCliques: estadoAnterior.numeroDeCliques + 1
+}))
+</code>
+            </pre>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Não devemos fazer a atualização de um estado diretamente utilizando a função</p>
+               <code>this.state</code><p>.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

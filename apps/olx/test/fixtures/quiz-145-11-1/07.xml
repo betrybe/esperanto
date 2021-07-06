@@ -1,0 +1,145 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Qual dos blocos de código a seguir utiliza corretamente a sintaxe</p>
+         <code>JSX</code>
+         <p>para inserir uma lista à aplicação?</p>
+      </label>
+      <br></br>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+const task = (value, value2) =&gt; {
+  return(
+    &lt;ol className=&quot;taskList&quot;&gt;
+      &lt;li&gt;{value}&lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;ol className=&quot;taskList2&quot;&gt;
+      &lt;li&gt;{value2}&lt;/li&gt;
+    &lt;/ol&gt;
+  )
+}  
+</code>
+            </pre>
+            <br></br>
+            <choicehint>
+               <p>Essa alternativa faz uso incorreto da sintaxe</p>
+               <code>JSX</code>
+               <p>, em que a função retorna mais de um nó</p>
+               <code>React</code>
+               <p>. Expressões</p>
+               <code>JSX</code>
+               <p>devem retornar apenas um</p>
+               <em>
+                  <p>"elemento pai/mãe"</p>
+               </em>
+               <p>, que, se necessário, pode encapsular várias</p>
+               <code>tags</code>
+               <p>ou</p>
+               <em>
+                  <p>"elementos filhos"</p>
+               </em>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+const task = (value) =&gt; {
+  const list = document.querySelector('.taskList');
+  const item = document.createElement('li');
+  item.innerText = value;
+  list.appendChild(item);
+}
+</code>
+            </pre>
+            <br></br>
+            <choicehint>
+               <p>Esta alternativa está incorreta, pois corresponde à criação de uma lista com</p>
+               <code>JavaScript</code>
+               <p>puro, o que podemos notar pelo uso dos métodos</p>
+               <code>createElement</code>
+               <p>e</p>
+               <code>appendChild</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+const task = (value) =&gt; {
+  return(
+    &lt;ol class=&quot;taskList&quot;&gt;
+      &lt;li&gt;{value}&lt;/li&gt;
+    &lt;/ol&gt;
+  )
+}
+</code>
+            </pre>
+            <br></br>
+            <choicehint>
+               <p>Esta alternativa está incorreta por usar erroneamente a palavra</p>
+               <code>class</code>
+               <p>para adicionar classes</p>
+               <code>CSS</code>
+               <p>. Esta palavra é restrita para a criação de</p>
+               <strong>
+                  <p>componentes de classe</p>
+               </strong>
+               <p>no</p>
+               <code>React</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <br></br>
+            <pre>
+               <code>
+&lt;ol class=&quot;taskList&quot;&gt;
+  &lt;li&gt;item 1&lt;/li&gt;
+&lt;/ol&gt;
+</code>
+            </pre>
+            <br></br>
+            <choicehint>
+               <p>Alternativa incorreta. Essa sintaxe apresenta a criação de uma lista diretamente no</p>
+               <code>HTML</code>
+               <p>, de forma estática.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <br></br>
+            <pre>
+               <code>  
+const task = (value) =&gt; {
+  return(
+    &lt;ol className=&quot;taskList&quot;&gt;
+      &lt;li&gt;{value}&lt;/li&gt;
+    &lt;/ol&gt;
+  )
+}
+</code>
+            </pre>
+            <br></br>
+            <choicehint>
+               <p>Uso correto da sintaxe</p>
+               <code>JSX</code>
+               <p>, que permite inserir lógica dentro de códigos</p>
+               <code>HTML</code>
+               <p>, desde que só retorne um nó</p>
+               <code>React</code>
+               <p>e usando a palavra</p>
+               <code>className</code>
+               <p>para adicionar classes</p>
+               <code>CSS</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

@@ -1,0 +1,53 @@
+
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Sobre a atribuição de valores ao estado de um componente React, marque a opção correta:</p>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <p>Devemos usar this.state(novoEstado) quando quisermos atualizar o estado de um componente.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A função</p><code>this.state</code>
+               <p>é usada para setar um estado inicial para o componente e não devemos utilizá-la para alterar diretamente um estado.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>Para atualizar o estado de um componente podemos utilizar tanto this.state(novoEstado) quanto this.setState(novoEstado).</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A função</p>
+               <code>this.state</code>
+               <p>é usada para setar um estado inicial para o componente e não devemos utilizá-la para alterar diretamente um estado. Para este fim, devemos utilizar a função</p>
+               <code>this.setState</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <p>O estado é atualizado de forma síncrona pelo React, garantindo a ordem em que as atualizações ocorrerão.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. O estado é atualizado de forma assíncrona pelo</p>
+               <code>React</code>
+               <p>e ele não garante a ordem em que as atualizações ocorrerão. Por isso mesmo não se deve fazer uma atribuição direta para atualizar o estado e sim atualizá-lo através da função</p>
+               <code>this.setState(meuNovoObjetoQueRepresentaOEstado)</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>A função this.setState() deve ser utilizada para definir um estado inicial ao componente, a ser definido no momento em que o componente for colocado na tela.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. Para definir um estado inicial ao componente, a ser definido no momento em que o componente for colocado na tela, fazemos a atribuição de um objeto à chave</p>
+               <code>state</code><p>do</p><code>this</code><p>, ou seja, ao</p>
+               <code>this.state</code><p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <p>Devemos usar o this.setState(meuNovoObjetoQueRepresentaOEstado) quando quisermos atualizar o estado de um componente.</p>
+            <choicehint><p>Essa alternativa está correta. A função</p>
+               <code>this.setState</code>
+               <p>é usada para setar um novo estado para o componente, sem fazer uma atribuição direta.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+
