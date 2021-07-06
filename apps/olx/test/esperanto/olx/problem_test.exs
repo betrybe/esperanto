@@ -320,8 +320,8 @@ defmodule Esperanto.Olx.ParseTest do
   test "converting to struct" do
     input = ~S"""
     >>Hello<<
-    ( ) Apple {{incorrect}}
-    (x) Orange {{correct}}
+    ( )Apple{{incorrect}}
+    (x)Orange{{correct}}
     """
 
     problem =
