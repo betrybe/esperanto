@@ -26,3 +26,4 @@ erl_crash.dump
 priv/
 
 *.DS_Store
+apps/esperanto_cli/esperanto_cli

@@ -2,6 +2,7 @@ defmodule Esperanto.Parsers.IndentedCode do
   @moduledoc """
   Parse an idented code with 4 space or tab
   """
+  alias Esperanto.CodeUtility
   alias Esperanto.Walker
 
   @behaviour Esperanto.Parser
@@ -10,7 +11,7 @@ defmodule Esperanto.Parsers.IndentedCode do
   def parse(walker, tree, parent_id, _opts) do
     {walker, content} = get_content(walker)
     pre = NaryTree.Node.new(:pre)
-    code = NaryTree.Node.new(:code, content)
+    code = NaryTree.Node.new(:code, CodeUtility.escape(content))
 
     tree = NaryTree.add_child(tree, pre, parent_id)
     tree = NaryTree.add_child(tree, code, pre.id)

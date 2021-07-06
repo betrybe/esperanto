@@ -6,20 +6,20 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
   @doc """
   opts
     * :start_delimiter
-    * :end_delimiter
+    * :barrier
     * :enclosing_tag
     * :attrs
   """
 
   @moduledoc """
-  Simple enclose the contents between `:start_delimiter` and `:end_delimiter`
+  Simple enclose the contents between `:start_delimiter` and `:barrier`
   with the `enclosing_tag` and `attrs` specified
   It's possible to surround all siblings together with the `surround` tag if specified
   """
 
   defmacro __using__(options) do
     start_delimiter = Keyword.get(options, :start_delimiter)
-    end_delimiter = Keyword.get(options, :end_delimiter)
+    barrier = Keyword.get(options, :barrier)
     tag = Keyword.get(options, :enclosing_tag)
     surrounding_tag = Keyword.get(options, :surrounding_tag, nil)
 
@@ -52,7 +52,7 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
       @behaviour Esperanto.Parser
 
       @start_delimiter unquote(start_delimiter)
-      @end_delimiter unquote(end_delimiter)
+      @barrier unquote(barrier)
       @tag unquote(tag)
       @surrounding_tag unquote(surrounding_tag)
       @attrs Keyword.get(unquote(options), :attrs, %{})
@@ -61,15 +61,14 @@ defmodule Esperanto.Parsers.Generics.EnclosingTag do
       @impl Esperanto.Parser
       def parse(walker, tree, parent_id, opts) do
         ParserUtility.ensure_has_matched(walker, @start_delimiter)
-
         node = NaryTree.Node.new(@tag, {:empty, @attrs})
 
         unquote(create_node_bloc)
 
         {tree, walker} =
           walker
-          |> Walker.consume_input()
-          |> Walker.with_barrier(@end_delimiter)
+          |> Walker.consume_input_matching_regex(@start_delimiter)
+          |> Walker.with_barrier(@barrier)
           |> TopLevel.parse(tree, node.id, opts)
 
         {tree, Walker.destroy_barrier(walker)}
