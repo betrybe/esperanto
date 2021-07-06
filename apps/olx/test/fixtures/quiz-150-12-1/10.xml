@@ -1,0 +1,59 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Sobre a atualização de estados em</p>
+         <code>React</code>
+         <p>, marque a alternativa correta:</p>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <p>A atualização do estado é síncrona, por isso a ordem em que ela é colocada no código é relevante para garantir que uma atualização ocorrerá no momento correto, antes ou depois de outra atualização.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A atualização do estado é assíncrona. A forma de garantir que as atualizações ocorram em uma determinada ordem é passá-la via</p>
+               <code>callback</code><p>na função</p><code>this.setState</code><p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <p>A atualização do estado é assíncrona, por isso se você quiser garantir que uma atualização ocorrerá depois da outra, tal atualização deverá ser definida via</p>
+            <code>callback</code>
+            <p>passada à função</p>
+            <code>this.setState</code>
+            <p>, no formato</p>
+            <code>this.setState((estadoAnterior, props) =&gt; novoEstado)</code>
+            <p>.</p>
+            <choicehint>
+               <p>Essa alternativa está correta. A atualização do estado é assíncrona e a forma de garantir que as atualizações ocorram em uma determinada ordem é passá-la via</p>
+               <code>callback</code><p>na função</p><code>this.setState</code><p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>A atualização do estado é assíncrona, por isso não há meios de garantir que as atualizações ocorrem em uma determinada ordem.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A atualização do estado é mesmo assíncrona, porém com o uso de</p>
+               <code>callbacks</code><p>na função</p><code>this.setState</code>
+               <p>pode-se garantir que as atualizações ocorram em uma determinada ordem.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>A atualização do estado é síncrona, por isso você sempre deve fazer a atualização de estados atribuindo o novo estado diretamente com o uso da função</p>
+            <code>this.state</code><p>.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A atualização do estado é assíncrona e não deve ser feita diretamente através do</p>
+               <code>this.state</code><p>. Para este fim utilizamos a função</p>
+               <code>this.setState</code><p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>A atualização do estado é assíncrona, por isso, para garantir que o navegador não atualize antes da mudança, devemos fazer a atualização sempre por meio da função</p>
+            <code>this.state</code>
+            <p>.</p>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A atualização do estado é realmente assíncrona, mas não devemos fazer essa atualização diretamente através do</p>
+               <code>this.state</code><p>. Para este fim utilizamos a função</p>
+               <code>this.setState</code><p>.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

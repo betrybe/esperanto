@@ -1,0 +1,81 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>O que é o</p>
+         <code>npm</code>
+         <p>?</p>
+      </label>
+      <br></br>
+      <choicegroup type="MultipleChoice">
+         <choice correct="true">
+            <p>É um gerenciador de pacotes do</p>
+            <code>Node</code>
+            <p>que utilizamos para instalar os pacotes em nossas aplicações React.</p>
+            <choicehint>
+               <p>Como o nome sugere,</p>
+               <em>
+                  <p>Node Package Manager</p>
+               </em>
+               <p>, o</p>
+               <code>npm</code>
+               <p>, é um gerenciador de pacotes do</p>
+               <code>Node</code>
+               <p>. Existem vários outros gerenciadores de pacotes, como o</p>
+               <code>Yarn</code>
+               <p>, por exemplo, mas aqui na</p>
+               <strong>
+                  <p>Trybe</p>
+               </strong>
+               <p>sempre priorizamos o uso do</p>
+               <code>npm</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>É um comando que executa um pacote sem instalá-lo em si.</p>
+            <choicehint>
+               <p>Alternativa incorreta. Esta é a função do</p>
+               <code>npx</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>É um gerenciador de versões do</p>
+            <code>Node</code>
+            <p>.</p>
+            <choicehint>
+               <p>Alternativa incorreta. Esta é a função do</p>
+               <code>nvm</code>
+               <p>, utilizado para a instalação do</p>
+               <code>Node</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>É uma extensão para aplicações</p>
+            <code>React</code>
+            <p>.</p>
+            <choicehint>
+               <p>Alternativa incorreta. Como dito anteriormente, o</p>
+               <code>npm</code>
+               <p>é um gerenciador de pacotes do</p>
+               <code>Node</code>
+               <p>, portanto não se trata de uma extensão.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>É um pacote do</p>
+            <code>Node</code>
+            <p>que devemos ter em nossas aplicações</p>
+            <code>React</code>
+            <p>.</p>
+            <choicehint>
+               <p>Alternativa incorreta. O</p>
+               <code>npm</code>
+               <p>não é apenas um pacote e sim um gerenciador de pacotes.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

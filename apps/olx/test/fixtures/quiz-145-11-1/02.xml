@@ -1,0 +1,49 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Qual a função da pasta</p>
+         <code>node_modules</code>
+         <p>?</p>
+      </label>
+      <br></br>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <p>Listar as dependências do projeto.</p>
+            <choicehint>
+               <p>Alternativa incorreta. A listagem de dependências do projeto fica armazenada no arquivo</p>
+               <code>package.json</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <p>Armazenar todas as dependências (módulos) do projeto.</p>
+            <choicehint>
+               <p>Exatamente isso. É na pasta</p>
+               <code>node_modules</code>
+               <p>que as dependências serão instaladas e ficarão armazenadas dentro do projeto.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>Criar um novo projeto</p>
+            <code>React</code>
+            <p>.</p>
+            <choicehint>
+               <p>Alternativa incorreta, pois um novo projeto</p>
+               <code>React</code>
+               <p>é criado a partir do comando</p>
+               <code>npx create-react-app my-app</code>
+               <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <p>Gerenciar as versões do</p>
+            <code>Node</code>
+            <p>.</p>
+            <choicehint>
+               <p>Alternativa incorreta, uma vez que a armazenagem de imagens utilizadas no projeto pode ser feita por qualquer outra pasta criada para esse fim.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+

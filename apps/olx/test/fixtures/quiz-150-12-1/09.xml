@@ -1,0 +1,60 @@
+<problem>
+   <multiplechoiceresponse>
+      <label>
+         <p>Qual das alternativas apresenta a forma correta de se definir um estado inicial de um componente</p>
+         <code>React</code>
+         <p>dentro do</p>
+         <code>construtor</code>
+         <p>?</p>
+      </label>
+      <choicegroup type="MultipleChoice">
+         <choice correct="false">
+            <code>this.state({ total: 0 })</code>
+            <choicehint>
+               <p>Essa alternativa está incorreta. A sintaxe correta seria</p>
+                  <code>this.state = { chave: valorInicial }</code>
+                  <p>.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <code>this.setState((prevState, _props) =&gt; ({ total: prevState.total + 1 }))</code>
+            <choicehint>
+               <p>Essa alternativa está incorreta, pois é por meio do método</p>
+               <code>this.state</code><p>que definimos um estado inicial no</p>
+               <code>construtor</code><p>e a alternativa apresenta uma utilização do</p>
+               <code>this.setState</code><p>para</p>
+               <strong><p>atualizar</p></strong><p>o estado.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <code>this.setState({total: 0 })</code>
+            <choicehint>
+               <p>Essa alternativa está incorreta, pois é por meio do método</p>
+               <code>this.state</code><p>que definimos um estado inicial no</p>
+               <code>construtor</code><p>e a alternativa apresenta uma utilização do</p>
+               <code>this.setState</code><p>para</p><strong><p>atualizar</p>
+               </strong><p>o estado.</p>
+            </choicehint>
+         </choice>
+         <choice correct="false">
+            <code>this.setState = { total: 0 }</code>
+            <choicehint>
+               <p>Essa alternativa está incorreta, pois é por meio do método</p>
+               <code>this.state</code><p>que definimos um estado inicial no</p>
+               <code>construtor</code><p>. Utilizamos o</p><code>this.setState</code>
+               <p>para atualizar o estado, sem fazer atribuições diretamente.</p>
+            </choicehint>
+         </choice>
+         <choice correct="true">
+            <code>this.state = { total: 0 }</code>
+            <choicehint>
+               <p>Essa alternativa está correta porque é por meio do método</p>
+               <code>this.state</code><p>que definimos um estado inicial no</p>
+               <code>construtor</code><p>. A sintaxe correta é</p>
+               <code>this.state = { chave: valorInicial }</code><p>.</p>
+            </choicehint>
+         </choice>
+      </choicegroup>
+   </multiplechoiceresponse>
+</problem>
+
