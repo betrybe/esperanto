@@ -57,16 +57,15 @@ defmodule Olx.MixProject do
     ]
   end
 
-
-  defp get_umbrella_dependencies(:umbrella) do
+  defp get_umbrella_dependencies(:prod) do
     [
-      {:esperanto, in_umbrella: true},
+      {:esperanto, "~> 0.1.0"},
     ]
   end
 
   defp get_umbrella_dependencies(_) do
     [
-      {:esperanto, "~> 0.1.0"},
+      {:esperanto, in_umbrella: true},
     ]
   end
 end

@@ -23,6 +23,7 @@ defmodule Esperanto.Parsers.InlineFencedCode do
   end
 
   @impl Esperanto.Parser
+  def should_parse(%Walker{input: "`", rest: ""}, _, _, _), do: false
   def should_parse(%Walker{input: "`"}, _, _, _), do: true
   def should_parse(_, _, _, _), do: false
 
@@ -36,11 +37,10 @@ defmodule Esperanto.Parsers.InlineFencedCode do
     else
       walker = Walker.consume_input(walker)
       regex = Regex.compile!("[`]{#{back_slash_count}}$")
-
       walker = Walker.walk_until(walker, regex)
-
       if walker.rest == "" and !Regex.match?(regex, walker.input) do
-        {backup_walker, ""}
+        # advanced 1 char per time to avoid infinite loop
+        {Walker.walk(backup_walker), ""}
       else
         {content, _} = String.split_at(walker.input, -back_slash_count)
         {Walker.consume_input(walker), content}
