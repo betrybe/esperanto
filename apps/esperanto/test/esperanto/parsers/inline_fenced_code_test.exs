@@ -8,9 +8,16 @@ defmodule Esperanto.Parsers.InlineFencedCodeParseTest do
   describe "should_parse/4" do
     test "when input matches the regex, Then should_parse has to return true" do
       tree = NaryTree.new(NaryTree.Node.new(:problem))
-      walker = %Walker{input: "`"}
+      walker = %Walker{input: "`", rest: "a"}
 
       assert true == InlineFencedCode.should_parse(walker, tree, tree.root, [])
+    end
+
+    test "when input matches the regex, but rest is empty Then should_parse has to return false" do
+      tree = NaryTree.new(NaryTree.Node.new(:problem))
+      walker = %Walker{input: "`"}
+
+      assert false == InlineFencedCode.should_parse(walker, tree, tree.root, [])
     end
 
     test "when input does not matches the regex, Then should_parse has to return false" do
