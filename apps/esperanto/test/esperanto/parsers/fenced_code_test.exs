@@ -66,11 +66,11 @@ defmodule Esperanto.Parsers.FencedCodeTest do
 
     %{
       children: [
-        %{content: "`", level: 1, name: :p,},
+        %{content: "`", level: 1, name: :p},
         %{
           content: "render(&lt;Card /&gt;)",
           level: 1,
-          name: :code,
+          name: :code
         },
         %{content: "`", level: 1, name: :p}
       ],
@@ -79,7 +79,6 @@ defmodule Esperanto.Parsers.FencedCodeTest do
       name: :empty,
       parent: :empty
     } = NaryTree.to_map(tree)
-
   end
 
   test "parse source with language" do

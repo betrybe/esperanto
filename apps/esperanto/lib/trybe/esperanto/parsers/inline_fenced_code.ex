@@ -38,6 +38,7 @@ defmodule Esperanto.Parsers.InlineFencedCode do
       walker = Walker.consume_input(walker)
       regex = Regex.compile!("[`]{#{back_slash_count}}$")
       walker = Walker.walk_until(walker, regex)
+
       if walker.rest == "" and !Regex.match?(regex, walker.input) do
         # advanced 1 char per time to avoid infinite loop
         {Walker.walk(backup_walker), ""}
