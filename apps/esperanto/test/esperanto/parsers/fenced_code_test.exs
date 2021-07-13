@@ -60,6 +60,27 @@ defmodule Esperanto.Parsers.FencedCodeTest do
            } = NaryTree.to_map(tree)
   end
 
+  test "parse inline code with ```" do
+    input = "```render(<Card />)```"
+    assert {tree, _} = TopLevel.parse(Walker.start(input), nil, nil, [])
+
+    %{
+      children: [
+        %{content: "`", level: 1, name: :p},
+        %{
+          content: "render(&lt;Card /&gt;)",
+          level: 1,
+          name: :code
+        },
+        %{content: "`", level: 1, name: :p}
+      ],
+      content: :empty,
+      level: 0,
+      name: :empty,
+      parent: :empty
+    } = NaryTree.to_map(tree)
+  end
+
   test "parse source with language" do
     input = """
     ```javascript
