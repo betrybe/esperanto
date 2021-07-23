@@ -33,15 +33,15 @@ defmodule Esperanto.Parser do
             ) :: boolean()
 
   @doc """
-  Enchant parser returning a new tree
+  If parser has not chance to parse the content return false will
+  speed up parse
   paremters:
     * `tree`- Current AST tree
     * `tree`- the node being created
     * `parent_id`- id of the parent node
-  returns: a new enchanted tree
+  returns: true only if the has a chance to parse the content
   """
-  @callback enchant_parser(tree(), NaryTree.Node.t(), integer()) :: tree()
-  @optional_callbacks enchant_parser: 3
+  @callback may_parser(tree(), NaryTree.Node.t(), integer()) :: tree()
 
   def to_xml(tree, opts \\ []) do
     opts = Keyword.merge([format: :none], opts)
