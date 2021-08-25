@@ -41,7 +41,8 @@ defmodule Esperanto.Parsers.FencedCode do
     walker = Walker.walk_until(walker, regex)
 
     if walker.rest == "" and !Regex.match?(regex, walker.input) do
-      {backup_walker, ""}
+      # advanced 1 char per time to avoid infinite loop
+      {Walker.walk(backup_walker), ""}
     else
       {content, _} = String.split_at(walker.input, -back_slash_count)
       {Walker.consume_input(walker), get_code_tag(content, language)}
