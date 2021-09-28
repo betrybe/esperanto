@@ -99,9 +99,7 @@ defmodule Esperanto.Parsers.TopLevel do
       |> Enum.map(&Atom.to_string/1)
       |> Enum.join(", ")
 
-    raise "Grammar is ambiguos! More then one parser found for input \"#{input.input}\": #{
-            parsers
-          }."
+    raise "Grammar is ambiguos! More then one parser found for input \"#{input.input}\": #{parsers}."
   end
 
   # find parsers that should be executed
