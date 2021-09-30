@@ -15,9 +15,7 @@ defmodule Esperanto.ParserUtility do
 
   def ensure_has_matched(walker, delimiter) do
     if !match(walker.input, delimiter) do
-      raise "Expected to find #{__MODULE__.delimiter_as_string(delimiter)} at line:#{walker.line},column:#{
-              walker.column
-            }. Found: #{walker.input}"
+      raise "Expected to find #{__MODULE__.delimiter_as_string(delimiter)} at line:#{walker.line},column:#{walker.column}. Found: #{walker.input}"
     end
   end
 

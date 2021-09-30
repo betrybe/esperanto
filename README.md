@@ -68,3 +68,8 @@ generate the following xml:
 </problem>
 ```
 
+### Architecture
+
+The [TopLevel parser architecture](https://excalidraw.com/#json=5712520383823872,DK0L53AOWtahSilX4YwuiQ) is the following:
+
+![TopLevel parser architecture](/docs/esperanto_top_level_parser.png?raw=true "TopLevel parser architecture")
