@@ -6,15 +6,15 @@ defmodule Esperanto.Barriers.NewLineBarrier do
   @behaviour Esperanto.Barrier
 
   def should_bar(%Walker{input: input, rest: rest}) do
-    input != "  " and String.match?(rest, ~r/^\n/)
+    input != "  " and String.match?(rest, ~r/^(\r\n|\n)/)
   end
 
   def destroy_barrier(walker) do
     BarrierUtility.assert_walker_is_barried(walker)
-    barried_content = Walker.strip_from_regex(walker.barriered, ~r/^\n/)
+    barried_content = Walker.strip_from_regex(walker.barriered, ~r/^(\r\n|\n)/)
 
     {line, column} = Walker.increment_line_and_column(barried_content, walker.line, walker.column)
-    rest = String.replace(walker.barriered, ~r/^\n/, "", global: false)
+    rest = String.replace(walker.barriered, ~r/^(\r\n|\n)/, "", global: false)
 
     {_, new_barriers} = List.pop_at(walker.barriers, 0)
 
